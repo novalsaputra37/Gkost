@@ -1,0 +1,129 @@
+{% extends "base/base.html" %}
+
+{% block title %} Dashboard {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="row">
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="title">Regristrasi</h5>
+                </div>
+
+                <div class="card-body">
+                    <form role="form" enctype="multipart/form-data" method="post" action="">
+                        {% csrf_token %}
+
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" name="{{form.Nik.name}}"
+                                maxlength="{{form.Nik.max}}" required id="{{form.Nik.id_for_label}}"
+                                value="{{ request.user.username }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="{{form.Nama_lengkap.id_for_label}}">{{form.Nama_lengkap.label}}:</label>
+                            {{form.Nama_lengkap}}
+                        </div>
+
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" name="{{form.Email.name}}"
+                                maxlength="{{form.Email.max}}" required id="{{form.Email.id_for_label}}"
+                                value="{{ request.user.email }}">
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 pr-md-1">
+                                <div class="form-group">
+                                    <label for="{{form.Tempat_lahir.id_for_label}}">{{form.Tempat_lahir.label}}:</label>
+                                   {{form.Tempat_lahir}}
+                                </div>
+                            </div>
+                            <div class="col-md-6 pr-md-1">
+                                <div class="form-group">
+                                    <label
+                                        for="{{form.Tanggal_lahir.id_for_label}}">{{form.Tanggal_lahir.label}}:</label>
+                                    {{form.Tanggal_lahir}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 pr-md-1">
+                                <div class="form-group">
+                                    <label for="{{form.No_tlp.id_for_label}}">{{form.No_tlp.label}}:</label>
+                                   {{form.No_tlp}}
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 pr-md-1">
+                                <div class="form-group">
+                                    <label for="{{form.Agama.id_for_label}}">{{form.Agama.label}}:</label>
+                                    {{form.Agama}}
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 pr-md-1">
+                                <div class="form-group">
+                                    <label for="{{form.Pekerjaan.id_for_label}}">{{form.Pekerjaan.label}}:</label>
+                                    {{form.Pekerjaan}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="{{form.Jenis_kelamin.id_for_label}}">{{form.Jenis_kelamin.label}}:</label>
+                            {{ form.Jenis_kelamin }}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="{{form.Alamat_asal.id_for_label}}">{{form.Alamat_asal.label}}:</label>
+                            <textarea class="form-control" name="{{form.Alamat_asal.name}}" rows="10" required
+                                id="{{form.Alamat_asal.id_for_label}}"></textarea>
+                        </div>
+                        <br>
+                        <label for="{{form.Foto_ktp.id_for_label}}">{{form.Foto_ktp.label}}:</label>
+                        {{ form.Foto_ktp }}
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-fill btn-primary">Submit</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card card-user">
+                <div class="card-body">
+                    <p class="card-text">
+                    <div class="author">
+                        <div class="block block-one"></div>
+                        <div class="block block-two"></div>
+                        <div class="block block-three"></div>
+                        <div class="block block-four"></div>
+                        <a href="javascript:void(0)">
+                            <h5 class="title">
+                                {{ request.user.username }}
+                            </h5>
+                        </a>
+                        <p class="description">
+                            {{ request.user.email }}
+                        </p>
+                    </div>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endblock content %}
+
+    <!-- Specific Page JS goes HERE  -->
+    {% block javascripts %}{% endblock javascripts %}

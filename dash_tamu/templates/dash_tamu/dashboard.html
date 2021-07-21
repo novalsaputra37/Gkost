@@ -1,0 +1,223 @@
+{% extends "base/base.html" %}
+
+{% block title %} Dashboard {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<div class="row justify-content-md-center">
+    <div class="col-12 col-sm-6 col-xl-4 mb-4">
+        <div class="card border-light shadow-sm">
+            <div class="card-body">
+                <div class="row d-block d-xl-flex align-items-center">
+                    <div
+                        class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                        <div class="icon icon-shape icon-md icon-shape-primary rounded me-4 me-sm-0"><span
+                                class="fas fa-chart-line"></span></div>
+                        <div class="d-sm-none">
+                            <h2 class="h5">Status</h2>
+                            <h3 class="mb-1 text-success">AKTIF</h3>
+                        </div>
+                    </div>
+                    <div class="col-12 col-xl-7 px-xl-0">
+                        <div class="d-none d-sm-block">
+                            <h2 class="h5">Status</h2>
+                            <h3 class="mb-1 text-success">AKTIF</h3>
+                        </div>
+                        <small>Feb 1 - Apr 1 </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-sm-6 col-xl-4 mb-4">
+        <div class="card border-light shadow-sm">
+            <div class="card-body">
+                <div class="row d-block d-xl-flex align-items-center">
+                    <div
+                        class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                        <div class="icon icon-shape icon-md icon-shape-secondary rounded me-4"><span
+                                class="fas fa-cash-register"></span></div>
+                        <div class="d-sm-none">
+                            <h2 class="h5">No Kamar</h2>
+                            <h3 class="mb-1">2</h3>
+                        </div>
+                    </div>
+                    <div class="col-12 col-xl-7 px-xl-0">
+                        <div class="d-none d-sm-block">
+                            <h2 class="h5">No Kamar</h2>
+                            <h3 class="mb-1">2</h3>
+                        </div>
+                        <small>&nbsp;</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-sm-6 col-xl-4 mb-4">
+        <div class="card border-light shadow-sm">
+            <div class="card-body">
+                <div class="row d-block d-xl-flex align-items-center">
+                    <div
+                        class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                        <div class="icon icon-shape icon-md icon-shape-secondary rounded me-4"><span
+                                class="fas fa-cash-register"></span></div>
+                        <div class="d-sm-none">
+                            <h2 class="h5">Paket Kost</h2>
+                            <h3 class="mb-1">Tahunan</h3>
+                        </div>
+                    </div>
+                    <div class="col-12 col-xl-7 px-xl-0">
+                        <div class="d-none d-sm-block">
+                            <h2 class="h5">Paket Kost</h2>
+                            <h3 class="mb-1">Tahunan</h3>
+                        </div>
+                        <small>&nbsp;</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-12 col-xl-8 mb-4">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-light shadow-sm">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="h5">Biodata</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table align-items-center table-flush ">
+                        {% for DataTamu in DataTamu %}
+                            <tr>
+                                <th scope="row">
+                                    Nik
+                                </th>
+                                <td>
+                                    {{DataTamu.Nik}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    Nama
+                                </th>
+                                <td>
+                                    {{DataTamu.Nama_lengkap|title}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    Jenis kelamin
+                                </th>
+                                <td>
+                                    {{DataTamu.Jenis_kelamin|capfirst}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    TTL
+                                </th>
+                                <td>
+                                    {{DataTamu.Tempat_lahir|capfirst}}, {{DataTamu.Tanggal_lahir|date:"d F Y"}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    Agama
+                                </th>
+                                <td>
+                                    {{DataTamu.Agama|capfirst}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    Pekerjaan
+                                </th>
+                                <td>
+                                    {{DataTamu.Pekerjaan|capfirst}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    No_tlp
+                                </th>
+                                <td>
+                                    +62{{DataTamu.No_tlp}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    Email
+                                </th>
+                                <td>
+                                    {{DataTamu.Email}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    Alamat
+                                </th>
+                                <td>
+                                    {{DataTamu.Alamat_asal|title}}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-xl-4 mb-4">
+        <div class="col-12 px-0 mb-4">
+            <div class="card border-light shadow-sm">
+                <div class="card-header border-bottom border-light d-flex justify-content-between">
+                    <h2 class="h5 mb-0">Log Pembayaran</h2>
+                    <a href="#" class="btn btn-sm btn-secondary">See all</a>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush list my--3">
+                        <li class="list-group-item px-0">
+                            <div class="row align-items-center">
+                                <div class="col-auto">
+                                    <!-- Avatar -->
+                                    <a href="#" class="user-avatar">
+                                        <img class="rounded-circle" alt="Image placeholder"
+                                            src="/static/assets/img/team/profile-picture-1.jpg">
+                                    </a>
+                                </div>
+                                <div class="col-auto ms--2">
+                                    <h4 class="h6 mb-0">
+                                        <a href="#!">Chris Wood</a>
+                                    </h4>
+                                    <span class="text-success">●</span>
+                                    <small>Online</small>
+                                </div>
+                                <div class="col text-right">
+                                    <a href="#" class="btn btn-sm btn-tertiary"><i
+                                            class="fas fa-calendar-check me-1"></i> Invite</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
