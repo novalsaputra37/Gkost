@@ -1,0 +1,21 @@
+{% extends "base/base-volt.html" %}
+
+{% block title %} Dashboard {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<div class="container">
+<form action="" method='POST'>
+{% csrf_token %}
+    {{ form.as_table }}
+    <br>
+    <button class='btn btn-primary' type='submit'>Submit</button>
+</form>
+</div>
+{% endblock content %}
+
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

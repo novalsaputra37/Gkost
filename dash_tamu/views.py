@@ -7,11 +7,10 @@ from django.template import loader
 from django.http import HttpResponse
 
 #models
-from .models import RegisterTamuModel,PaketKostModel
+from .models import RegisterTamuModel
 
 #form
 from .form import RegisterTamuForm,PaketKostForm,KritikSaranForm
-from dash_tamu import models
 
 #Dashboard View
 @login_required(login_url="/")
