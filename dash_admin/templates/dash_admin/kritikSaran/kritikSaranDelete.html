@@ -1,0 +1,28 @@
+{% extends "base/base-volt.html" %}
+
+{% block title %} Dashboard {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4"></div>
+
+<div class="row">
+  <div class="col-12 col-xl-8">
+    <div class="card card-body border-0 shadow mb-4">
+      <h2 class="h5 mb-4">Delete Profile</h2>
+        <p>Apakah benar anda ingin menghapus Profile berikut:</p>
+        <h5>Nama : </h5> <p>{{kritikSaran.Nik}}</p>
+        <form method = 'POST'>
+        {% csrf_token %}
+        <button type="submit" class="btn btn-outline-primary">Ya</button>
+        </form>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

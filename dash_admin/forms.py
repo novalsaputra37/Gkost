@@ -2,6 +2,7 @@ from django import forms
 from .models import KamarKostModel,PemasukanKostModel,PengeluaranKostModel
 
 class KamarKostForm(forms.ModelForm):
+    
     class Meta :
         model = KamarKostModel
         fields = [
@@ -16,7 +17,6 @@ class KamarKostForm(forms.ModelForm):
                 attrs ={
                     'class' : 'form-control',
                     'placeholder' : 'Masukan NIK KTP',
-                    
                 }
             ),
             'No_kamar' : forms.NumberInput(

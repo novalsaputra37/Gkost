@@ -1,0 +1,115 @@
+{% extends "base/base-volt.html" %}
+
+{% block title %} Dashboard {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+        <div class="d-block mb-4 mb-md-0">
+            <h2 class="h4">Profil Tamu</h2>
+            <p class="mb-0">Your web analytics dashboard template.</p>
+        </div>
+    </div>
+
+    <div class="table-settings mb-4">
+        <div class="row justify-content-between align-items-center">
+            <div class="col-9 col-lg-8 d-md-flex">
+                <div class="input-group me-2 me-lg-3 fmxw-300">
+                    <span class="input-group-text">
+                        <svg class="icon icon-xs" x-description="Heroicon name: solid/search" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+                        </svg>
+                    </span>
+                    <input type="text" class="form-control" placeholder="Search users">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card card-body shadow border-0 table-wrapper table-responsive">
+        <table class="table user-table table-hover align-items-center">
+            <thead>
+                <tr>
+                    <th class="border-bottom">No</th>
+                    <th class="border-bottom">Name</th>						
+                    <th class="border-bottom">Kritik</th>
+                    <th class="border-bottom">Saran</th>
+                    <th class="border-bottom">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for kritikSaran in kritikSaran %}
+                <tr>
+                    <td><span class="fw-normal">{{forloop.counter}}</span></td>
+                    <td>
+                    
+                        <a href="#" class="d-flex align-items-center">
+                            <div class="avatar d-flex align-items-center justify-content-center fw-bold rounded bg-secondary me-3"><span>{{kritikSaran.Nama_lengkap|first|title}}</span></div>
+                            <div class="d-block">
+                                <span class="fw-bold">{{kritikSaran.Nama_lengkap}}</span>
+                                <div class="small text-gray">{{kritikSaran.Email}}</div>
+                            </div>
+                        </a> 
+                    </td>
+                    <td><span class="fw-normal">{{kritikSaran.Kritik|title}}</span></td>                        
+                    <td><span class="fw-normal">{{kritikSaran.Saran|title}}</span></td>                        
+
+                    <!-- button-->
+                    <td>
+                        <div class="btn-group">
+                            <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <svg class="icon icon-xs" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"></path></svg>
+                                <span class="visually-hidden">Toggle Dropdown</span>
+                            </button>
+                            <div class="dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1">
+                                <a class="dropdown-item d-flex align-items-center" href="{% url 'dashadmin:kritikSaran-delete' kritikSaran.pk %}">
+                                    <svg class="dropdown-icon text-danger me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M11 6a3 3 0 11-6 0 3 3 0 016 0zM14 17a6 6 0 00-12 0h12zM13 8a1 1 0 100 2h4a1 1 0 100-2h-4z"></path></svg>
+                                    Delete
+                                </a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+
+        <div class="card-footer px-3 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination mb-0">
+                    <li class="page-item">
+                        <a class="page-link" href="#">Previous</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">1</a>
+                    </li>
+                    <li class="page-item active">
+                        <a class="page-link" href="#">2</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">3</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">4</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">5</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="fw-normal small mt-4 mt-lg-0">Showing <b>5</b> out of <b>25</b> entries</div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

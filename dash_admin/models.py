@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils import timezone
+import datetime
 
 # Create your models here.
 
@@ -13,7 +15,7 @@ class KamarKostModel(models.Model):
 
 class PemasukanKostModel(models.Model):
     Nik              = models.CharField(max_length=50)
-    Tgl_pemasukan    = models.DateField()
+    Tgl_pemasukan    = models.DateField(default=datetime.datetime.now)
     Jmlh_pemasukan   = models.IntegerField()
     Keterangan       = models.CharField(max_length=50)
 
@@ -26,4 +28,4 @@ class PengeluaranKostModel(models.Model):
     jmlh_pengeluaran  = models.IntegerField()
 
     def __str__(self):
-        return "{}. {}".format(self.id, self.pengeluaran)
+        return "{}. {}".format(self.id, self.Pengeluaran)

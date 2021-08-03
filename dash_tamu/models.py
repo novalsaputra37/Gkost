@@ -1,7 +1,7 @@
 from django.db import models
 
 # Create your models here.
-class RegisterTamuModel(models.Model):
+class ProfilTamuModel(models.Model):
     Nik             = models.CharField(max_length=50)
     Nama_lengkap    = models.CharField(max_length=50)
     No_tlp          = models.BigIntegerField()

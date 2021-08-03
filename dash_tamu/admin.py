@@ -1,13 +1,13 @@
 from django.contrib import admin
-from .models import RegisterTamuModel,PaketKostModel,KritikSaranModel
+from .models import ProfilTamuModel,PaketKostModel,KritikSaranModel
 
-class RegisterTamuAdmin(admin.ModelAdmin):
+class ProfilTamuAdmin(admin.ModelAdmin):
     readonly_fields=[
         'published',
         'updated'
     ]
     
 # Register your models here.
-admin.site.register(RegisterTamuModel, RegisterTamuAdmin)
+admin.site.register(ProfilTamuModel, ProfilTamuAdmin)
 admin.site.register(PaketKostModel)
 admin.site.register(KritikSaranModel)

@@ -1,13 +1,13 @@
 from django import forms
 from .models import (
-                    RegisterTamuModel,
+                    ProfilTamuModel,
                     PaketKostModel,
                     KritikSaranModel
                     )
 
-class RegisterTamuForm(forms.ModelForm):
+class ProfilTamuForm(forms.ModelForm):
     class Meta :
-        model = RegisterTamuModel
+        model = ProfilTamuModel
         fields = [
             'Nik',
             'Nama_lengkap',

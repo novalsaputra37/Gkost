@@ -1,5 +1,4 @@
 from django.contrib.auth.decorators import login_required
-from django.db.models.base import Model
 from django.shortcuts import render, redirect
 from django.views.generic import FormView,TemplateView
 from django.views.generic.edit import CreateView
@@ -7,25 +6,25 @@ from django.template import loader
 from django.http import HttpResponse
 
 #models
-from .models import RegisterTamuModel
+from .models import ProfilTamuModel
 
 #form
-from .form import RegisterTamuForm,PaketKostForm,KritikSaranForm
+from .form import ProfilTamuForm,PaketKostForm,KritikSaranForm
 
 #Dashboard View
 @login_required(login_url="/")
 def dashTamuView(request):
     Akun = request.user
-    RegisterTamuModels = RegisterTamuModel.objects.filter(Nik=Akun)
+    ProfilTamuModels = ProfilTamuModel.objects.filter(Nik=Akun)
     # Statuskos = StatusKostModel.objects.raw('SELECT dash_admin_statuskostmodel.*, current_date() as tgl_sekarang, datediff(Waktu_out, current_date()) as selisih FROM dash_admin_statuskostmodel WHERE Nik= %s', [Akun])
     # InfoPembayaran = InfoPembayaranModel.objects.filter(Nik=Akun)
 
     context = {
-        'DataTamu' : RegisterTamuModels
+        'DataTamu' : ProfilTamuModels
     }
     context['segment'] = 'dashboard'
   
-    if RegisterTamuModels.exists() :
+    if ProfilTamuModels.exists() :
         html_template = loader.get_template( 'dash_tamu/dashboard.html' )
         return HttpResponse(html_template.render(context, request))
     else:
@@ -36,7 +35,7 @@ class PeraturanKostView(TemplateView):
     template_name = 'dash_tamu/registerTamu/peraturan.html'
 
 class RegisterTamuView(CreateView):
-    form_class = RegisterTamuForm
+    form_class = ProfilTamuForm
     template_name = "dash_tamu/registerTamu/regtamunew.html"
     success_url = '/dashtamu/register/paketkost'
 

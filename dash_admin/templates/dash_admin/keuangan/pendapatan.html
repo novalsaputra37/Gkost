@@ -1,0 +1,185 @@
+{% extends "base/base-volt.html" %}
+{% load humanize %}
+{% block title %} Dashboard {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<!-- Row -->
+    <div class="row">
+        <!-- Customers -->
+        <div class="col-12 col-sm-6 col-xl-4 mb-4">
+            <div class="card border-0 shadow">
+                <div class="card-body">
+                    <div class="row d-block d-xxl-flex align-items-center">
+                        <div class="col-12 col-xxl-6 px-xxl-0 mb-3 mb-xxl-0">
+                            <div id="chart-customers"></div>
+                        </div>
+                        <div class="col-12 col-xxl-6 ps-xxl-4 pe-xxl-0">
+                            <h2 class="fs-6 fw-normal mb-1 text-gray-400">Tamu Aktif</h2>
+                            <h3 class="fw-extrabold mb-1">1</h3>
+                            <small class="d-flex align-items-center">
+                                <svg class="icon icon-xxs text-gray-400 me-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
+                                Apr 1 - May 1
+                            </small> 
+                            <div class="small d-flex mt-1">                               
+                                <div><svg class="icon icon-xs text-success" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd"></path></svg><span class="text-success fw-bolder">18,2%</span> Since last month</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Revenue -->
+        <div class="col-12 col-sm-6 col-xl-4 mb-4">
+            <div class="card border-0 shadow">
+                <div class="card-body">
+                    <div class="row d-block d-xxl-flex align-items-center">
+                        <div class="col-12 col-xxl-6 px-xxl-0 mb-3 mb-xxl-0">
+                            <div id="chart-revenue"></div>
+                        </div>
+                        <div class="col-12 col-xxl-6 ps-xxl-4 pe-xl-0">
+                            <h2 class="fs-6 fw-normal mb-1 text-gray-400">Pendapatan Bulan Ini</h2>
+                            <h3 class="fw-extrabold mb-1">Rp. {{profit|intcomma}}</h3>
+                            <small class="d-flex align-items-center">
+                                <svg class="icon icon-xxs text-gray-400 me-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
+                                Apr 1 - May 1
+                            </small> 
+                            <div class="small d-flex mt-1">                               
+                                <div><svg class="icon icon-xs text-danger" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg><span class="text-danger fw-bolder">4,6%</span> Since last month</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Traffic -->
+        <div class="col-12 col-sm-12 col-xl-4 mb-4">
+            <div class="card border-0 shadow">
+                <div class="card-body">
+                    <div class="row d-block d-sm-flex d-xl-block d-xxl-flex align-items-center">
+                        <div class="col-12 col-sm-6 col-xl-12 col-xxl-6 px-xxl-0 mb-3 mb-sm-0 mb-xl-3 mb-xxl-0">
+                            <div id="pie-chart-apex"></div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-xl-12 col-xxl-6 ps-xxl-4 pe-xxl-0">
+                            <h2 class="fs-6 fw-normal mb-1 text-gray-400">Users</h2>
+                            <h3 class="fw-extrabold mb-1">15.3k</h3>
+                            <small class="d-flex align-items-center">
+                                <svg class="icon icon-xxs text-gray-400 me-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
+                                Apr 1 - May 1
+                            </small> 
+                            <div class="small d-flex mt-1">                               
+                                <div><svg class="icon icon-xs text-success" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd"></path></svg><span class="text-success fw-bolder">20%</span> Since last month</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- Pendapatan -->
+<div class="row">
+  <div class="col-12 col-xl-8">
+    <div class="card shadow mb-4">
+    <h5>Pendapatan</h5>
+      <div class="table-responsive">
+        <table class="table">
+          <thead class="thead-light">
+            <tr>
+              <th>No</th>
+              <th>Nama</th>
+              <th>Tgl_pemasukan</th>
+              <th>Jmlh_pemasukan</th>
+              <th>Keterangan</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for InfoPembayaran in InfoPembayaran %}
+            <tr>
+              <td>{{forloop.counter}}</td>
+              <td><span class="fw-normal">{{InfoPembayaran.Nama_lengkap|title}}</span></td>
+              <td><span class="fw-normal">{{InfoPembayaran.Tgl_pemasukan|date:"d F Y"}}</span></td>
+              <td><span class="fw-normal">Rp. {{InfoPembayaran.Jmlh_pemasukan|intcomma}}</span></td>
+              <td><span class="fw-normal">{{InfoPembayaran.Keterangan}}</span></td>
+            </tr>
+          {% endfor %}
+          <tr>
+            <td><span class="h6">Pemasukan Total = Rp. {{pemasukanTotal|intcomma}}</span></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+ <div class="card shadow mb-4">
+    <h5>Pengeluaran</h5>
+      <div class="table-responsive">
+        <table class="table">
+          <thead class="thead-light">
+            <tr>
+              <th>No</th>
+              <th>Pengeluaran</th>
+              <th>Tgl_pengeluaran</th>
+              <th>jmlh_pengeluaran</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for InfoPengeluaran in InfoPengeluaran %}
+            <tr>
+              <td>{{forloop.counter}}</td>
+              <td><span class="fw-normal">{{InfoPengeluaran.Pengeluaran|title}}</span></td>
+              <td><span class="fw-normal">{{InfoPengeluaran.Tgl_pengeluaran|date:"d F Y"}}</span></td>
+              <td><span class="fw-normal">Rp. {{InfoPengeluaran.jmlh_pengeluaran|intcomma}}</span></td>
+            </tr>
+          {% endfor %}
+          <tr>
+            <td><span class="h6">Pengeluaran Total = Rp. {{pengeluaranTotal|intcomma}}</span></td>
+          </tr
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-xl-4">
+    <div class="row">
+      <div class="col-12 mb-4">
+        <div class="card shadow border-0 text-center p-0">
+          <H5>Input Bulan Pemasukan</H5>
+        <form enctype="multipart/form-data" method="POST">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="Bulan">Bulan :<br>
+              <select  class='form-control' required id="Bulan" name="Bulan" onChange="form.submit();">
+                <option value="1">Januari</option>
+                <option value="2">Februari</option>
+                <option value="3">Maret</option>
+                <option value="4">April</option>
+                <option value="5">Mei</option>
+                <option value="6">Juni</option>
+                <option value="7">Juli</option>
+                <option value="8">Agustus</option>
+                <option value="9">September</option>
+                <option value="10">Oktober</option>
+                <option value="11">November</option>
+                <option value="12">Desember</option>
+              </select>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 mb-4">
+        <div class="card shadow border-0 text-center p-0">
+          <H5>Input Bulan Pemasukan</H5>
+           <img src="{{ProfilTamu.Foto_ktp.url}}" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  {% endblock content %}
+  <!-- Specific Page JS goes HERE  -->
+  {% block javascripts %}
+  {% endblock javascripts %}
