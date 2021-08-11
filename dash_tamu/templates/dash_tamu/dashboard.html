@@ -1,4 +1,4 @@
-{% extends "base/base.html" %}
+{% extends "base/base-volt.html" %}
 
 {% block title %} Dashboard {% endblock %}
 
@@ -7,214 +7,272 @@
 
 {% block content %}
 <div class="row justify-content-md-center">
-    <div class="col-12 col-sm-6 col-xl-4 mb-4">
-        <div class="card border-light shadow-sm">
-            <div class="card-body">
-                <div class="row d-block d-xl-flex align-items-center">
-                    <div
-                        class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
-                        <div class="icon icon-shape icon-md icon-shape-primary rounded me-4 me-sm-0"><span
-                                class="fas fa-chart-line"></span></div>
-                        <div class="d-sm-none">
-                            <h2 class="h5">Status</h2>
-                            <h3 class="mb-1 text-success">AKTIF</h3>
-                        </div>
-                    </div>
-                    <div class="col-12 col-xl-7 px-xl-0">
-                        <div class="d-none d-sm-block">
-                            <h2 class="h5">Status</h2>
-                            <h3 class="mb-1 text-success">AKTIF</h3>
-                        </div>
-                        <small>Feb 1 - Apr 1 </small>
-                    </div>
-                </div>
+  <div class="col-12 col-sm-6 col-xl-4 mb-4">
+    <div class="card border-light shadow-sm">
+      <div class="card-body">
+        <div class="row d-block d-xl-flex align-items-center">
+          <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+            <div class=" me-4 me-sm-0"><svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" color="#10b981" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+              </svg></div>
+              <div class="d-sm-none">
+                <h2 class="h5">Status</h2>
+                {% for Statuskos in Statuskos %}
+                {% if Statuskos.selisih >= 0  %}
+                <h3 class="mb-1 text-success">AKTIF</h3>
+                {% else %}
+                <h3 class="mb-1 text-danger">TIDAK AKTIF</h3>
+                {% endif %}
+                {% endfor %}
+              </div>
+          </div>
+          <div class="col-12 col-xl-7 px-xl-0">
+            <div class="d-none d-sm-block">
+              <h2 class="h5">Status</h2>
+              {% for Statuskos in Statuskos %}
+              {% if Statuskos.selisih >= 0  %}
+              <h3 class="mb-1 text-success">AKTIF</h3>
+              {% else %}
+              <h3 class="mb-1 text-danger">TIDAK AKTIF</h3>
+              {% endif %}
+              {% endfor %}
             </div>
+            {% for Statuskos in Statuskos %}
+            <small>{{Statuskos.Waktu_in|date:"d F Y"}} - {{Statuskos.Waktu_out|date:"d F Y"}} </small>
+            {% endfor %}
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 
-    <div class="col-12 col-sm-6 col-xl-4 mb-4">
-        <div class="card border-light shadow-sm">
-            <div class="card-body">
-                <div class="row d-block d-xl-flex align-items-center">
-                    <div
-                        class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
-                        <div class="icon icon-shape icon-md icon-shape-secondary rounded me-4"><span
-                                class="fas fa-cash-register"></span></div>
-                        <div class="d-sm-none">
-                            <h2 class="h5">No Kamar</h2>
-                            <h3 class="mb-1">2</h3>
-                        </div>
-                    </div>
-                    <div class="col-12 col-xl-7 px-xl-0">
-                        <div class="d-none d-sm-block">
-                            <h2 class="h5">No Kamar</h2>
-                            <h3 class="mb-1">2</h3>
-                        </div>
-                        <small>&nbsp;</small>
-                    </div>
-                </div>
+  <div class="col-12 col-sm-6 col-xl-4 mb-4">
+    <div class="card border-light shadow-sm">
+      <div class="card-body">
+        <div class="row d-block d-xl-flex align-items-center">
+          <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+            <div class="me-4 me-sm-0"><svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" color="#111827" class="bi bi-house" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+  <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+</svg></span></div>
+            <div class="d-sm-none">
+              <h2 class="h5">No Kamar</h2>
+              {% for Statuskos in Statuskos %}
+              <h3 class="mb-1">{{Statuskos.No_kamar}}</h3>
+              {% endfor %}
             </div>
+          </div>
+          <div class="col-12 col-xl-7 px-xl-0">
+            <div class="d-none d-sm-block">
+              <h2 class="h5">No Kamar</h2>
+              {% for Statuskos in Statuskos %}
+              <h3 class="mb-1">{{Statuskos.No_kamar}}</h3>
+              {% endfor %}
+            </div>
+            <small>&nbsp;</small>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 
-    <div class="col-12 col-sm-6 col-xl-4 mb-4">
-        <div class="card border-light shadow-sm">
-            <div class="card-body">
-                <div class="row d-block d-xl-flex align-items-center">
-                    <div
-                        class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
-                        <div class="icon icon-shape icon-md icon-shape-secondary rounded me-4"><span
-                                class="fas fa-cash-register"></span></div>
-                        <div class="d-sm-none">
-                            <h2 class="h5">Paket Kost</h2>
-                            <h3 class="mb-1">Tahunan</h3>
-                        </div>
-                    </div>
-                    <div class="col-12 col-xl-7 px-xl-0">
-                        <div class="d-none d-sm-block">
-                            <h2 class="h5">Paket Kost</h2>
-                            <h3 class="mb-1">Tahunan</h3>
-                        </div>
-                        <small>&nbsp;</small>
-                    </div>
-                </div>
+  <div class="col-12 col-sm-6 col-xl-4 mb-4">
+    <div class="card border-light shadow-sm">
+      <div class="card-body">
+        <div class="row d-block d-xl-flex align-items-center">
+          <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+            <div class="me-4 me-sm-0"><svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor"  class="bi bi-award" viewBox="0 0 16 16">
+  <path d="M9.669.864 8 0 6.331.864l-1.858.282-.842 1.68-1.337 1.32L2.6 6l-.306 1.854 1.337 1.32.842 1.68 1.858.282L8 12l1.669-.864 1.858-.282.842-1.68 1.337-1.32L13.4 6l.306-1.854-1.337-1.32-.842-1.68L9.669.864zm1.196 1.193.684 1.365 1.086 1.072L12.387 6l.248 1.506-1.086 1.072-.684 1.365-1.51.229L8 10.874l-1.355-.702-1.51-.229-.684-1.365-1.086-1.072L3.614 6l-.25-1.506 1.087-1.072.684-1.365 1.51-.229L8 1.126l1.356.702 1.509.229z"/>
+  <path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1 4 11.794z"/>
+</svg></div>
+            <div class="d-sm-none">
+              <h2 class="h5">Paket Kost</h2>
+              {% for Statuskos in Statuskos %}
+              {% if Statuskos.Paket == "1" %}
+              <h3 class="mb-1">Bulanan</h3>
+              {% elif Statuskos.Paket == "2" %}
+              <h3 class="mb-1">3 Bulanan</h3>
+              {% else %}
+              <h3 class="mb-1">Tahunan</h3>
+              {% endif %}
+              {% endfor %}
             </div>
+          </div>
+          <div class="col-12 col-xl-7 px-xl-0">
+            <div class="d-none d-sm-block">
+              <h2 class="h5">Paket Kost</h2>
+              {% for Statuskos in Statuskos %}
+              {% if Statuskos.Paket == "1" %}
+              <h3 class="mb-1">1 Bulan</h3>
+              {% elif Statuskos.Paket == "2" %}
+              <h3 class="mb-1">3 Bulan</h3>
+              {% else %}
+              <h3 class="mb-1">1 Tahun</h3>
+              {% endif %}
+              {% endfor %}
+            </div>
+            {% for Statuskos in Statuskos %}
+            <small>Tersisa <b>{{Statuskos.selisih}}</b> hari</small>
+            {% endfor %}
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 
 </div>
 <div class="row">
-    <div class="col-12 col-xl-8 mb-4">
-        <div class="row">
-            <div class="col-12 mb-4">
-                <div class="card border-light shadow-sm">
-                    <div class="card-header">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <h2 class="h5">Biodata</h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table align-items-center table-flush ">
-                        {% for DataTamu in DataTamu %}
-                            <tr>
-                                <th scope="row">
-                                    Nik
-                                </th>
-                                <td>
-                                    {{DataTamu.Nik}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">
-                                    Nama
-                                </th>
-                                <td>
-                                    {{DataTamu.Nama_lengkap|title}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">
-                                    Jenis kelamin
-                                </th>
-                                <td>
-                                    {{DataTamu.Jenis_kelamin|capfirst}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">
-                                    TTL
-                                </th>
-                                <td>
-                                    {{DataTamu.Tempat_lahir|capfirst}}, {{DataTamu.Tanggal_lahir|date:"d F Y"}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">
-                                    Agama
-                                </th>
-                                <td>
-                                    {{DataTamu.Agama|capfirst}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">
-                                    Pekerjaan
-                                </th>
-                                <td>
-                                    {{DataTamu.Pekerjaan|capfirst}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">
-                                    No_tlp
-                                </th>
-                                <td>
-                                    +62{{DataTamu.No_tlp}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">
-                                    Email
-                                </th>
-                                <td>
-                                    {{DataTamu.Email}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">
-                                    Alamat
-                                </th>
-                                <td>
-                                    {{DataTamu.Alamat_asal|title}}
-                                </td>
-                            </tr>
-                        {% endfor %}
-                        </table>
-                    </div>
-                </div>
+  <div class="col-12 col-xl-8 mb-4">
+    <div class="row">
+      <div class="col-12 mb-4">
+        <div class="card border-light shadow-sm">
+          <div class="card-header">
+            <div class="row align-items-center">
+              <div class="col">
+                <h2 class="h5">Biodata</h2>
+              </div>
             </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table align-items-center table-flush ">
+              {% for DataTamu in DataTamu %}
+              <tr>
+                <th scope="row">
+                  Nik
+                </th>
+                <td>
+                  {{DataTamu.Nik}}
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  Nama
+                </th>
+                <td>
+                  {{DataTamu.Nama_lengkap|title}}
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  Jenis kelamin
+                </th>
+                <td>
+                  {{DataTamu.Jenis_kelamin|capfirst}}
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  TTL
+                </th>
+                <td>
+                  {{DataTamu.Tempat_lahir|capfirst}}, {{DataTamu.Tanggal_lahir|date:"d F Y"}}
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  Agama
+                </th>
+                <td>
+                  {{DataTamu.Agama|capfirst}}
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  Pekerjaan
+                </th>
+                <td>
+                  {{DataTamu.Pekerjaan|capfirst}}
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  No_tlp
+                </th>
+                <td>
+                  +62{{DataTamu.No_tlp}}
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  Email
+                </th>
+                <td>
+                  {{DataTamu.Email}}
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  Alamat
+                </th>
+                <td>
+                  {{DataTamu.Alamat_asal|title}}
+                </td>
+              </tr>
+              {% endfor %}
+            </table>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 
-    <div class="col-12 col-xl-4 mb-4">
-        <div class="col-12 px-0 mb-4">
-            <div class="card border-light shadow-sm">
-                <div class="card-header border-bottom border-light d-flex justify-content-between">
-                    <h2 class="h5 mb-0">Log Pembayaran</h2>
-                    <a href="#" class="btn btn-sm btn-secondary">See all</a>
+  <div class="col-12 col-xl-4 mb-4">
+    <div class="row">
+      <div class="col-12 col-xl-12 mb-4">
+        <div class="card border-0 shadow">
+          <div class="card-header border-bottom d-flex align-items-center justify-content-between">
+            <h2 class="fs-5 fw-bold mb-0">Log Pembayaran</h2>
+            <a
+              href="#"
+              class="btn btn-sm btn-primary"
+            >See all</a>
+          </div>
+          <div class="card-body">
+            <ul class="list-group list-group-flush list my--3">
+              {% for LogPembayaran in LogPembayaran %}
+              <li class="list-group-item px-0">
+                <div class="row align-items-center">
+                  <div class="col-auto">
+                    <h1>{{forloop.counter}}</h1>
+                  </div>
+                  <div class="col-auto ms--2">
+                    <h4 class="h6 mb-0">
+                      <a href="#">Rp. {{LogPembayaran.Jmlh_pemasukan}}</a>
+                    </h4>
+                    <div class="d-flex align-items-center">
+                      <div class="bg-success dot rounded-circle me-1"></div>
+                      <small>{{LogPembayaran.Tgl_pemasukan|date:"d F Y"}}</small>
+                    </div>
+                  </div>
+                  <div class="col text-end">
+                    <a
+                      href="#"
+                      class="btn btn-sm btn-secondary d-inline-flex align-items-center"
+                    >
+                      <svg
+                        class="icon icon-xxs me-2"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                          clip-rule="evenodd"
+                        ></path>
+                      </svg>
+                      Print
+                    </a>
+                  </div>
                 </div>
-                <div class="card-body">
-                    <ul class="list-group list-group-flush list my--3">
-                        <li class="list-group-item px-0">
-                            <div class="row align-items-center">
-                                <div class="col-auto">
-                                    <!-- Avatar -->
-                                    <a href="#" class="user-avatar">
-                                        <img class="rounded-circle" alt="Image placeholder"
-                                            src="/static/assets/img/team/profile-picture-1.jpg">
-                                    </a>
-                                </div>
-                                <div class="col-auto ms--2">
-                                    <h4 class="h6 mb-0">
-                                        <a href="#!">Chris Wood</a>
-                                    </h4>
-                                    <span class="text-success">●</span>
-                                    <small>Online</small>
-                                </div>
-                                <div class="col text-right">
-                                    <a href="#" class="btn btn-sm btn-tertiary"><i
-                                            class="fas fa-calendar-check me-1"></i> Invite</a>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
         </div>
+      </div>
     </div>
-
+  </div>
 </div>
 
 {% endblock content %}

@@ -1,3 +1,4 @@
+from decimal import Clamped
 from django import forms
 from .models import KamarKostModel,PemasukanKostModel,PengeluaranKostModel
 
@@ -28,8 +29,11 @@ class KamarKostForm(forms.ModelForm):
             ),
             'Waktu_in' : forms.DateInput(
                 attrs ={
+                    'id' : 'birthday',
                     'class' : 'form-control',
-                    'type'  : 'date'
+                    'type'  : 'text',
+                    'data-datepicker' : "",
+                    'placeholder' : 'dd/mm/yyyy'
                 }
             ),
             'Waktu_out' : forms.DateInput(
@@ -60,9 +64,9 @@ class PemasukanKostForm(forms.ModelForm):
             ),
             'Tgl_pemasukan' : forms.DateInput(
                 attrs ={
+                    'id' : 'birthday',
                     'class' : 'form-control',
                     'type'  : 'date',
-                    
                 }
             ),
             'Jmlh_pemasukan' : forms.NumberInput(
@@ -75,6 +79,37 @@ class PemasukanKostForm(forms.ModelForm):
                 attrs ={
                     'class' : 'form-control',
                     'placeholder' : 'Keterangan',
+                }
+            ),
+        }
+
+class PengeluaranKostForm(forms.ModelForm):
+    class Meta :
+        model = PengeluaranKostModel
+        fields = [
+            'Pengeluaran',
+            'Tgl_pengeluaran',
+            'jmlh_pengeluaran'
+        ]
+
+        widgets = {
+            'Pengeluaran' : forms.TextInput(
+                attrs ={
+                    'class' : 'form-control',
+                    'placeholder' : 'Masukan Pengeluaran',
+                    
+                }
+            ),
+            'Tgl_pengeluaran' : forms.DateInput(
+                attrs ={
+                    'class' : 'form-control',
+                    'type'  : 'date',
+                }
+            ),
+            'jmlh_pengeluaran' : forms.NumberInput(
+                attrs ={
+                    'class' : 'form-control',
+                    'placeholder' : 'Masukan jmlh_pengeluaran',
                 }
             ),
         }

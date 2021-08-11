@@ -6,85 +6,32 @@
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
-<!-- Row -->
-    <div class="row">
-        <!-- Customers -->
-        <div class="col-12 col-sm-6 col-xl-4 mb-4">
-            <div class="card border-0 shadow">
-                <div class="card-body">
-                    <div class="row d-block d-xxl-flex align-items-center">
-                        <div class="col-12 col-xxl-6 px-xxl-0 mb-3 mb-xxl-0">
-                            <div id="chart-customers"></div>
-                        </div>
-                        <div class="col-12 col-xxl-6 ps-xxl-4 pe-xxl-0">
-                            <h2 class="fs-6 fw-normal mb-1 text-gray-400">Tamu Aktif</h2>
-                            <h3 class="fw-extrabold mb-1">1</h3>
-                            <small class="d-flex align-items-center">
-                                <svg class="icon icon-xxs text-gray-400 me-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
-                                Apr 1 - May 1
-                            </small> 
-                            <div class="small d-flex mt-1">                               
-                                <div><svg class="icon icon-xs text-success" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd"></path></svg><span class="text-success fw-bolder">18,2%</span> Since last month</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Revenue -->
-        <div class="col-12 col-sm-6 col-xl-4 mb-4">
-            <div class="card border-0 shadow">
-                <div class="card-body">
-                    <div class="row d-block d-xxl-flex align-items-center">
-                        <div class="col-12 col-xxl-6 px-xxl-0 mb-3 mb-xxl-0">
-                            <div id="chart-revenue"></div>
-                        </div>
-                        <div class="col-12 col-xxl-6 ps-xxl-4 pe-xl-0">
-                            <h2 class="fs-6 fw-normal mb-1 text-gray-400">Pendapatan Bulan Ini</h2>
-                            <h3 class="fw-extrabold mb-1">Rp. {{profit|intcomma}}</h3>
-                            <small class="d-flex align-items-center">
-                                <svg class="icon icon-xxs text-gray-400 me-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
-                                Apr 1 - May 1
-                            </small> 
-                            <div class="small d-flex mt-1">                               
-                                <div><svg class="icon icon-xs text-danger" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg><span class="text-danger fw-bolder">4,6%</span> Since last month</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Traffic -->
-        <div class="col-12 col-sm-12 col-xl-4 mb-4">
-            <div class="card border-0 shadow">
-                <div class="card-body">
-                    <div class="row d-block d-sm-flex d-xl-block d-xxl-flex align-items-center">
-                        <div class="col-12 col-sm-6 col-xl-12 col-xxl-6 px-xxl-0 mb-3 mb-sm-0 mb-xl-3 mb-xxl-0">
-                            <div id="pie-chart-apex"></div>
-                        </div>
-                        <div class="col-12 col-sm-6 col-xl-12 col-xxl-6 ps-xxl-4 pe-xxl-0">
-                            <h2 class="fs-6 fw-normal mb-1 text-gray-400">Users</h2>
-                            <h3 class="fw-extrabold mb-1">15.3k</h3>
-                            <small class="d-flex align-items-center">
-                                <svg class="icon icon-xxs text-gray-400 me-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
-                                Apr 1 - May 1
-                            </small> 
-                            <div class="small d-flex mt-1">                               
-                                <div><svg class="icon icon-xs text-success" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd"></path></svg><span class="text-success fw-bolder">20%</span> Since last month</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+        <div class="d-block mb-4 mb-md-0">
+            <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+                <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+                    <li class="breadcrumb-item">
+                        <a href="#">
+                            <svg class="icon icon-xxs" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="#">Keuangan</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Rincian Keuangan</li>
+                </ol>
+            </nav>
+            <h2 class="h4">Rincian Keuangan</h2>
+            <p class="mb-0">Your web analytics dashboard template.</p>
         </div>
     </div>
 <!-- Pendapatan -->
 <div class="row">
   <div class="col-12 col-xl-8">
     <div class="card shadow mb-4">
-    <h5>Pendapatan</h5>
+    <div class="card-header">
+    <h4 class="card-title">Pemasukan</h4>
+    </div>
       <div class="table-responsive">
-        <table class="table">
+        <table class="table tablesorter">
           <thead class="thead-light">
             <tr>
               <th>No</th>
@@ -113,7 +60,9 @@
     </div>
 
  <div class="card shadow mb-4">
-    <h5>Pengeluaran</h5>
+    <div class="card-header">
+    <h4 class="card-title">Pengeluaran</h4>
+    </div>
       <div class="table-responsive">
         <table class="table">
           <thead class="thead-light">
@@ -172,7 +121,7 @@
     </div>
     <div class="col-12 mb-4">
         <div class="card shadow border-0 text-center p-0">
-          <H5>Input Bulan Pemasukan</H5>
+          <H5>Input Pengeluaran</H5>
            <img src="{{ProfilTamu.Foto_ktp.url}}" alt="">
         </div>
       </div>

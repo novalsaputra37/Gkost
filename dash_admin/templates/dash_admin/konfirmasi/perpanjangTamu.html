@@ -273,16 +273,17 @@
              
             >
               {% csrf_token %}
-              <label for="NAMA">Nama Pembayar: </label>
+              <label for="state" class="my-1 mr-2">Nama Pembayar: </label>
               <select
                 class='form-control'
                 name="NAMA"
-                id="NAMA"
+                id="state"
+                class="w-100"
                 onChange="form.submit();"
               >
-                <option>--- Pilih Nama ---</option>
+                <option>----- Pilih Nama -----</option>
                 {% for profilTamu in profilTamu %}
-                <option value={{profilTamu.Nik}}>{{profilTamu.Nama_lengkap}}</option>
+                <option value={{profilTamu.Nik}}>{{profilTamu.Nama_lengkap|title}}</option>
                 {% endfor %}
               </select>
             </form>

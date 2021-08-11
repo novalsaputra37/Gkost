@@ -7,6 +7,23 @@
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+        <div class="d-block mb-4 mb-md-0">
+            <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+                <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+                    <li class="breadcrumb-item">
+                        <a href="#">
+                            <svg class="icon icon-xxs" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="#">Keuangan</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">log Pembayaran</li>
+                </ol>
+            </nav>
+            <h2 class="h4">Log Pembayaran</h2>
+            <p class="mb-0">Your web analytics dashboard template.</p>
+        </div>
+    </div>
 
 <div class="row">
   <div class="col-lg-12 col-md-12">
@@ -16,20 +33,18 @@
         <form enctype="multipart/form-data" method="POST">
           {% csrf_token %}
           <div class="form-group">
-            <label for="Bulan">Bulan :<br>
-              <select  class='form-control' required id="Bulan" name="Bulan" onChange="form.submit();">
-                <option value="1">Januari</option>
-                <option value="2">Februari</option>
-                <option value="3">Maret</option>
-                <option value="4">April</option>
-                <option value="5">Mei</option>
-                <option value="6">Juni</option>
-                <option value="7">Juli</option>
-                <option value="8">Agustus</option>
-                <option value="9">September</option>
-                <option value="10">Oktober</option>
-                <option value="11">November</option>
-                <option value="12">Desember</option>
+            <label for="state" class="my-1 mr-2">Nama Pembayar: </label>
+              <select
+                class='form-control'
+                name="NAMA"
+                id="state"
+                class="w-100"
+                onChange="form.submit();"
+              >
+                <option>----- Pilih Nama -----</option>
+                {% for profilTamu in profilTamu %}
+                <option value={{profilTamu.Nik}}>{{profilTamu.Nama_lengkap|title}}</option>
+                {% endfor %}
               </select>
           </div>
         </form>
@@ -58,24 +73,24 @@
               </tr>
             </thead>
             <tbody>
-              {% for InfoPembayaran in InfoPembayaran %}
+              {% for invoice in invoice %}
               <tr>
                 <td>
-                  <h6>{{InfoPembayaran.Nama_lengkap}}</h6>
+                  <h6>{{invoice.Nama_lengkap}}</h6>
                 </td>
                 <td>
-                  {{InfoPembayaran.Tgl_pemasukan}}
+                  {{invoice.Tgl_pemasukan}}
                 </td>
                 <td>
-                  Rp. {{InfoPembayaran.Jmlh_pemasukan|intcomma}}
+                  Rp. {{invoice.Jmlh_pemasukan|intcomma}}
                 </td>
 
                 <td>
-                  {{InfoPembayaran.Keterangan}}
+                  {{invoice.Keterangan}}
                 </td>
                 <td>
                   <a class="btn btn-warning" href="#">Edit</a>
-                  <a class="btn btn-danger" href="#">Delete</a>
+                  <a class="btn btn-danger" href="{% url 'dashadmin:LogPembayaran-delete' invoice.pk %}">Delete</a>
                 </td>
               </tr>
               {% endfor %}

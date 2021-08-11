@@ -13,7 +13,8 @@ from .views import (KomfirmasiTamuBaruView,
                     kritikSaranListView,
                     KritikSaranDeleteView,
                     LogPembayaranListView,
-                    PendapatanListView,)
+                    PendapatanListView,
+                    LogPembayaranDeleteView,)
 
 app_name = 'dashadmin'
 urlpatterns = [
@@ -36,10 +37,11 @@ urlpatterns = [
     path('data/kamar/delete/<int:pk>', KamarTamuDeleteView.as_view(), name='kamartamu-delete'),
 
     #Keuangan >> Pemasukan
-    path('keuangan/pemasukan/', PendapatanListView, name='keuangan-pemasukan'),
+    path('keuangan/pemasukan/', PendapatanListView, name='pemasukan-view'),
 
     #Keuangan >> Log Pembayaran
-    path('keuangan/logpembayaran/', LogPembayaranListView, name='keuangan-LogPembayaran'),
+    path('keuangan/logpembayaran/', LogPembayaranListView, name='LogPembayaran-view'),
+    path('keuangan/logpembayaran/delete/<int:pk>', LogPembayaranDeleteView.as_view(), name='LogPembayaran-delete'),
 
     #KritikSaran
      path('kritik/', kritikSaranListView.as_view(), name='kritikSaran-view'),

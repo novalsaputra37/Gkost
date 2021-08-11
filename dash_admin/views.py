@@ -8,7 +8,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView, DetailView
 from django.contrib import messages
 
-from .forms import KamarKostForm,PemasukanKostForm
+from .forms import KamarKostForm, PemasukanKostForm, PengeluaranKostForm
 from dash_tamu.form import ProfilTamuForm
 
 from .models import KamarKostModel,PemasukanKostModel, PengeluaranKostModel
@@ -20,7 +20,7 @@ def index(request):
     
     context = {}
     context['segment'] = 'index'
-
+    
     html_template = loader.get_template( 'dash_admin/dashboard.html' )
     return HttpResponse(html_template.render(context, request))
 
@@ -148,6 +148,10 @@ class KamarTamuDeleteView(DeleteView):
 def PendapatanListView(request):
     context = {}
     context['segment'] = 'Keuangan'
+    PengeluaranKost = PengeluaranKostForm
+    context = {
+        'form' : PengeluaranKost
+    }
     if request.method == 'POST':
         Bulan = request.POST['Bulan']
         context['InfoPembayaran'] = PemasukanKostModel.objects.raw('SELECT dash_tamu_profiltamumodel.Nama_lengkap, dash_admin_pemasukankostmodel.* FROM dash_tamu_profiltamumodel INNER JOIN dash_admin_pemasukankostmodel ON dash_tamu_profiltamumodel.Nik=dash_admin_pemasukankostmodel.Nik where month(tgl_pemasukan)=%s', [Bulan])
@@ -173,21 +177,52 @@ def PendapatanListView(request):
         profit = pemasukanTotal - pengeluaranTotal
         context['profit'] = profit
 
+        form = PengeluaranKostForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/')
+
     html_template = loader.get_template( 'dash_admin/keuangan/pendapatan.html' )
     return HttpResponse(html_template.render(context, request))
 
 #Keuangan >> log Pembayaran
 def LogPembayaranListView(request):
-    context = {}
-    context['segment'] = 'Keuangan'
-    if request.method == 'POST':
-        Bulan = request.POST['Bulan']
-        context['InfoPembayaran'] = PemasukanKostModel.objects.raw('SELECT dash_tamu_profiltamumodel.Nama_lengkap, dash_admin_pemasukankostmodel.* FROM dash_tamu_profiltamumodel INNER JOIN dash_admin_pemasukankostmodel ON dash_tamu_profiltamumodel.Nik=dash_admin_pemasukankostmodel.Nik where month(tgl_pemasukan)=%s', [Bulan])
-    else:
-        Bulan = False
+    template_name = None
+    context = None
 
-    html_template = loader.get_template( 'dash_admin/keuangan/logPembayaranView.html' )
-    return HttpResponse(html_template.render(context, request))
+    if request.user.is_authenticated:
+        profilTamu = ProfilTamuModel.objects.all()
+
+        context = {
+            'profilTamu' : profilTamu
+        }
+
+        context['segment'] = 'Pembayaran'
+
+        nama = None
+        if request.method == 'POST':
+            if 'NAMA' in request.POST:
+                nama = request.POST['NAMA']
+                context['invoice'] = PemasukanKostModel.objects.raw('SELECT dash_tamu_profiltamumodel.Nama_lengkap, dash_admin_pemasukankostmodel.* FROM dash_tamu_profiltamumodel INNER JOIN dash_admin_pemasukankostmodel ON dash_tamu_profiltamumodel.Nik=dash_admin_pemasukankostmodel.Nik WHERE dash_admin_pemasukankostmodel.Nik=%s', [nama])
+                cursor = connection.cursor()
+                cursor.execute('SELECT SUM(Jmlh_pemasukan) AS Total FROM dash_admin_pemasukankostmodel WHERE Nik=%s', [nama])
+                subtotal = cursor.fetchone()[0]
+                context['subtotal'] = subtotal
+            else:
+                nama = False
+
+        template_name = 'dash_admin/keuangan/logPembayaranView.html'
+    else:
+        template_name = 'auth/login.html'
+    
+    return render(request, template_name, context)
+
+class LogPembayaranDeleteView(DeleteView):
+    model = PemasukanKostModel
+    template_name = "dash_admin/dataTamu/profilTamu/profilTamuDelete.html"
+    context_object_name = 'ProfilTamu'
+    success_url = reverse_lazy('dashadmin:profiltamu-view')
 
 #KritikSaran
 class kritikSaranListView(ListView):

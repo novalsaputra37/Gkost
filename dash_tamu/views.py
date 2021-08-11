@@ -7,6 +7,7 @@ from django.http import HttpResponse
 
 #models
 from .models import ProfilTamuModel
+from dash_admin.models import KamarKostModel, PemasukanKostModel
 
 #form
 from .form import ProfilTamuForm,PaketKostForm,KritikSaranForm
@@ -16,11 +17,13 @@ from .form import ProfilTamuForm,PaketKostForm,KritikSaranForm
 def dashTamuView(request):
     Akun = request.user
     ProfilTamuModels = ProfilTamuModel.objects.filter(Nik=Akun)
-    # Statuskos = StatusKostModel.objects.raw('SELECT dash_admin_statuskostmodel.*, current_date() as tgl_sekarang, datediff(Waktu_out, current_date()) as selisih FROM dash_admin_statuskostmodel WHERE Nik= %s', [Akun])
-    # InfoPembayaran = InfoPembayaranModel.objects.filter(Nik=Akun)
+    Statuskos = KamarKostModel.objects.raw('SELECT dash_admin_kamarkostmodel.*, dash_tamu_paketkostmodel.*,datediff(Waktu_out, current_date()) as selisih FROM dash_admin_kamarkostmodel INNER JOIN dash_tamu_paketkostmodel ON dash_admin_kamarkostmodel.Nik=dash_tamu_paketkostmodel.Nik WHERE dash_admin_kamarkostmodel.Nik=%s', [Akun])
+    LogPembayaran = PemasukanKostModel.objects.filter(Nik=Akun)
 
     context = {
-        'DataTamu' : ProfilTamuModels
+        'DataTamu' : ProfilTamuModels,
+        'Statuskos' : Statuskos,
+        'LogPembayaran' : LogPembayaran
     }
     context['segment'] = 'dashboard'
   
