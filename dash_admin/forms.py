@@ -16,7 +16,8 @@ class KamarKostForm(forms.ModelForm):
         widgets = {
             'Nik' : forms.NumberInput(
                 attrs ={
-                    'class' : 'form-control',
+                    'id' : 'state',
+                    'class' : 'form-control w-100',
                     'placeholder' : 'Masukan NIK KTP',
                 }
             ),
@@ -24,7 +25,6 @@ class KamarKostForm(forms.ModelForm):
                 attrs ={
                     'class' : 'form-control',
                     'placeholder' : 'Masukan No_kamar',
-                    
                 }
             ),
             'Waktu_in' : forms.DateInput(
@@ -38,8 +38,11 @@ class KamarKostForm(forms.ModelForm):
             ),
             'Waktu_out' : forms.DateInput(
                 attrs ={
+                    'id' : 'birthday',
                     'class' : 'form-control',
-                    'type'  : 'date'
+                    'type'  : 'text',
+                    'data-datepicker' : "",
+                    'placeholder' : 'dd/mm/yyyy'
                 }
             ),
         }

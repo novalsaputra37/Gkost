@@ -5,21 +5,50 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.template import loader
 from django.http import HttpResponse, request
 from django.urls import reverse_lazy
+from django.urls import reverse
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView, DetailView
 from django.contrib import messages
 
+#mail
+from django.conf import settings
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+
+#pdf
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+
+#form
 from .forms import KamarKostForm, PemasukanKostForm, PengeluaranKostForm
 from dash_tamu.form import ProfilTamuForm
 
+#models
 from .models import KamarKostModel,PemasukanKostModel, PengeluaranKostModel
 from dash_tamu.models import ProfilTamuModel,PaketKostModel, KritikSaranModel
 from django.db import connection
 
 @login_required(login_url="/")
 def index(request):
-    
     context = {}
     context['segment'] = 'index'
+    context['JumalahTamu'] = ProfilTamuModel.objects.all().count()
+
+    cursor = connection.cursor()
+    cursor.execute('SELECT COUNT(*) FROM dash_admin_kamarkostmodel WHERE Waktu_out >= current_date()')
+    TamuAktif = cursor.fetchone()[0]
+    context['TamuAktif'] = TamuAktif
+
+    cursor = connection.cursor()
+    cursor.execute('SELECT SUM(Jmlh_pemasukan) AS Total FROM dash_admin_pemasukankostmodel WHERE YEAR(Tgl_pemasukan)= YEAR(NOW())')
+    totalTahun = cursor.fetchone()[0]
+    context['totalTahun'] = totalTahun
+
+    cursor = connection.cursor()
+    cursor.execute("SELECT SUM(Jmlh_pemasukan) AS Total FROM dash_admin_pemasukankostmodel WHERE CONCAT(YEAR(Tgl_pemasukan),'/',MONTH(Tgl_pemasukan))=CONCAT(YEAR(NOW()),'/',MONTH(NOW()))")
+    totalBulan = cursor.fetchone()[0]
+    context['totalBulan'] = totalBulan
     
     html_template = loader.get_template( 'dash_admin/dashboard.html' )
     return HttpResponse(html_template.render(context, request))
@@ -113,7 +142,7 @@ class KamarTamuListView(ListView):
     context_object_name = 'KamarTamu'
 
     def get_queryset(self):
-        self.queryset = self.model.objects.raw('SELECT dash_tamu_profiltamumodel.Nama_lengkap, dash_admin_kamarkostmodel.*, current_date() as tgl_sekarang, datediff(Waktu_out, current_date()) as selisih FROM dash_tamu_profiltamumodel INNER JOIN dash_admin_kamarkostmodel ON dash_tamu_profiltamumodel.Nik=dash_admin_kamarkostmodel.Nik ORDER BY `selisih` DESC')
+        self.queryset = self.model.objects.raw('SELECT dash_tamu_profiltamumodel.*, dash_admin_kamarkostmodel.*, current_date() as tgl_sekarang, datediff(Waktu_out, current_date()) as selisih FROM dash_tamu_profiltamumodel INNER JOIN dash_admin_kamarkostmodel ON dash_tamu_profiltamumodel.Nik=dash_admin_kamarkostmodel.Nik ORDER BY `selisih` DESC')
         return super().get_queryset()
 
     def get_context_data(self, **kwargs):
@@ -160,13 +189,11 @@ def PendapatanListView(request):
         cursor = connection.cursor()
         cursor.execute('SELECT SUM(Jmlh_pemasukan) AS Total FROM dash_admin_pemasukankostmodel where month(Tgl_pemasukan)=%s', [Bulan])
         pemasukanTotal = cursor.fetchone()[0]
-        print(pemasukanTotal)
         context['pemasukanTotal'] = pemasukanTotal
 
         cursor = connection.cursor()
         cursor.execute('SELECT SUM(jmlh_pengeluaran) AS Total FROM dash_admin_pengeluarankostmodel where month(Tgl_pengeluaran)=%s', [Bulan])
         pengeluaranTotal = cursor.fetchone()[0]
-        print(pengeluaranTotal)
         context['pengeluaranTotal'] = pengeluaranTotal
 
         if pemasukanTotal is None:
@@ -244,3 +271,39 @@ class KritikSaranDeleteView(DeleteView):
     template_name = "dash_admin/kritikSaran/kritikSaranDelete.html"
     context_object_name = 'kritikSaran'
     success_url = reverse_lazy('dashadmin:kritikSaran-view')
+
+def send_gmail(request, Email):
+    obj = ProfilTamuModel.objects.get(Email=Email)
+    print(obj.Email)
+    subject = 'cek sound'
+    massage = 'Tagihan kost'
+    to = obj.Email
+    html_content = render_to_string("dash_admin/email/emailTempate.html", {'title': 'test email', 'content' : massage })
+    text_content = strip_tags(html_content)
+
+    email = EmailMultiAlternatives(
+        subject,
+        text_content,
+        'gatotkacanetwork@gmail.com',
+        [to],
+    )
+    email.attach_alternative(html_content, 'text/html')
+    email.send()
+
+    return render(request, 'dash_admin/email/email.html')
+
+def render_pdf_view(request):
+    template_path = 'dash_admin/konfirmasi/pdf1.html'
+    context = {'myvar': 'this is your template context'}
+    # Create a Django response object, and specify content_type as pdf
+    response = HttpResponse(content_type='application/pdf')
+    template = get_template(template_path)
+    html = template.render(context)
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+       html, dest=response)
+    # if error then show some funy view
+    if pisa_status.err:
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response

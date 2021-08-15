@@ -55,13 +55,13 @@
               </div>
             </div>
 
-           
+
             <div class="col-sm col-lg-4">
               <dl class="row text-sm-right">
                 <dt class="col-6"><strong>Invoice No.</strong>
                 </dt>
                 <dd class="col-6">{{invoice.id|title}}</dd>
-                 {% if invoice.selisih >= 0 %}
+                {% if invoice.selisih >= 0 %}
                 <dt class="col-6"><strong>Date Issued:</strong>
                 </dt>
                 <dd class="col-6">{{invoice.Waktu_in|date:'d'|add:'-7'}}/{{invoice.Waktu_in|date:'M/Y'}}</dd>
@@ -121,19 +121,19 @@
                         Kamar No {{invoice.No_kamar|title}}
                       </th>
                       <td>
-                      {% if invoice.selisih >= 0 %}
+                        {% if invoice.selisih >= 0 %}
                         {{invoice.Waktu_in|date:'d M Y'}} - {{invoice.Bulan_in|date:'d M Y'}}
-                      {% else %}
+                        {% else %}
                         {{invoice.Waktu_out|date:'d M Y'}} - {{invoice.Bulan_out|date:'d M Y'}}
-                      {% endif %}
+                        {% endif %}
                       </td>
                       {% for PaketKost in PaketKost %}
                       <td>
                         {{PaketKost.Paket}}
                       </td>
-                      
+
                       <td>
-                      {% if PaketKost.Paket == '3' %}
+                        {% if PaketKost.Paket == '3' %}
                         Rp. 6.000.000
                       </td>
                     </tr>
@@ -173,188 +173,211 @@
                       {% elif PaketKost.Paket == '2'%}
                       Rp. 1.500.000
                       </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="d-flex justify-content-end text-right mb-4 py-4">
-                <div class="mt-4">
-                  <table class="table table-clear">
-                    <tbody>
-                      <tr>
-                        <td class="left">
-                          <strong>Subtotal</strong>
-                        </td>
-                        <td class="right">Rp. 1.500.000</td>
                       </tr>
-                      <tr>
-                        <td class="left">
-                          <strong>Discount (5%)</strong>
-                        </td>
-                        <td class="right">Rp. -75.000</td>
-                      </tr>
-                      <tr>
-                        <td class="left">
-                          <strong>PPN (10%)</strong>
-                        </td>
-                        <td class="right">Rp. 142.500</td>
-                      </tr>
-                      <tr>
-                        <td class="left">
-                          <strong>Total</strong>
-                        </td>
-                        <td class="right">
-                          <strong>Rp. 1.567.500</strong>
-                        </td>
-                      </tr>
-                      {% else %}
-                      Rp. 500.000
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="d-flex justify-content-end text-right mb-4 py-4">
-                <div class="mt-4">
-                  <table class="table table-clear">
-                    <tbody>
-                      <tr>
-                        <td class="left">
-                          <strong>Subtotal</strong>
-                        </td>
-                        <td class="right">Rp. 500.000</td>
-                      </tr>
-                      <tr>
-                        <td class="left">
-                          <strong>Discount (0%)</strong>
-                        </td>
-                        <td class="right">Rp. 0</td>
-                      </tr>
-                      <tr>
-                        <td class="left">
-                          <strong>PPN (10%)</strong>
-                        </td>
-                        <td class="right">Rp. 50.000</td>
-                      </tr>
-                      <tr>
-                        <td class="left">
-                          <strong>Total</strong>
-                        </td>
-                        <td class="right">
-                          <strong>Rp. 550.000</strong>
-                        </td>
-                      </tr>
-                      {% endif %}
-                      {% endfor %}
                     </tbody>
                   </table>
                 </div>
-              </div>
+                <div class="d-flex justify-content-end text-right mb-4 py-4">
+                  <div class="mt-4">
+                    <table class="table table-clear">
+                      <tbody>
+                        <tr>
+                          <td class="left">
+                            <strong>Subtotal</strong>
+                          </td>
+                          <td class="right">Rp. 1.500.000</td>
+                        </tr>
+                        <tr>
+                          <td class="left">
+                            <strong>Discount (5%)</strong>
+                          </td>
+                          <td class="right">Rp. -75.000</td>
+                        </tr>
+                        <tr>
+                          <td class="left">
+                            <strong>PPN (10%)</strong>
+                          </td>
+                          <td class="right">Rp. 142.500</td>
+                        </tr>
+                        <tr>
+                          <td class="left">
+                            <strong>Total</strong>
+                          </td>
+                          <td class="right">
+                            <strong>Rp. 1.567.500</strong>
+                          </td>
+                        </tr>
+                        {% else %}
+                        Rp. 500.000
+                        </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="d-flex justify-content-end text-right mb-4 py-4">
+                    <div class="mt-4">
+                      <table class="table table-clear">
+                        <tbody>
+                          <tr>
+                            <td class="left">
+                              <strong>Subtotal</strong>
+                            </td>
+                            <td class="right">Rp. 500.000</td>
+                          </tr>
+                          <tr>
+                            <td class="left">
+                              <strong>Discount (0%)</strong>
+                            </td>
+                            <td class="right">Rp. 0</td>
+                          </tr>
+                          <tr>
+                            <td class="left">
+                              <strong>PPN (10%)</strong>
+                            </td>
+                            <td class="right">Rp. 50.000</td>
+                          </tr>
+                          <tr>
+                            <td class="left">
+                              <strong>Total</strong>
+                            </td>
+                            <td class="right">
+                              <strong>Rp. 550.000</strong>
+                            </td>
+                          </tr>
+                          {% endif %}
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
 
-              <h4>Payments to:</h4>
-              <span>payment@volt.com</span>
+                  <h4>Payments to:</h4>
+                  <span>payment@volt.com</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="d-grid gap-2 col-4">
+            <br>
+            <a
+              href="/dashadmin/pdf"
+              class="btn btn-primary"
+              target="_blank"
+            >
+              Download
+              <svg
+                class="icon icon-xs ms-2"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M2 9.5A3.5 3.5 0 005.5 13H9v2.586l-1.293-1.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 15.586V13h2.5a4.5 4.5 0 10-.616-8.958 4.002 4.002 0 10-7.753 1.977A3.5 3.5 0 002 9.5zm9 3.5H9V8a1 1 0 012 0v5z"
+                  clip-rule="evenodd"
+                /></svg>
+            </a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <!-- Form -->
+      <div class="col-12 col-xl-4">
+        <div class="row">
+          <div class="col-12 mb-4"><br>
+            <div class="card shadow border-0 text-center p-0">
+              <div class="card-body pb-5">
+                <form
+                  name='NAMA'
+                  method='POST'
+                >
+                  {% csrf_token %}
+                  <label
+                    for="state"
+                    class="my-1 mr-2"
+                  >Nama Pembayar: </label>
+                  <select
+                    class='form-control'
+                    name="NAMA"
+                    id="state"
+                    class="w-100"
+                    onChange="form.submit();"
+                  >
+                    <option>----- Pilih Nama -----</option>
+                    {% for profilTamu in profilTamu %}
+                    <option value={{profilTamu.Nik}}>{{profilTamu.Nama_lengkap|title}}</option>
+                    {% endfor %}
+                  </select>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 mb-4">
+            <div class="card shadow border-0 text-center p-0">
+              <div class="card-body pb-5">
+
+                {% for idProfil in idProfil %}
+                {{idProfil.id}}
+                {% endfor %}
+                <form method='POST'>
+                  {% csrf_token %}
+                  <div class="form-group">
+                    <input
+                      type="hidden"
+                      class="form-control"
+                      name="{{form.Nik.name}}"
+                      id="{{form.Nik.id_for_label}}"
+                      value="{{Tagihan}}"
+                    >
+                  </div>
+
+                  <div class="form-group">
+                    <label for="{{form.Tgl_pemasukan.id_for_label}}">Tanggal Pembayaran:</label>
+                    {{form.Tgl_pemasukan}}
+                  </div>
+
+                  <div class="form-group">
+                    <label for="{{form.Jmlh_pemasukan.id_for_label}}">Jumlah Setoran:</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="{{form.Jmlh_pemasukan.name}}"
+                      id="{{form.Jmlh_pemasukan.id_for_label}}"
+                      {% for PaketKost in PaketKost %}
+                      {% if PaketKost.Paket == '3' %}
+                      value="5940000"
+                      {% elif PaketKost.Paket == '2' %}
+                      value="1567500"
+                      {% else %}
+                      value="550000"
+                      {% endif %}
+                      {% endfor %}
+                      readonly
+                    >
+                  </div>
+
+                  <div class="form-group">
+                    <label for="{{form.Keterangan.id_for_label}}">{{form.Keterangan.label}}:</label>
+                    {{form.Keterangan}}
+                  </div>
+                  <br>
+                  <button
+                    class='btn btn-primary'
+                    type='submit'
+                  >Submit</button>
+                </form>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    {% endfor %}
-  </div>
 
-  <!-- Form -->
-  <div class="col-12 col-xl-4">
-    <div class="row">
-      <div class="col-12 mb-4"><br>
-        <div class="card shadow border-0 text-center p-0">
-          <div class="card-body pb-5">
-            <form
-              name='NAMA'
-              method='POST'
-             
-            >
-              {% csrf_token %}
-              <label for="state" class="my-1 mr-2">Nama Pembayar: </label>
-              <select
-                class='form-control'
-                name="NAMA"
-                id="state"
-                class="w-100"
-                onChange="form.submit();"
-              >
-                <option>----- Pilih Nama -----</option>
-                {% for profilTamu in profilTamu %}
-                <option value={{profilTamu.Nik}}>{{profilTamu.Nama_lengkap|title}}</option>
-                {% endfor %}
-              </select>
-            </form>
-          </div>
-        </div>
-      </div>
+    {% endblock content %}
 
-      <div class="col-12 mb-4">
-        <div class="card shadow border-0 text-center p-0">
-          <div class="card-body pb-5">
+    <!-- Specific Page JS goes HERE  -->
+    {% block javascripts %}
 
-          {% for idProfil in idProfil %}
-          {{idProfil.id}}
-          {% endfor %}
-            <form method='POST'>
-              {% csrf_token %}
-              <div class="form-group">
-                <input
-                  type="hidden"
-                  class="form-control"
-                  name="{{form.Nik.name}}"
-                  id="{{form.Nik.id_for_label}}"
-                  value="{{Tagihan}}"
-                >
-              </div>
-
-              <div class="form-group">
-                <label for="{{form.Tgl_pemasukan.id_for_label}}">Tanggal Pembayaran:</label>
-                {{form.Tgl_pemasukan}}
-              </div>
-
-              <div class="form-group">
-                <label for="{{form.Jmlh_pemasukan.id_for_label}}">Jumlah Setoran:</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="{{form.Jmlh_pemasukan.name}}"
-                  id="{{form.Jmlh_pemasukan.id_for_label}}"
-                  {% for PaketKost in PaketKost %}
-                    {% if PaketKost.Paket == '3' %}
-                      value="5940000"
-                    {% elif PaketKost.Paket == '2' %}
-                      value="1567500"
-                    {% else %}
-                      value="550000"
-                    {% endif %}
-                  {% endfor %}
-                  readonly
-                >
-              </div>
-
-              <div class="form-group">
-                <label for="{{form.Keterangan.id_for_label}}">{{form.Keterangan.label}}:</label>
-                {{form.Keterangan}}
-              </div>
-              <br>
-              <button
-                class='btn btn-primary'
-                type='submit'
-              >Submit</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-{% endblock content %}
-
-<!-- Specific Page JS goes HERE  -->
-{% block javascripts %}
-
-{% endblock javascripts %}
+    {% endblock javascripts %}

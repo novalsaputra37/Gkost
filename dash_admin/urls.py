@@ -14,7 +14,9 @@ from .views import (KomfirmasiTamuBaruView,
                     KritikSaranDeleteView,
                     LogPembayaranListView,
                     PendapatanListView,
-                    LogPembayaranDeleteView,)
+                    LogPembayaranDeleteView,
+                    send_gmail,
+                    render_pdf_view,)
 
 app_name = 'dashadmin'
 urlpatterns = [
@@ -44,6 +46,10 @@ urlpatterns = [
     path('keuangan/logpembayaran/delete/<int:pk>', LogPembayaranDeleteView.as_view(), name='LogPembayaran-delete'),
 
     #KritikSaran
-     path('kritik/', kritikSaranListView.as_view(), name='kritikSaran-view'),
-     path('kritik/delete/<int:pk>', KritikSaranDeleteView.as_view(), name='kritikSaran-delete'),
+    path('kritik/', kritikSaranListView.as_view(), name='kritikSaran-view'),
+    path('kritik/delete/<int:pk>', KritikSaranDeleteView.as_view(), name='kritikSaran-delete'),
+
+    #Tagihan
+    path('email/<str:Email>', send_gmail, name='send_mail'),
+    path('pdf/', render_pdf_view, name='test-view'),
 ]
