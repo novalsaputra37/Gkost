@@ -112,18 +112,20 @@
     <div class="card border-0 shadow">
       <div class="card-body">
         <div class="row d-block d-xxl-flex align-items-center">
-        <div class="col-md-8 ">
-          <center><h2 class="fs-6 fw-normal mb-1 text-gray-400">Gender</h2></center>
-          <div id="pie-chart-apex"></div>
-          {% comment %} <div class="col-12 col-xxl-8 px-xxl-0 mb-3 mb-xxl-0"> {% endcomment %}
-          </div>
+            <center>
+              <h2 class="fs-6 fw-normal mb-1 text-gray-400">Gender</h2>
+            </center>
+            <div id="pie-chart-apex"></div>
         </div>
       </div>
     </div>
   </div>
 
 </div>
+{{ data_Main_chart | json_script:"data-Main-chart" }}
+{{ gender | json_script:"gender" }}
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+{% endblock javascripts %}

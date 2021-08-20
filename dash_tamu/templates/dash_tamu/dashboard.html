@@ -1,60 +1,108 @@
 {% extends "base/base-volt.html" %}
+{% load humanize %}
 
-{% block title %} Dashboard {% endblock %}
+{% block title %} DashboardTamu {% endblock title %}
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
 <div class="row justify-content-md-center">
+  <!-- Card Status -->
+  {% for Statuskos in Statuskos %}
+  {% if Statuskos.selisih >= 0 %}
   <div class="col-12 col-sm-6 col-xl-4 mb-4">
     <div class="card border-light shadow-sm">
       <div class="card-body">
         <div class="row d-block d-xl-flex align-items-center">
           <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
-            <div class=" me-4 me-sm-0"><svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" color="#10b981" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
-              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+            <div class=" me-4 me-sm-0"><svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="80"
+                height="80"
+                fill="currentColor"
+                color="#10b981"
+                class="bi bi-check-circle-fill"
+                viewBox="0 0 16 16"
+              >
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
               </svg></div>
-              <div class="d-sm-none">
-                <h2 class="h5">Status</h2>
-                {% for Statuskos in Statuskos %}
-                {% if Statuskos.selisih >= 0  %}
-                <h3 class="mb-1 text-success">AKTIF</h3>
-                {% else %}
-                <h3 class="mb-1 text-danger">TIDAK AKTIF</h3>
-                {% endif %}
-                {% endfor %}
-              </div>
+            <div class="d-sm-none">
+              <h2 class="h5">Status</h2>
+              <h3 class="mb-1 text-success">AKTIF</h3>
+            </div>
           </div>
           <div class="col-12 col-xl-7 px-xl-0">
             <div class="d-none d-sm-block">
               <h2 class="h5">Status</h2>
-              {% for Statuskos in Statuskos %}
-              {% if Statuskos.selisih >= 0  %}
               <h3 class="mb-1 text-success">AKTIF</h3>
-              {% else %}
-              <h3 class="mb-1 text-danger">TIDAK AKTIF</h3>
-              {% endif %}
-              {% endfor %}
             </div>
-            {% for Statuskos in Statuskos %}
             <small>{{Statuskos.Waktu_in|date:"d F Y"}} - {{Statuskos.Waktu_out|date:"d F Y"}} </small>
-            {% endfor %}
           </div>
         </div>
       </div>
     </div>
   </div>
-
+  {% else %}
   <div class="col-12 col-sm-6 col-xl-4 mb-4">
     <div class="card border-light shadow-sm">
       <div class="card-body">
         <div class="row d-block d-xl-flex align-items-center">
           <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
-            <div class="me-4 me-sm-0"><svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" color="#111827" class="bi bi-house" viewBox="0 0 16 16">
-  <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
-  <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
-</svg></span></div>
+            <div class=" me-4 me-sm-0"><svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="80"
+                height="80"
+                fill="currentColor"
+                color="#e11d48"
+                class="bi bi-exclamation-triangle-fill"
+                viewBox="0 0 16 16"
+              >
+                <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+              </svg></div>
+            <div class="d-sm-none">
+              <h2 class="h5">Status</h2>
+              <h3 class="mb-1 text-danger">Lakukan Pembayaran</h3>
+            </div>
+          </div>
+          <div class="col-12 col-xl-7 px-xl-0">
+            <div class="d-none d-sm-block">
+              <h2 class="h5">Status</h2>
+              <h3 class="mb-1 text-danger">Lakukan Pembayaran</h3>
+            </div>
+            <small>{{Statuskos.Waktu_in|date:"d F Y"}} - {{Statuskos.Waktu_out|date:"d F Y"}} </small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  {% endfor %}
+
+  <!-- card No kamar -->
+  <div class="col-12 col-sm-6 col-xl-4 mb-4">
+    <div class="card border-light shadow-sm">
+      <div class="card-body">
+        <div class="row d-block d-xl-flex align-items-center">
+          <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+            <div class="me-4 me-sm-0"><svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="80"
+                height="80"
+                fill="currentColor"
+                color="#111827"
+                class="bi bi-house"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"
+                />
+                <path
+                  fill-rule="evenodd"
+                  d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"
+                />
+              </svg></span></div>
             <div class="d-sm-none">
               <h2 class="h5">No Kamar</h2>
               {% for Statuskos in Statuskos %}
@@ -76,15 +124,23 @@
     </div>
   </div>
 
+  <!-- Card Paket Kost -->
   <div class="col-12 col-sm-6 col-xl-4 mb-4">
     <div class="card border-light shadow-sm">
       <div class="card-body">
         <div class="row d-block d-xl-flex align-items-center">
           <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
-            <div class="me-4 me-sm-0"><svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor"  class="bi bi-award" viewBox="0 0 16 16">
-  <path d="M9.669.864 8 0 6.331.864l-1.858.282-.842 1.68-1.337 1.32L2.6 6l-.306 1.854 1.337 1.32.842 1.68 1.858.282L8 12l1.669-.864 1.858-.282.842-1.68 1.337-1.32L13.4 6l.306-1.854-1.337-1.32-.842-1.68L9.669.864zm1.196 1.193.684 1.365 1.086 1.072L12.387 6l.248 1.506-1.086 1.072-.684 1.365-1.51.229L8 10.874l-1.355-.702-1.51-.229-.684-1.365-1.086-1.072L3.614 6l-.25-1.506 1.087-1.072.684-1.365 1.51-.229L8 1.126l1.356.702 1.509.229z"/>
-  <path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1 4 11.794z"/>
-</svg></div>
+            <div class="me-4 me-sm-0"><svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="80"
+                height="80"
+                fill="currentColor"
+                class="bi bi-award"
+                viewBox="0 0 16 16"
+              >
+                <path d="M9.669.864 8 0 6.331.864l-1.858.282-.842 1.68-1.337 1.32L2.6 6l-.306 1.854 1.337 1.32.842 1.68 1.858.282L8 12l1.669-.864 1.858-.282.842-1.68 1.337-1.32L13.4 6l.306-1.854-1.337-1.32-.842-1.68L9.669.864zm1.196 1.193.684 1.365 1.086 1.072L12.387 6l.248 1.506-1.086 1.072-.684 1.365-1.51.229L8 10.874l-1.355-.702-1.51-.229-.684-1.365-1.086-1.072L3.614 6l-.25-1.506 1.087-1.072.684-1.365 1.51-.229L8 1.126l1.356.702 1.509.229z" />
+                <path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1 4 11.794z" />
+              </svg></div>
             <div class="d-sm-none">
               <h2 class="h5">Paket Kost</h2>
               {% for Statuskos in Statuskos %}
@@ -121,6 +177,8 @@
   </div>
 
 </div>
+
+<!-- Table Biodata -->
 <div class="row">
   <div class="col-12 col-xl-8 mb-4">
     <div class="row">
@@ -189,7 +247,7 @@
                   No_tlp
                 </th>
                 <td>
-                  +62{{DataTamu.No_tlp}}
+                  +62 {{DataTamu.No_tlp}}
                 </td>
               </tr>
               <tr>
@@ -216,6 +274,7 @@
     </div>
   </div>
 
+<!-- Table Log Pembayaran -->
   <div class="col-12 col-xl-4 mb-4">
     <div class="row">
       <div class="col-12 col-xl-12 mb-4">
@@ -237,7 +296,7 @@
                   </div>
                   <div class="col-auto ms--2">
                     <h4 class="h6 mb-0">
-                      <a href="#">Rp. {{LogPembayaran.Jmlh_pemasukan}}</a>
+                      <a href="#">Rp. {{LogPembayaran.Jmlh_pemasukan|intcomma}}</a>
                     </h4>
                     <div class="d-flex align-items-center">
                       <div class="bg-success dot rounded-circle me-1"></div>

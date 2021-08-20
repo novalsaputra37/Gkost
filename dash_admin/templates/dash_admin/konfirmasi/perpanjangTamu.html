@@ -122,7 +122,7 @@
                       </th>
                       <td>
                         {% if invoice.selisih >= 0 %}
-                        {{invoice.Waktu_in|date:'d M Y'}} - {{invoice.Bulan_in|date:'d M Y'}}
+                        {{invoice.Waktu_in|date:'d M Y'}} - {{invoice.Waktu_out|date:'d M Y'}}
                         {% else %}
                         {{invoice.Waktu_out|date:'d M Y'}} - {{invoice.Bulan_out|date:'d M Y'}}
                         {% endif %}

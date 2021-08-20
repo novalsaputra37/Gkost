@@ -29,20 +29,14 @@ class KamarKostForm(forms.ModelForm):
             ),
             'Waktu_in' : forms.DateInput(
                 attrs ={
-                    'id' : 'birthday',
                     'class' : 'form-control',
-                    'type'  : 'text',
-                    'data-datepicker' : "",
-                    'placeholder' : 'dd/mm/yyyy'
+                    'type'  : 'date',
                 }
             ),
             'Waktu_out' : forms.DateInput(
                 attrs ={
-                    'id' : 'birthday',
                     'class' : 'form-control',
-                    'type'  : 'text',
-                    'data-datepicker' : "",
-                    'placeholder' : 'dd/mm/yyyy'
+                    'type'  : 'date',
                 }
             ),
         }

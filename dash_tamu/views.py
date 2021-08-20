@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from django.views.generic import FormView,TemplateView
+from django.views.generic import FormView, TemplateView, ListView
 from django.views.generic.edit import CreateView
 from django.template import loader
 from django.http import HttpResponse
@@ -60,9 +60,17 @@ class PeraturanView(TemplateView):
     template_name ='dash_tamu/peraturankost/peraturankost.html'
 
 #harga list
-class PaketKostDashView(TemplateView):
-    template_name ='dash_tamu/paketKost.html'
+class PaketKostDashView(ListView):
+    model = ProfilTamuModel
+    template_name ='dash_tamu/Tagihan/tagihan.html'
+    context_object_name = 'invoice'
 
+    def get_queryset(self):
+        Akun = self.request.user
+        print(Akun)
+        self.queryset = self.model.objects.raw('SELECT dash_tamu_profiltamumodel.*, dash_admin_kamarkostmodel.*, dash_tamu_paketkostmodel.*, CASE WHEN dash_tamu_paketkostmodel.Paket = 3 THEN dash_admin_kamarkostmodel.Waktu_out + INTERVAL 12 MONTH WHEN dash_tamu_paketkostmodel.Paket = 2 THEN dash_admin_kamarkostmodel.Waktu_out + INTERVAL 3 MONTH WHEN dash_tamu_paketkostmodel.Paket = 1 THEN dash_admin_kamarkostmodel.Waktu_out + INTERVAL 1 MONTH END AS Bulan_out, dash_admin_kamarkostmodel.Waktu_in + INTERVAL 1 MONTH AS Bulan_in, datediff(Waktu_out, current_date()) as selisih FROM dash_tamu_profiltamumodel INNER JOIN dash_admin_kamarkostmodel ON dash_tamu_profiltamumodel.Nik=dash_admin_kamarkostmodel.Nik INNER JOIN dash_tamu_paketkostmodel ON dash_admin_kamarkostmodel.Nik=dash_tamu_paketkostmodel.Nik WHERE dash_tamu_profiltamumodel.Nik =%s', [Akun])
+        return super().get_queryset()
+        
 #Kritik & Saran
 class KritikSaranView(CreateView):
     form_class = KritikSaranForm

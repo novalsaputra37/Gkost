@@ -12,7 +12,7 @@ urlpatterns = [
     path('register/paketkost', views.PaketKostView.as_view(), name='register-paketkost'),
 
     #daftarpaketkost
-    path('paket/', views.PaketKostDashView.as_view(), name='paket'),
+    path('tagihan/', views.PaketKostDashView.as_view(), name='paket'),
     #peraturanKost
     path('peraturan/', views.PeraturanView.as_view(), name='peraturan'),
     #Kritik

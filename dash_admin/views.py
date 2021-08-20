@@ -1,16 +1,14 @@
-from django import template
+import json
+import jsonpickle
 from django.contrib.auth.decorators import login_required
 from django.http.response import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, redirect
 from django.template import loader
-from django.http import HttpResponse, request
+from django.http import HttpResponse
 from django.urls import reverse_lazy
-from django.urls import reverse
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView, DetailView
-from django.contrib import messages
 
 #mail
-from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
@@ -32,6 +30,43 @@ from django.db import connection
 @login_required(login_url="/")
 def index(request):
     context = {}
+
+    #Pendapatan Chart
+    data = []
+    count = 0
+    while (count < 13):
+        cursor = connection.cursor()
+        cursor.execute('SELECT SUM(Jmlh_pemasukan) AS Total FROM dash_admin_pemasukankostmodel where month(Tgl_pemasukan)=%s', [count])
+        bulan_1 = cursor.fetchone()[0]
+        if bulan_1 == None:
+            bulan_1 = 0
+        float_str = float(bulan_1)
+        bulan_1 = int(float_str)
+        data.append(bulan_1)
+        count = count + 1
+
+    data.pop(0)
+    context['data_Main_chart'] = data
+
+    #gender Chart
+    gender = []
+
+    cursor = connection.cursor()
+    cursor.execute('SELECT COUNT(Jenis_kelamin) FROM `dash_tamu_profiltamumodel` WHERE Jenis_kelamin="pria"')
+    pria = cursor.fetchone()[0]
+
+    cursor = connection.cursor()
+    cursor.execute('SELECT COUNT(Jenis_kelamin) FROM `dash_tamu_profiltamumodel` WHERE Jenis_kelamin="wanita"')
+    wanita = cursor.fetchone()[0]
+
+    # jlmh_tamu = ProfilTamuModel.objects.all().count()
+    # pria = pria/jlmh_tamu*100
+    gender.append(pria)
+    # wanita = wanita/jlmh_tamu*100
+    gender.append(wanita)
+    context['gender'] = gender
+    print(gender)
+
     context['segment'] = 'index'
     context['JumalahTamu'] = ProfilTamuModel.objects.all().count()
 

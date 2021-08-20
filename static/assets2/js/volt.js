@@ -140,6 +140,9 @@ d.addEventListener("DOMContentLoaded", function(event) {
     // Apex Charts
 
     //Main Chart
+    const data_chart = JSON.parse(document.getElementById('data-Main-chart').textContent);
+    console.log(data_chart)
+
     var options = {
         chart: {
             height: 420,
@@ -196,7 +199,7 @@ d.addEventListener("DOMContentLoaded", function(event) {
         },
         series: [{
             name: "Rp",
-            data: [1000000, 2000000, 78, 45, 19, 53, 60, 60, 60, 60, 60]
+            data: data_chart
         }],
         markers: {
             size: 5,
@@ -207,7 +210,7 @@ d.addEventListener("DOMContentLoaded", function(event) {
             }
         },
         xaxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
             labels: {
                 style: {
                     fontSize: '12px',
@@ -383,9 +386,11 @@ d.addEventListener("DOMContentLoaded", function(event) {
             },
         },
     };
+    const gender = JSON.parse(document.getElementById('gender').textContent);
+    console.log(gender)
 
     var optionsPieChart = {
-        series: [44, 55],
+        series: gender,
         chart: {
             type: 'pie',
             height: 360,
@@ -419,15 +424,15 @@ d.addEventListener("DOMContentLoaded", function(event) {
                 fontFamily: 'Inter',
             },
             y: {
-                formatter: function (val) {
-                    return "$ " + val + "k"
+                formatter: function(val) {
+                    return  val + " tamu"
                 }
             }
         },
     };
 
-    
-    
+
+
     var pieChartEl = document.getElementById('pie-chart-apex');
     if (pieChartEl) {
         var pieChart = new ApexCharts(pieChartEl, optionsPieChart);
@@ -849,19 +854,58 @@ d.addEventListener("DOMContentLoaded", function(event) {
                 },
                 applyData: 'visitors',
                 values: {
-                    US: { visitors: 272109, change: 4.73 },
-                    CA: { visitors: 160064, change: 11.09 },
-                    DE: { visitors: 120048, change: -2.3 },
-                    GB: { visitors: 110048, change: 3.3 },
-                    FR: { visitors: 100048, change: 1.3 },
-                    ES: { visitors: 90048, change: 1.5 },
-                    JP: { visitors: 56022, change: 3.5 },
-                    IT: { visitors: 48019, change: 1 },
-                    NL: { visitors: 40016, change: 2 },
-                    RU: { visitors: 30016, change: 3.4 },
-                    CN: { visitors: 50016, change: 6 },
-                    IN: { visitors: 140016, change: 2 },
-                    BR: { visitors: 40016, change: 5 },
+                    US: {
+                        visitors: 272109,
+                        change: 4.73
+                    },
+                    CA: {
+                        visitors: 160064,
+                        change: 11.09
+                    },
+                    DE: {
+                        visitors: 120048,
+                        change: -2.3
+                    },
+                    GB: {
+                        visitors: 110048,
+                        change: 3.3
+                    },
+                    FR: {
+                        visitors: 100048,
+                        change: 1.3
+                    },
+                    ES: {
+                        visitors: 90048,
+                        change: 1.5
+                    },
+                    JP: {
+                        visitors: 56022,
+                        change: 3.5
+                    },
+                    IT: {
+                        visitors: 48019,
+                        change: 1
+                    },
+                    NL: {
+                        visitors: 40016,
+                        change: 2
+                    },
+                    RU: {
+                        visitors: 30016,
+                        change: 3.4
+                    },
+                    CN: {
+                        visitors: 50016,
+                        change: 6
+                    },
+                    IN: {
+                        visitors: 140016,
+                        change: 2
+                    },
+                    BR: {
+                        visitors: 40016,
+                        change: 5
+                    },
                     // ...
                 }
             }
@@ -871,7 +915,9 @@ d.addEventListener("DOMContentLoaded", function(event) {
     // Dropzone
     if (d.querySelector('myDropzone')) {
         // Dropzone class:
-        var myDropzone = new Dropzone("div#myId", { url: "/file/post" });
+        var myDropzone = new Dropzone("div#myId", {
+            url: "/file/post"
+        });
     }
 
     // Full Calendar
@@ -962,14 +1008,22 @@ d.addEventListener("DOMContentLoaded", function(event) {
         var addNewEventModalEl = d.getElementById('modal-new-event');
         var addNewEventModal = new bootstrap.Modal(addNewEventModalEl);
         var newEventTitleInput = d.getElementById('eventTitle');
-        var newEventStartDatepicker = new Datepicker(d.getElementById('dateStart'), { buttonClass: 'btn' });
-        var newEventEndDatepicker = new Datepicker(d.getElementById('dateEnd'), { buttonClass: 'btn' });
+        var newEventStartDatepicker = new Datepicker(d.getElementById('dateStart'), {
+            buttonClass: 'btn'
+        });
+        var newEventEndDatepicker = new Datepicker(d.getElementById('dateEnd'), {
+            buttonClass: 'btn'
+        });
 
         var editEventModalEl = d.getElementById('modal-edit-event');
         var editEventModal = new bootstrap.Modal(editEventModalEl);
         var editEventTitleInput = d.getElementById('eventTitleEdit');
-        var editEventStartDatepicker = new Datepicker(d.getElementById('dateStartEdit'), { buttonClass: 'btn' });
-        var editEventEndDatepicker = new Datepicker(d.getElementById('dateEndEdit'), { buttonClass: 'btn' });
+        var editEventStartDatepicker = new Datepicker(d.getElementById('dateStartEdit'), {
+            buttonClass: 'btn'
+        });
+        var editEventEndDatepicker = new Datepicker(d.getElementById('dateEndEdit'), {
+            buttonClass: 'btn'
+        });
 
         // current id selection
         var currentId = null;
@@ -1191,7 +1245,9 @@ d.addEventListener("DOMContentLoaded", function(event) {
                 </a>
             `;
 
-            var marker = L.marker(listing.latLng, { icon: icon }).addTo(mapListings);
+            var marker = L.marker(listing.latLng, {
+                icon: icon
+            }).addTo(mapListings);
             marker.bindPopup(popupHtml);
         });
     }
@@ -1242,8 +1298,12 @@ d.addEventListener("DOMContentLoaded", function(event) {
     // Pricing countup
     var billingSwitchEl = d.getElementById('billingSwitch');
     if (billingSwitchEl) {
-        const countUpStandard = new countUp.CountUp('priceStandard', 99, { startVal: 199 });
-        const countUpPremium = new countUp.CountUp('pricePremium', 199, { startVal: 299 });
+        const countUpStandard = new countUp.CountUp('priceStandard', 99, {
+            startVal: 199
+        });
+        const countUpPremium = new countUp.CountUp('pricePremium', 199, {
+            startVal: 299
+        });
 
         billingSwitchEl.addEventListener('change', function() {
             if (billingSwitch.checked) {
