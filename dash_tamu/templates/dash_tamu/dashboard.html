@@ -288,7 +288,7 @@
           </div>
           <div class="card-body">
             <ul class="list-group list-group-flush list my--3">
-              {% for LogPembayaran in LogPembayaran %}
+              {% for LogPembayaran in LogPembayaran|slice:":3" %}
               <li class="list-group-item px-0">
                 <div class="row align-items-center">
                   <div class="col-auto">
@@ -330,6 +330,18 @@
           </div>
         </div>
       </div>
+
+      <div class="col-12 col-xl-12 mb-4">
+        <div class="card border-0 shadow">
+          <div class="card-header border-bottom d-flex align-items-center justify-content-between">
+            <h2 class="fs-5 fw-bold mb-0">Note :</h2>
+          </div>
+          <div class="card-body">
+            Jika ingin mengubah paket kost bisa hubungi pemilik kost hub : 081903874977
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>

@@ -1,0 +1,78 @@
+{% extends "base/base-volt.html" %}
+
+{% block title %} Dashboard - LogPembayaranDash {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+{% load humanize %}
+<div class="col-12 col-xl-7 col-xxl-8 mb-4">
+    <div class="row">
+      <div class="col-12 mb-4">
+        <div class="card border-0 shadow">
+          <div class="card-header">
+            <div class="row align-items-center">
+              <div class="col">
+              {% for obj in obj|slice:":1" %}
+                <h2 class="fs-5 fw-bold mb-0">Log Pembayaran Tahun {{obj.Tgl_pemasukan|date:"Y"}}</h2>
+                {% endfor %}
+              </div>
+              <div class="col text-end"><a
+                  href="./traffic-sources.html"
+                  class="btn btn-sm btn-primary"
+                >Print</a></div>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
+                <tr>
+                  <th
+                    class="border-bottom"
+                    scope="col"
+                  >No</th>
+                  <th
+                    class="border-bottom"
+                    scope="col"
+                  >NAMA</th>
+                  <th
+                    class="border-bottom"
+                    scope="col"
+                  >TGL_PEMBAYARAN</th>
+                  <th
+                    class="border-bottom"
+                    scope="col"
+                  >JMLH_DIBAYARAN</th>
+                  <th
+                    class="border-bottom"
+                    scope="col"
+                  >KETERANGAN</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for obj in obj %}
+                <tr>
+                  <th
+                    class="text-gray-900"
+                    scope="row"
+                  >{{forloop.counter}}</th>
+                  <td class="fw-bolder text-gray-500">{{obj.Nama_lengkap}}</td>
+                  <td class="fw-bolder text-gray-500">{{obj.Tgl_pemasukan|date:"d F Y"}}</td>
+                  <td class="fw-bolder text-gray-500">Rp. {{obj.Jmlh_pemasukan|intcomma}}</td>
+                  <td class="fw-bolder text-gray-500">{{obj.Keterangan}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

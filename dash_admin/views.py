@@ -1,5 +1,3 @@
-import json
-import jsonpickle
 from django.contrib.auth.decorators import login_required
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -7,6 +5,7 @@ from django.template import loader
 from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView, DetailView
+import datetime
 
 #mail
 from django.core.mail import EmailMultiAlternatives
@@ -31,12 +30,21 @@ from django.db import connection
 def index(request):
     context = {}
 
+    TimeNow = datetime.datetime.now().strftime('%Y')
+    context['TimeNow'] = TimeNow
+
+    #Pendapatan Tahun Sekarang
+    cursor = connection.cursor()
+    cursor.execute('SELECT SUM(Jmlh_pemasukan) AS Total FROM dash_admin_pemasukankostmodel WHERE YEAR(Tgl_pemasukan)= YEAR(NOW())')
+    PendapatanTahunIni = cursor.fetchone()[0]
+    context['PendapatanTahunIni'] = PendapatanTahunIni
+
     #Pendapatan Chart
     data = []
     count = 0
     while (count < 13):
         cursor = connection.cursor()
-        cursor.execute('SELECT SUM(Jmlh_pemasukan) AS Total FROM dash_admin_pemasukankostmodel where month(Tgl_pemasukan)=%s', [count])
+        cursor.execute("select SUM(Jmlh_pemasukan) AS Total from dash_admin_pemasukankostmodel where month(Tgl_pemasukan)=%s and year(Tgl_pemasukan) =%s", [count, TimeNow])
         bulan_1 = cursor.fetchone()[0]
         if bulan_1 == None:
             bulan_1 = 0
@@ -59,34 +67,63 @@ def index(request):
     cursor.execute('SELECT COUNT(Jenis_kelamin) FROM `dash_tamu_profiltamumodel` WHERE Jenis_kelamin="wanita"')
     wanita = cursor.fetchone()[0]
 
-    # jlmh_tamu = ProfilTamuModel.objects.all().count()
-    # pria = pria/jlmh_tamu*100
     gender.append(pria)
-    # wanita = wanita/jlmh_tamu*100
     gender.append(wanita)
     context['gender'] = gender
-    print(gender)
 
     context['segment'] = 'index'
     context['JumalahTamu'] = ProfilTamuModel.objects.all().count()
 
+    #tamu daftar chart
+    tamu = []
+    count = 0
+    while (count < 13):
+        cursor = connection.cursor()
+        cursor.execute('SELECT COUNT(*) FROM dash_tamu_profiltamumodel where month(published)=%s and year(published) =%s', [count, TimeNow])
+        tamu_1 = cursor.fetchone()[0]
+        if tamu_1 == None:
+            tamu_1 = 0
+
+        tamu.append(tamu_1)
+        count = count + 1
+
+    tamu.pop(0)
+    context['data_tamu_chart'] = tamu
+
+    #card Jumlah Tamu
     cursor = connection.cursor()
     cursor.execute('SELECT COUNT(*) FROM dash_admin_kamarkostmodel WHERE Waktu_out >= current_date()')
     TamuAktif = cursor.fetchone()[0]
     context['TamuAktif'] = TamuAktif
 
-    cursor = connection.cursor()
-    cursor.execute('SELECT SUM(Jmlh_pemasukan) AS Total FROM dash_admin_pemasukankostmodel WHERE YEAR(Tgl_pemasukan)= YEAR(NOW())')
-    totalTahun = cursor.fetchone()[0]
-    context['totalTahun'] = totalTahun
-
+    #Card Pendapatan Bulan Ini
     cursor = connection.cursor()
     cursor.execute("SELECT SUM(Jmlh_pemasukan) AS Total FROM dash_admin_pemasukankostmodel WHERE CONCAT(YEAR(Tgl_pemasukan),'/',MONTH(Tgl_pemasukan))=CONCAT(YEAR(NOW()),'/',MONTH(NOW()))")
     totalBulan = cursor.fetchone()[0]
     context['totalBulan'] = totalBulan
+
+    #Card Log Pembayaran Bulan Ini
+    context['LogPembayaran'] = PemasukanKostModel.objects.raw("SELECT dash_admin_pemasukankostmodel.*, dash_tamu_profiltamumodel.Nama_lengkap FROM dash_admin_pemasukankostmodel INNER JOIN dash_tamu_profiltamumodel on dash_tamu_profiltamumodel.Nik = dash_admin_pemasukankostmodel.Nik WHERE CONCAT(YEAR(Tgl_pemasukan),'/',MONTH(Tgl_pemasukan))=CONCAT(YEAR(NOW()),'/',MONTH(NOW()))")
     
+    #Card Keuntungan Bersih Tahun Ini
+    cursor = connection.cursor()
+    cursor.execute('SELECT SUM(jmlh_pengeluaran) AS Total FROM dash_admin_pengeluarankostmodel WHERE YEAR(Tgl_pengeluaran)= YEAR(NOW())')
+    PengeluaranTahunIni = cursor.fetchone()[0]
+    context['PengeluaranTahunIni'] = PengeluaranTahunIni
+    TotalBersih = PendapatanTahunIni - PengeluaranTahunIni
+    context['TotalBersih'] = TotalBersih
+
     html_template = loader.get_template( 'dash_admin/dashboard.html' )
     return HttpResponse(html_template.render(context, request))
+
+class LogPembayaranDashListView(ListView):
+    model = PemasukanKostModel
+    template_name = "dash_admin/dashboard/logPembayaranDash.html"
+    context_object_name = 'obj'
+
+    def get_queryset(self):
+        self.queryset = self.model.objects.raw("SELECT dash_admin_pemasukankostmodel.*, dash_tamu_profiltamumodel.Nama_lengkap FROM dash_admin_pemasukankostmodel INNER JOIN dash_tamu_profiltamumodel on dash_tamu_profiltamumodel.Nik=dash_admin_pemasukankostmodel.Nik WHERE YEAR(Tgl_pemasukan)= YEAR(NOW()) ORDER BY `dash_admin_pemasukankostmodel`.`Tgl_pemasukan` DESC")
+        return super().get_queryset()
 
 #Pembayaran
 def KonfimasuTamyViewNew(request):
@@ -129,16 +166,15 @@ def KonfimasuTamyViewNew(request):
     
     return render(request, template_name, context)
 
-class PemasukanKostView(CreateView):
+class PembayaranTamuBaru(CreateView):
     form_class = PemasukanKostForm
-    template_name = "dash_admin/konfirmasi/perpanjangTamu.html"
-    success_url = '/dashadmin/kamar'
+    template_name = "dash_admin/konfirmasi/pembayaranTamuBaru.html"
+    success_url = reverse_lazy('dashadmin:kamartamu-create')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['segment'] = 'PemasukanKost'
         context ['profilTamu'] = ProfilTamuModel.objects.all()
-        context ['paketKost'] = PaketKostModel.objects.all()
         return context
 
 #Data Tamu >> Profil
@@ -147,6 +183,7 @@ class ProfilTamuListView(ListView):
     template_name = "dash_admin/dataTamu/profilTamu/profilTamu.html"
     context_object_name = 'ProfilTamu'
     ordering = ['-published']
+    paginate_by = 10
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -175,6 +212,7 @@ class KamarTamuListView(ListView):
     model = KamarKostModel
     template_name = "dash_admin/dataTamu/kamarTamu/kamarTamu.html"
     context_object_name = 'KamarTamu'
+    paginate_by = 10
 
     def get_queryset(self):
         self.queryset = self.model.objects.raw('SELECT dash_tamu_profiltamumodel.*, dash_admin_kamarkostmodel.*, current_date() as tgl_sekarang, datediff(Waktu_out, current_date()) as selisih FROM dash_tamu_profiltamumodel INNER JOIN dash_admin_kamarkostmodel ON dash_tamu_profiltamumodel.Nik=dash_admin_kamarkostmodel.Nik ORDER BY `selisih` DESC')
@@ -188,7 +226,7 @@ class KamarTamuListView(ListView):
 class KomfirmasiTamuBaruView(CreateView):
     form_class = KamarKostForm
     template_name = 'dash_admin/konfirmasi/tamuBaru.html'
-    success_url = reverse_lazy('dashadmin:kamartamu-view')
+    success_url = '/dashadmin/data/kamar/1'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -200,34 +238,42 @@ class KamarTamuUpdateView(UpdateView):
     form_class = KamarKostForm
     model = KamarKostModel
     template_name = "dash_admin/dataTamu/kamarTamu/kamarTamuUpdate.html"
-    success_url = reverse_lazy('dashadmin:kamartamu-view')
+    success_url = '/dashadmin/data/kamar/1'
     
 class KamarTamuDeleteView(DeleteView):
     model = KamarKostModel
     template_name = "dash_admin/dataTamu/profilTamu/profilTamuDelete.html"
     context_object_name = 'ProfilTamu'
-    success_url = reverse_lazy('dashadmin:profiltamu-view')
+    success_url = '/dashadmin/data/kamar/1'
 
 #Keuangan >> Penghasilan
 def PendapatanListView(request):
     context = {}
     context['segment'] = 'Keuangan'
-    PengeluaranKost = PengeluaranKostForm
+
+    PengeluaranKost = PengeluaranKostForm()
     context = {
         'form' : PengeluaranKost
     }
+    form = PengeluaranKostForm(request.POST)
+    if form.is_valid():
+        form.save()
+        return HttpResponseRedirect('/')
+
     if request.method == 'POST':
         Bulan = request.POST['Bulan']
-        context['InfoPembayaran'] = PemasukanKostModel.objects.raw('SELECT dash_tamu_profiltamumodel.Nama_lengkap, dash_admin_pemasukankostmodel.* FROM dash_tamu_profiltamumodel INNER JOIN dash_admin_pemasukankostmodel ON dash_tamu_profiltamumodel.Nik=dash_admin_pemasukankostmodel.Nik where month(tgl_pemasukan)=%s', [Bulan])
-        context['InfoPengeluaran'] = PengeluaranKostModel.objects.raw('SELECT * FROM dash_admin_pengeluarankostmodel where month(Tgl_pengeluaran)=%s', [Bulan])
+        Tahun = request.POST['Tahun']
+        context['InfoPembayaran'] = PemasukanKostModel.objects.raw('SELECT dash_tamu_profiltamumodel.Nama_lengkap, dash_admin_pemasukankostmodel.* FROM dash_tamu_profiltamumodel INNER JOIN dash_admin_pemasukankostmodel ON dash_tamu_profiltamumodel.Nik=dash_admin_pemasukankostmodel.Nik where month(Tgl_pemasukan)=%s and year(Tgl_pemasukan) =%s', [Bulan, Tahun])
+        context['InfoPengeluaran'] = PengeluaranKostModel.objects.raw('SELECT * FROM dash_admin_pengeluarankostmodel where month(Tgl_pengeluaran)=%s and year(Tgl_pengeluaran) =%s', [Bulan, Tahun])
 
+        #Table Pemasukan & Pengeluaran
         cursor = connection.cursor()
-        cursor.execute('SELECT SUM(Jmlh_pemasukan) AS Total FROM dash_admin_pemasukankostmodel where month(Tgl_pemasukan)=%s', [Bulan])
+        cursor.execute('SELECT SUM(Jmlh_pemasukan) AS Total FROM dash_admin_pemasukankostmodel where month(Tgl_pemasukan)=%s and year(Tgl_pemasukan)=%s', [Bulan, Tahun])
         pemasukanTotal = cursor.fetchone()[0]
         context['pemasukanTotal'] = pemasukanTotal
 
         cursor = connection.cursor()
-        cursor.execute('SELECT SUM(jmlh_pengeluaran) AS Total FROM dash_admin_pengeluarankostmodel where month(Tgl_pengeluaran)=%s', [Bulan])
+        cursor.execute('SELECT SUM(jmlh_pengeluaran) AS Total FROM dash_admin_pengeluarankostmodel where month(Tgl_pengeluaran)=%s and year(Tgl_pengeluaran)=%s', [Bulan, Tahun])
         pengeluaranTotal = cursor.fetchone()[0]
         context['pengeluaranTotal'] = pengeluaranTotal
 
@@ -238,12 +284,6 @@ def PendapatanListView(request):
         
         profit = pemasukanTotal - pengeluaranTotal
         context['profit'] = profit
-
-        form = PengeluaranKostForm(request.POST)
-
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/')
 
     html_template = loader.get_template( 'dash_admin/keuangan/pendapatan.html' )
     return HttpResponse(html_template.render(context, request))
@@ -291,6 +331,7 @@ class kritikSaranListView(ListView):
     model = KritikSaranModel
     template_name = "dash_admin/kritikSaran/kritikSaranList.html"
     context_object_name = 'kritikSaran'
+    paginate_by = 10
 
     def get_queryset(self):
         self.queryset = self.model.objects.raw('SELECT dash_tamu_profiltamumodel.Nama_lengkap,dash_tamu_profiltamumodel.Email, dash_tamu_kritiksaranmodel.* FROM dash_tamu_profiltamumodel INNER JOIN dash_tamu_kritiksaranmodel ON dash_tamu_profiltamumodel.Nik=dash_tamu_kritiksaranmodel.Nik')
@@ -309,7 +350,6 @@ class KritikSaranDeleteView(DeleteView):
 
 def send_gmail(request, Email):
     obj = ProfilTamuModel.objects.get(Email=Email)
-    print(obj.Email)
     subject = 'cek sound'
     massage = 'Tagihan kost'
     to = obj.Email

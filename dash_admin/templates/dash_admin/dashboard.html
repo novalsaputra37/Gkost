@@ -12,8 +12,8 @@
     <div class="card border-0 bg-yellow-100 shadow">
       <div class="card-header d-sm-flex flex-row align-items-center border-yellow-200 flex-0">
         <div class="d-block mb-3 mb-sm-0">
-          <div class="fs-5 fw-normal mb-2">Pendapatan Tahun Ini</div>
-          <h2 class="fs-3 fw-extrabold">RP. {{totalTahun|intcomma}}</h2>
+          <div class="fs-5 fw-normal mb-2">Pendapatan Tahun {{TimeNow}}</div>
+          <h2 class="fs-3 fw-extrabold">RP. {{PendapatanTahunIni|intcomma}}</h2>
           <div class="small mt-2">
             <span class="fw-normal me-2">Yesterday</span>
             <span class="fas fa-angle-up text-success"></span>
@@ -39,7 +39,7 @@
             <div id="chart-customers"></div>
           </div>
           <div class="col-12 col-xxl-6 ps-xxl-4 pe-xxl-0">
-            <h2 class="fs-6 fw-normal mb-1 text-gray-400">Tamu Kost</h2>
+            <h2 class="fs-6 fw-normal mb-1 text-gray-400">Total Pengunjung Kost</h2>
             <h3 class="fw-extrabold mb-1">{{JumalahTamu}}</h3>
             <small class="d-flex align-items-center">
               <svg
@@ -61,6 +61,7 @@
       </div>
     </div>
   </div>
+
   <!-- Revenue -->
   <div class="col-12 col-sm-6 col-xl-4 mb-4">
     <div class="card border-0 shadow">
@@ -112,17 +113,115 @@
     <div class="card border-0 shadow">
       <div class="card-body">
         <div class="row d-block d-xxl-flex align-items-center">
-            <center>
-              <h2 class="fs-6 fw-normal mb-1 text-gray-400">Gender</h2>
-            </center>
-            <div id="pie-chart-apex"></div>
+          <div class="d-block">
+            <div class="d-flex align-items-center me-5">
+            
+              <div class="icon-shape icon-sm icon-shape-danger rounded me-3"><svg
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11 4a1 1 0 10-2 0v4a1 1 0 102 0V7zm-3 1a1 1 0 10-2 0v3a1 1 0 102 0V8zM8 9a1 1 0 00-2 0v2a1 1 0 102 0V9z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg></div>
+              <div class="d-block"><label class="mb-0">Keuntungan Bersih</label>
+                <h4 class="mb-0">Rp. {{TotalBersih|intcomma}}</h4>
+              </div>
+            </div>
+            <div class="d-flex align-items-center pt-3">
+              <div class="icon-shape icon-sm icon-shape-purple rounded me-3"><svg
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z">
+                  </path>
+                </svg></div>
+              <div class="d-block"><label class="mb-0">Pengeluaran Tahun ini</label>
+                <h4 class="mb-0">Rp. {{PengeluaranTahunIni|intcomma}}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12 col-xl-7 col-xxl-8 mb-4">
+    <div class="row">
+      <div class="col-12 mb-4">
+        <div class="card border-0 shadow">
+          <div class="card-header">
+            <div class="row align-items-center">
+              <div class="col">
+                <h2 class="fs-5 fw-bold mb-0">Log Pembayaran Bulan ini</h2>
+              </div>
+              <div class="col text-end"><a
+                  href="/dashadmin/logpembayaran/"
+                  class="btn btn-sm btn-primary"
+                >See all</a></div>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
+                <tr>
+                  <th
+                    class="border-bottom"
+                    scope="col"
+                  >NAMA</th>
+                  <th
+                    class="border-bottom"
+                    scope="col"
+                  >TGL_PEMBAYARAN</th>
+                  <th
+                    class="border-bottom"
+                    scope="col"
+                  >JMLH_DIBAYARAN</th>
+                  <th
+                    class="border-bottom"
+                    scope="col"
+                  >KETERANGAN</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for LogPembayaran in LogPembayaran|slice:":7"%}
+                <tr>
+                  <th
+                    class="text-gray-900"
+                    scope="row"
+                  >{{LogPembayaran.Nama_lengkap}}</th>
+                  <td class="fw-bolder text-gray-500">{{LogPembayaran.Tgl_pemasukan|date:"d F Y"}}</td>
+                  <td class="fw-bolder text-gray-500">Rp. {{LogPembayaran.Jmlh_pemasukan|intcomma}}</td>
+                  <td class="fw-bolder text-gray-500">{{LogPembayaran.Keterangan}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
+  <div class="col-12 col-xl-5 col-xxl-4 mb-4">
+    <div class="col-12 px-0 mb-4">
+      <div class="card border-0 shadow">
+        <div class="card-body">
+          <h2 class="fs-5 fw-bold mb-1">Persentase Jenis Kelamin Tamu Kost</h2>
+          <div id="pie-chart-apex"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 {{ data_Main_chart | json_script:"data-Main-chart" }}
+{{ data_tamu_chart | json_script:"data_tamu_chart" }}
 {{ gender | json_script:"gender" }}
 {% endblock content %}
 

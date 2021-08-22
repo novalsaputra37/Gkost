@@ -7,29 +7,48 @@
 
 {% block content %}
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
-        <div class="d-block mb-4 mb-md-0">
-            <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
-                <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
-                    <li class="breadcrumb-item">
-                        <a href="#">
-                            <svg class="icon icon-xxs" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-                        </a>
-                    </li>
-                    <li class="breadcrumb-item"><a href="#">Keuangan</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Rincian Keuangan</li>
-                </ol>
-            </nav>
-            <h2 class="h4">Rincian Keuangan</h2>
-            <p class="mb-0">Your web analytics dashboard template.</p>
-        </div>
-    </div>
+  <div class="d-block mb-4 mb-md-0">
+    <nav
+      aria-label="breadcrumb"
+      class="d-none d-md-inline-block"
+    >
+      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+        <li class="breadcrumb-item">
+          <a href="#">
+            <svg
+              class="icon icon-xxs"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+              ></path>
+            </svg>
+          </a>
+        </li>
+        <li class="breadcrumb-item"><a href="#">Keuangan</a></li>
+        <li
+          class="breadcrumb-item active"
+          aria-current="page"
+        >Rincian Keuangan</li>
+      </ol>
+    </nav>
+    <h2 class="h4">Rincian Keuangan</h2>
+    <p class="mb-0">Your web analytics dashboard template.</p>
+  </div>
+</div>
 <!-- Pendapatan -->
 <div class="row">
   <div class="col-12 col-xl-8">
     <div class="card shadow mb-4">
-    <div class="card-header">
-    <h4 class="card-title">Pemasukan</h4>
-    </div>
+      <div class="card-header">
+        <h4 class="card-title">Pemasukan</h4>
+      </div>
       <div class="table-responsive">
         <table class="table tablesorter">
           <thead class="thead-light">
@@ -42,7 +61,7 @@
             </tr>
           </thead>
           <tbody>
-          {% for InfoPembayaran in InfoPembayaran %}
+            {% for InfoPembayaran in InfoPembayaran %}
             <tr>
               <td>{{forloop.counter}}</td>
               <td><span class="fw-normal">{{InfoPembayaran.Nama_lengkap|title}}</span></td>
@@ -50,19 +69,19 @@
               <td><span class="fw-normal">Rp. {{InfoPembayaran.Jmlh_pemasukan|intcomma}}</span></td>
               <td><span class="fw-normal">{{InfoPembayaran.Keterangan}}</span></td>
             </tr>
-          {% endfor %}
-          <tr>
-            <td><span class="h6">Pemasukan Total = Rp. {{pemasukanTotal|intcomma}}</span></td>
-          </tr>
+            {% endfor %}
+            <tr>
+              <td><span class="h6">Pemasukan Total = Rp. {{pemasukanTotal|intcomma}}</span></td>
+            </tr>
           </tbody>
         </table>
       </div>
     </div>
 
- <div class="card shadow mb-4">
-    <div class="card-header">
-    <h4 class="card-title">Pengeluaran</h4>
-    </div>
+    <div class="card shadow mb-4">
+      <div class="card-header">
+        <h4 class="card-title">Pengeluaran</h4>
+      </div>
       <div class="table-responsive">
         <table class="table">
           <thead class="thead-light">
@@ -74,60 +93,102 @@
             </tr>
           </thead>
           <tbody>
-          {% for InfoPengeluaran in InfoPengeluaran %}
+            {% for InfoPengeluaran in InfoPengeluaran %}
             <tr>
               <td>{{forloop.counter}}</td>
               <td><span class="fw-normal">{{InfoPengeluaran.Pengeluaran|title}}</span></td>
               <td><span class="fw-normal">{{InfoPengeluaran.Tgl_pengeluaran|date:"d F Y"}}</span></td>
               <td><span class="fw-normal">Rp. {{InfoPengeluaran.jmlh_pengeluaran|intcomma}}</span></td>
             </tr>
-          {% endfor %}
-          <tr>
-            <td><span class="h6">Pengeluaran Total = Rp. {{pengeluaranTotal|intcomma}}</span></td>
-          </tr
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
+            {% endfor %}
+            <tr>
+              <td><span class="h6">Pengeluaran Total = Rp. {{pengeluaranTotal|intcomma}}</span></td>
+            </tr
+              </tbody>
+              </table>
+              </div>
+              </div>
+              </div>
+              <div
+              class="col-12 col-xl-4"
+            >
+            <div class="row">
+              <div class="col-12 mb-4">
+                <div class="card shadow border-0 text-center p-0">
+                  <H5>Input Bulan Pemasukan</H5>
+                  <form
+                    name='Bulan'
+                    enctype="multipart/form-data"
+                    method="POST"
+                  >
+                    {% csrf_token %}
+                    <div class="form-group">
+                      <label for="Bulan">Bulan :
+                        <select
+                          class='form-control'
+                          required
+                          id="Bulan"
+                          name="Bulan"
+                        >
+                          <option value="1">Januari</option>
+                          <option value="2">Februari</option>
+                          <option value="3">Maret</option>
+                          <option value="4">April</option>
+                          <option value="5">Mei</option>
+                          <option value="6">Juni</option>
+                          <option value="7">Juli</option>
+                          <option value="8">Agustus</option>
+                          <option value="9">September</option>
+                          <option value="10">Oktober</option>
+                          <option value="11">November</option>
+                          <option value="12">Desember</option>
+                        </select>
 
-  <div class="col-12 col-xl-4">
-    <div class="row">
-      <div class="col-12 mb-4">
-        <div class="card shadow border-0 text-center p-0">
-          <H5>Input Bulan Pemasukan</H5>
-        <form enctype="multipart/form-data" method="POST">
-          {% csrf_token %}
-          <div class="form-group">
-            <label for="Bulan">Bulan :<br>
-              <select  class='form-control' required id="Bulan" name="Bulan" onChange="form.submit();">
-                <option value="1">Januari</option>
-                <option value="2">Februari</option>
-                <option value="3">Maret</option>
-                <option value="4">April</option>
-                <option value="5">Mei</option>
-                <option value="6">Juni</option>
-                <option value="7">Juli</option>
-                <option value="8">Agustus</option>
-                <option value="9">September</option>
-                <option value="10">Oktober</option>
-                <option value="11">November</option>
-                <option value="12">Desember</option>
-              </select>
-          </div>
-        </form>
-        </div>
-      </div>
-    </div>
-    <div class="col-12 mb-4">
-        <div class="card shadow border-0 text-center p-0">
-          <H5>Input Pengeluaran</H5>
-           <img src="{{ProfilTamu.Foto_ktp.url}}" alt="">
-        </div>
+                        <label for="Tahun">Tahun :
+                          <select
+                            class='form-control'
+                            required
+                            id="Tahun"
+                            name="Tahun"
+                          >
+                            <option value="2020">2020</option>
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>>
+                          </select>
+                          <br>
+                          <button type="submit" class="btn btn-primary">View</button>
+                    </div>
+
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 mb-4">
+              <div class="card shadow border-0 text-center p-0">
+                <H5>Input Pengeluaran</H5>
+                <form
+                  enctype="multipart/form-data"
+                  method="POST"
+                >
+                  <div class="row">
+                    <div class="col-md-12">
+                      {% csrf_token %}
+                      {{form.as_table}}
+                      <br>
+                      <button
+                        class="btn btn-primary"
+                        type="sumbit"
+                      >Save</button>
+                    </div>
+                </form>
+              </div>
+            </div>
       </div>
     </div>
   </div>
-</div>
   {% endblock content %}
   <!-- Specific Page JS goes HERE  -->
   {% block javascripts %}

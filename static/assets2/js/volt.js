@@ -141,7 +141,7 @@ d.addEventListener("DOMContentLoaded", function(event) {
 
     //Main Chart
     const data_chart = JSON.parse(document.getElementById('data-Main-chart').textContent);
-    console.log(data_chart)
+    // console.log(data_chart)
 
     var options = {
         chart: {
@@ -314,10 +314,12 @@ d.addEventListener("DOMContentLoaded", function(event) {
     }
 
     //Customers Chart
+    const tamu_chart = JSON.parse(document.getElementById('data_tamu_chart').textContent);
+    console.log(tamu_chart)
     var optionsCustomersChart = {
         series: [{
-            name: 'Tamu',
-            data: [120, 160, 200, 470, 420, 150, 470, 750, 650, 190, 140]
+            name: 'Tamu Baru',
+            data: tamu_chart
         }],
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
         chart: {
@@ -386,9 +388,9 @@ d.addEventListener("DOMContentLoaded", function(event) {
             },
         },
     };
+    //gender
     const gender = JSON.parse(document.getElementById('gender').textContent);
-    console.log(gender)
-
+    // console.log(gender)
     var optionsPieChart = {
         series: gender,
         chart: {
