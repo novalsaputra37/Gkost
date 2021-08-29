@@ -5,6 +5,7 @@ from dash_tamu import views
 app_name = "dash_tamu"
 urlpatterns = [
     path('', views.dashTamuView, name='dashtamu-home'),
+    path('logpembayaran/', views.LogPembayaranTamuListView.as_view(), name='log-dash'),
 
     #RegisterTamu
     path('register/profil', views.RegisterTamuView.as_view(), name='register-profil'),

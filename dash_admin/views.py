@@ -37,6 +37,8 @@ def index(request):
     cursor = connection.cursor()
     cursor.execute('SELECT SUM(Jmlh_pemasukan) AS Total FROM dash_admin_pemasukankostmodel WHERE YEAR(Tgl_pemasukan)= YEAR(NOW())')
     PendapatanTahunIni = cursor.fetchone()[0]
+    if PendapatanTahunIni is None:
+        PendapatanTahunIni = 0
     context['PendapatanTahunIni'] = PendapatanTahunIni
 
     #Pendapatan Chart
@@ -100,6 +102,8 @@ def index(request):
     cursor = connection.cursor()
     cursor.execute("SELECT SUM(Jmlh_pemasukan) AS Total FROM dash_admin_pemasukankostmodel WHERE CONCAT(YEAR(Tgl_pemasukan),'/',MONTH(Tgl_pemasukan))=CONCAT(YEAR(NOW()),'/',MONTH(NOW()))")
     totalBulan = cursor.fetchone()[0]
+    if totalBulan is None:
+        totalBulan = 0
     context['totalBulan'] = totalBulan
 
     #Card Log Pembayaran Bulan Ini
@@ -109,6 +113,8 @@ def index(request):
     cursor = connection.cursor()
     cursor.execute('SELECT SUM(jmlh_pengeluaran) AS Total FROM dash_admin_pengeluarankostmodel WHERE YEAR(Tgl_pengeluaran)= YEAR(NOW())')
     PengeluaranTahunIni = cursor.fetchone()[0]
+    if PengeluaranTahunIni is None:
+        PengeluaranTahunIni = 0
     context['PengeluaranTahunIni'] = PengeluaranTahunIni
     TotalBersih = PendapatanTahunIni - PengeluaranTahunIni
     context['TotalBersih'] = TotalBersih
@@ -173,9 +179,44 @@ class PembayaranTamuBaru(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['segment'] = 'PemasukanKost'
+        context['segment'] = 'Pembayaran'
         context ['profilTamu'] = ProfilTamuModel.objects.all()
         return context
+
+def PembayaranTamuBaruNew(request):
+    template_name = None
+    context = None
+    
+    if request.user.is_authenticated:
+        form = PemasukanKostForm()
+        profilTamu = ProfilTamuModel.objects.all()
+
+        context = {
+            'form' : form,
+            'profilTamu' : profilTamu
+        }
+
+        Tagihan = None
+        if request.method == 'POST':
+            if 'NAMA' in request.POST:
+                Tagihan = request.POST['NAMA']
+                context['Tagihan'] = Tagihan
+                context['invoice'] = ProfilTamuModel.objects.raw('SELECT dash_tamu_profiltamumodel.*, dash_admin_kamarkostmodel.*,dash_admin_kamarkostmodel.Waktu_out + INTERVAL 1 MONTH AS Bulan_out,dash_admin_kamarkostmodel.Waktu_in + INTERVAL 1 MONTH AS Bulan_in , current_date() as tgl_sekarang, datediff(Waktu_out, current_date()) as selisih FROM dash_tamu_profiltamumodel INNER JOIN dash_admin_kamarkostmodel ON dash_tamu_profiltamumodel.Nik=dash_admin_kamarkostmodel.Nik WHERE dash_tamu_profiltamumodel.Nik =%s', [Tagihan])
+                context['PaketKost'] = PaketKostModel.objects.filter(Nik=Tagihan)
+            else:
+                Tagihan = False
+
+        form = PemasukanKostForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/dashadmin/data/kamar/kamarbaru/')
+
+        template_name = 'dash_admin/konfirmasi/pembayaranTamuBaru.html'
+    else:
+        template_name = 'auth/login.html'
+
+    return render(request, template_name, context)
 
 #Data Tamu >> Profil
 class ProfilTamuListView(ListView):
@@ -205,7 +246,7 @@ class ProfilTamuDeleteView(DeleteView):
     model = ProfilTamuModel
     template_name = "dash_admin/dataTamu/profilTamu/profilTamuDelete.html"
     context_object_name = 'ProfilTamu'
-    success_url = reverse_lazy('dashadmin:kamartamu-view')
+    success_url = '/dashadmin/data/profil/1'
 
 #Data Tamu >> Kamar
 class KamarTamuListView(ListView):
@@ -215,7 +256,7 @@ class KamarTamuListView(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        self.queryset = self.model.objects.raw('SELECT dash_tamu_profiltamumodel.*, dash_admin_kamarkostmodel.*, current_date() as tgl_sekarang, datediff(Waktu_out, current_date()) as selisih FROM dash_tamu_profiltamumodel INNER JOIN dash_admin_kamarkostmodel ON dash_tamu_profiltamumodel.Nik=dash_admin_kamarkostmodel.Nik ORDER BY `selisih` DESC')
+        self.queryset = self.model.objects.raw('SELECT dash_tamu_profiltamumodel.Nama_lengkap, dash_tamu_profiltamumodel.No_tlp, dash_tamu_profiltamumodel.Email, dash_admin_kamarkostmodel.*, current_date() as tgl_sekarang, datediff(Waktu_out, current_date()) as selisih FROM dash_tamu_profiltamumodel INNER JOIN dash_admin_kamarkostmodel ON dash_tamu_profiltamumodel.Nik=dash_admin_kamarkostmodel.Nik ORDER BY `selisih` DESC')
         return super().get_queryset()
 
     def get_context_data(self, **kwargs):
@@ -300,7 +341,7 @@ def LogPembayaranListView(request):
             'profilTamu' : profilTamu
         }
 
-        context['segment'] = 'Pembayaran'
+        context['segment'] = 'Keuangan'
 
         nama = None
         if request.method == 'POST':
@@ -324,7 +365,7 @@ class LogPembayaranDeleteView(DeleteView):
     model = PemasukanKostModel
     template_name = "dash_admin/dataTamu/profilTamu/profilTamuDelete.html"
     context_object_name = 'ProfilTamu'
-    success_url = reverse_lazy('dashadmin:profiltamu-view')
+    success_url = '/dashadmin/keuangan/logpembayaran/'
 
 #KritikSaran
 class kritikSaranListView(ListView):
@@ -346,14 +387,13 @@ class KritikSaranDeleteView(DeleteView):
     model = KritikSaranModel
     template_name = "dash_admin/kritikSaran/kritikSaranDelete.html"
     context_object_name = 'kritikSaran'
-    success_url = reverse_lazy('dashadmin:kritikSaran-view')
+    success_url = '/dashadmin/kritik/1'
 
 def send_gmail(request, Email):
     obj = ProfilTamuModel.objects.get(Email=Email)
-    subject = 'cek sound'
-    massage = 'Tagihan kost'
+    subject = 'Invoice Gatotkaca Kost'
     to = obj.Email
-    html_content = render_to_string("dash_admin/email/emailTempate.html", {'title': 'test email', 'content' : massage })
+    html_content = render_to_string("dash_admin/email/emailTempate.html", {'title': 'Invoice Gatotkaca Kost', 'obj' : obj })
     text_content = strip_tags(html_content)
 
     email = EmailMultiAlternatives(

@@ -41,19 +41,41 @@
 </div>
 
 <div class="card card-body shadow border-0 table-wrapper table-responsive">
-  <form method='POST'>
+
+  <form
+    name='NAMA'
+    method='POST'
+  >
     {% csrf_token %}
-    <label for="{{form.Nik.id_for_label}}">Nama:</label>
+    <label
+      for="state"
+      class="my-1 mr-2"
+    >Nama Pembayar: </label>
     <select
       class='form-control'
-      name="{{form.Nik.name}}"
-      id="{{form.Nik.id_for_label}}"
+      name="NAMA"
+      id="state"
+      class="w-100"
+      onChange="form.submit();"
     >
-      <option>--- Pilih Nama ---</option>
+      <option>----- Pilih Nama -----</option>
       {% for profilTamu in profilTamu %}
-      <option value={{profilTamu.Nik}}>{{profilTamu.Nama_lengkap}}</option>
+      <option value={{profilTamu.Nik}}>{{profilTamu.Nama_lengkap|title}}</option>
       {% endfor %}
     </select>
+  </form>
+
+  <form method='POST'>
+    {% csrf_token %}
+    <div class="form-group">
+      <input
+        type="hidden"
+        class="form-control"
+        name="{{form.Nik.name}}"
+        id="{{form.Nik.id_for_label}}"
+        value="{{Tagihan}}"
+      >
+    </div>
 
     <div class="form-group">
       <label for="{{form.Tgl_pemasukan.id_for_label}}">{{form.Tgl_pemasukan.label}}:</label>
@@ -62,7 +84,22 @@
 
     <div class="form-group">
       <label for="{{form.Jmlh_pemasukan.id_for_label}}">{{form.Jmlh_pemasukan.label}}:</label>
-      {{form.Jmlh_pemasukan}}
+      <input
+        type="text"
+        class="form-control"
+        name="{{form.Jmlh_pemasukan.name}}"
+        id="{{form.Jmlh_pemasukan.id_for_label}}"
+        {% for PaketKost in PaketKost %}
+        {% if PaketKost.Paket == '3' %}
+        value="5940000"
+        {% elif PaketKost.Paket == '2' %}
+        value="1567500"
+        {% else %}
+        value="550000"
+        {% endif %}
+        {% endfor %}
+        readonly
+      >
     </div>
 
     <div class="form-group">

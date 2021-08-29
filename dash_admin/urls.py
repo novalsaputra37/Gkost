@@ -17,7 +17,8 @@ from .views import (KomfirmasiTamuBaruView,
                     LogPembayaranDashListView,
                     send_gmail,
                     render_pdf_view,
-                    PembayaranTamuBaru,)
+                    PembayaranTamuBaru,
+                    PembayaranTamuBaruNew,)
 
 app_name = 'dashadmin'
 urlpatterns = [
@@ -26,7 +27,8 @@ urlpatterns = [
     path('', views.index, name='dashadmin-home'),
     path('logpembayaran/', LogPembayaranDashListView.as_view(), name='log-dash'),
 
-    path('pembayaran/tamubaru', PembayaranTamuBaru.as_view(), name='tambah-tamu-baru'),
+    # path('pembayaran/tamubaru', PembayaranTamuBaru.as_view(), name='tambah-tamu-baru'),
+    path('pembayaran/tamubaru', PembayaranTamuBaruNew, name='tambah-tamu-baru'),
     path('pembayaran/', KonfimasuTamyViewNew, name='tambah-pembayaran'),
 
     #Data>>Profil Tamu

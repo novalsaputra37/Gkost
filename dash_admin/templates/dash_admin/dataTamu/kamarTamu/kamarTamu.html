@@ -159,7 +159,7 @@
               {% if KamarTamu.selisih <= 0 %}
               <a
                 class="dropdown-item d-flex align-items-center"
-                href="https://api.whatsapp.com/send/?phone=62{{KamarTamu.No_tlp}}&text=Kepada+Yth+{{KamarTamu.Nama_lengkap}}+%0a+Kost+anda+memasuki+jatuh+tempo+pada+tanggal+{{KamarTamu.Waktu_out|date:"d F Y"}}+segera+membayar+untuk+memperpanjang+sewa+kost&app_absent=0"
+                href="https://api.whatsapp.com/send/?phone=62{{KamarTamu.No_tlp}}&text=Kepada+Yth+{{KamarTamu.Nama_lengkap|title}}+kamar+no+{{KamarTamu.No_kamar}},+%0a+Kost+anda+memasuki+jatuh+tempo+pada+tanggal+{{KamarTamu.Waktu_out|date:"d F Y"}}+segera+membayar+untuk+memperpanjang+sewa+kost&app_absent=0"
                 target="_blank"
               >
                 <svg

@@ -390,7 +390,7 @@ d.addEventListener("DOMContentLoaded", function(event) {
     };
     //gender
     const gender = JSON.parse(document.getElementById('gender').textContent);
-    // console.log(gender)
+    console.log(gender)
     var optionsPieChart = {
         series: gender,
         chart: {

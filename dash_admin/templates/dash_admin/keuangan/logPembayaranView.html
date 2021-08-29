@@ -76,7 +76,7 @@
               {% for invoice in invoice %}
               <tr>
                 <td>
-                  <h6>{{invoice.Nama_lengkap}}</h6>
+                  <h6>{{invoice.Nama_lengkap|title}}</h6>
                 </td>
                 <td>
                   {{invoice.Tgl_pemasukan}}

@@ -24,16 +24,13 @@
         <ul class="nav flex-column pt-3 pt-md-0">
         <li class="nav-item">
             <a href="/" class="nav-link d-flex align-items-center">
-            <span class="sidebar-icon">
-                <img src="https://appsrv1-147a1.kxcdn.com/volt-dashboard-pro-v141/img/brand/light.svg" height="20" width="20" alt="Volt Logo">
-            </span>
-            <span class="mt-1 sidebar-text">Dashboard Tamu</span>
+            <span class="mt-1 sidebar-text">&nbsp; &nbsp; &nbsp;Dashboard Tamu</span>
             </a>
             <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
         </li>
 
     <!-- Menu --> 
-        <li class="nav-item ">
+        <li class="nav-item {% if 'dashboard' in segment %} active {% endif %}">
             <a href="/" class="nav-link d-flex align-items-center justify-content-between">
                 <span>
                 <span class="sidebar-icon">
@@ -44,7 +41,7 @@
             </a>
         </li>
 
-        <li class="nav-item ">
+        <li class="nav-item  {% if 'PemasukanKost' in segment %} active {% endif %}">
             <a href="/dashtamu/peraturan" class="nav-link d-flex align-items-center justify-content-between">
                 <span>
                 <span class="sidebar-icon">
@@ -55,7 +52,7 @@
             </a>
         </li>
 
-        <li class="nav-item ">
+        <li class="nav-item {% if 'Tagihan' in segment %} active {% endif %}">
             <a href="/dashtamu/tagihan" class="nav-link d-flex align-items-center justify-content-between">
                 <span>
                 <span class="sidebar-icon">
@@ -71,7 +68,7 @@
             </a>
         </li>
 
-        <li class="nav-item ">
+        <li class="nav-item {% if 'KritikSaran' in segment %} active {% endif %}">
             <a href="/dashtamu/kritik" class="nav-link d-flex align-items-center justify-content-between">
                 <span>
                 <span class="sidebar-icon">

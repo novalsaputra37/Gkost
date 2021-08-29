@@ -87,7 +87,9 @@
                   clip-rule="evenodd"
                 ></path>
               </svg>
-              Apr 1 - May 1
+              {% for LogPembayaran in LogPembayaran|slice:":1" %}
+              {{LogPembayaran.Tgl_pemasukan|date:"F Y"}}
+              {% endfor %}
             </small>
             <div class="small d-flex mt-1">
               <div><svg
