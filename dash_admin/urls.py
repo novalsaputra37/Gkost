@@ -56,5 +56,5 @@ urlpatterns = [
 
     #Tagihan
     path('email/<str:Email>', send_gmail, name='send_mail'),
-    path('pdf/', render_pdf_view, name='test-view'),
+    path('pdf/<str:Nik>', render_pdf_view, name='pdf-tagihan'),
 ]

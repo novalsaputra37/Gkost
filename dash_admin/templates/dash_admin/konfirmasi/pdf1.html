@@ -4,7 +4,8 @@
 
   <head>
     <meta charset="utf-8">
-    <title>Example 1</title>
+    <title>Invoice - GatotkacaKost</title>
+
     <style type="text/css">
       .clearfix:after {
         content: "";
@@ -42,7 +43,6 @@
       }
 
       h1 {
-        border-top: 1px solid #5D6975;
         border-bottom: 1px solid #5D6975;
         color: #5D6975;
         font-size: 2.4em;
@@ -50,7 +50,7 @@
         font-weight: normal;
         text-align: center;
         margin: 0 0 20px 0;
-        background: url('static/assets_pdf/dimension.png');
+        background: url('/static/assets_pdf/dimension.png');
       }
 
       #project {
@@ -63,25 +63,8 @@
       }
 
       #project div,
-
       #company div {
         white-space: nowrap;
-      }
-
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        border-spacing: 0;
-        margin-bottom: 20px;
-      }
-
-      table tr:nth-child(2n-1) td {
-        background: #F5F5F5;
-      }
-
-      table th,
-      table td {
-        text-align: center;
       }
 
       table th {
@@ -98,19 +81,8 @@
       }
 
       table td {
-        padding: 20px;
+        padding: 10px;
         text-align: right;
-      }
-
-      table td.service,
-      table td.desc {
-        vertical-align: top;
-      }
-
-      table td.unit,
-      table td.qty,
-      table td.total {
-        font-size: 1.2em;
       }
 
       table td.grand {
@@ -140,15 +112,17 @@
   <body>
     <header class="clearfix">
       <div id="logo">
-        <img src="static/assets_pdf/logo.png">
+        <img src="static/assets_pdf/Gartnew.png">
       </div>
-      <h1>INVOICE 3-2-1</h1>
+      
+      <h1><br>Gatotkaca Kost</h1>
 
       <div id="project">
-        <div><span>PROJECT</span> Website development</div>
-        <div><span>CLIENT</span> John Doe</div>
-        <div><span>ADDRESS</span> 796 Silver Harbour, TX 79273, US</div>
-        <div><span>EMAIL</span> <a href="mailto:john@example.com">john@example.com</a></div>
+        <div><span>Client Information:</span></div>
+        <div><span>Yth</span> Dzikri Noval Saputra</div>
+        <div><span>Mancasan Krajan, Wedomartani, Ngemplak, Sleman, Yogyakarta</span></div>
+        <div><span>EMAIL</span> <a href="mailto:john@example.com">novalsaputra37@gmail.com</a></div>
+        <br>
         <div><span>DATE</span> August 17, 2015</div>
         <div><span>DUE DATE</span> September 17, 2015</div>
       </div>
@@ -159,45 +133,37 @@
       <table>
         <thead>
           <tr>
-            <th class="service">SERVICE</th>
-            <th class="desc">DESCRIPTION</th>
-            <th>PRICE</th>
-            <th>QTY</th>
-            <th>TOTAL</th>
+            <th>NO</th>
+            <th>SEWA</th>
+            <th>PERIODE</th>
+            <th>PAKET</th>
+            <th>HARGA</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td class="service">Design</td>
-            <td class="desc">Creating a recognizable</td>
-            <td class="unit">$40.00</td>
-            <td class="qty">26</td>
-            <td class="total">$1,040.00</td>
+            <td><center>1</center> </td>
+            <td><center>Kamar No 3</center></td>
+            <td><center>29 Aug 2021 - 29 Nov 2021</center></td>
+            <td><center>2</center></td>
+            <td><center>Rp. 1.500.000</center></td>
           </tr>
           <tr>
             <td colspan="3"></td>
-            <td class="total">SUBTOTAL</td>
-            <td class="total">$5,200.00</td>
+            <td><center>SUBTOTAL <br><br> Discount (5%) <br><br> PPN (10%)</center></td>
+            <td><center>Rp. 1.500.000 <br><br> 	Rp. -75.000 <br><br> 	Rp. 142.500</center></td>
           </tr>
-          <tr>
-            <td colspan="3"></td>
-            <td class="total">PPN 10%</td>
-            <td class="total">$5,200.00</td>
-          </tr>
-          <tr>
-            <td colspan="3"></td>
-            <td class="total">PPN 10%</td>
-            <td class="total">$5,200.00</td>
-          </tr>
+
           <tr>
             <td
               colspan="4"
               class="grand total"
-            >GRAND TOTAL</td>
-            <td class="grand total">$6,500.00</td>
+            >TOTAL</td>
+            <td class="grand total">Rp. 1.567.500</td>
           </tr>
         </tbody>
       </table>
+
       <div id="notices">
         <div>NOTICE:</div>
         <div class="notice">A finance charge of 1.5% will be made on unpaid balances after 30 days.</div>

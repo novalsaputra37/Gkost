@@ -7,8 +7,13 @@ from django.http import HttpResponse
 from django.db import connection
 
 #models
-from .models import ProfilTamuModel
+from .models import ProfilTamuModel, PaketKostModel
 from dash_admin.models import KamarKostModel, PemasukanKostModel
+
+#pdf
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
 
 #form
 from .form import ProfilTamuForm,PaketKostForm,KritikSaranForm
@@ -20,6 +25,7 @@ def dashTamuView(request):
     ProfilTamuModels = ProfilTamuModel.objects.filter(Nik=Akun)
     Statuskos = KamarKostModel.objects.raw('SELECT dash_admin_kamarkostmodel.*, dash_tamu_paketkostmodel.*,datediff(Waktu_out, current_date()) as selisih FROM dash_admin_kamarkostmodel INNER JOIN dash_tamu_paketkostmodel ON dash_admin_kamarkostmodel.Nik=dash_tamu_paketkostmodel.Nik WHERE dash_admin_kamarkostmodel.Nik=%s', [Akun])
     LogPembayaran = PemasukanKostModel.objects.filter(Nik=Akun)
+    PaketKost = PaketKostModel.objects.filter(Nik=Akun)
     
     cursor = connection.cursor()
     cursor.execute('SELECT SUM(Jmlh_pemasukan) AS Total FROM dash_admin_pemasukankostmodel WHERE Nik=%s', [Akun])
@@ -31,7 +37,8 @@ def dashTamuView(request):
         'subtotal' : subtotal,
         'DataTamu' : ProfilTamuModels,
         'Statuskos' : Statuskos,
-        'LogPembayaran' : LogPembayaran
+        'LogPembayaran' : LogPembayaran,
+        'PaketKost' : PaketKost
     }
     context['segment'] = 'dashboard'
   
@@ -49,6 +56,32 @@ class LogPembayaranTamuListView(ListView):
     def get_queryset(self):
         Akun = self.request.user
         self.queryset = self.model.objects.raw('SELECT dash_admin_pemasukankostmodel.*, dash_tamu_profiltamumodel.Nama_lengkap  FROM dash_admin_pemasukankostmodel INNER JOIN dash_tamu_profiltamumodel ON dash_admin_pemasukankostmodel.Nik=dash_tamu_profiltamumodel.Nik WHERE dash_admin_pemasukankostmodel.Nik=%s', [Akun])
+        return super().get_queryset()
+
+def render_pdf_view(request):
+    template_path = 'dash_admin/konfirmasi/pdf1.html'
+    context = {'myvar': 'this is your template context'}
+    # Create a Django response object, and specify content_type as pdf
+    response = HttpResponse(content_type='application/pdf')
+    template = get_template(template_path)
+    html = template.render(context)
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+       html, dest=response)
+    # if error then show some funy view
+    if pisa_status.err:
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
+
+class ProfilListView(ListView):
+    model = ProfilTamuModel
+    template_name = "dash_tamu/profil/profil.html"
+    context_object_name = 'DataTamu'
+
+    def get_queryset(self):
+        Akun = self.request.user
+        self.queryset = self.model.objects.filter(Nik=Akun)
         return super().get_queryset()
 
 #Register Tamu
@@ -95,7 +128,15 @@ class PaketKostDashView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        Akun = self.request.user
+        cursor = connection.cursor()
+        cursor.execute('SELECT SUM(Jmlh_pemasukan) AS Total FROM dash_admin_pemasukankostmodel WHERE Nik=%s', [Akun])
+        subtotal = cursor.fetchone()[0]
+        if subtotal is None:
+            subtotal = 0
+        print(subtotal)
         context['segment'] = 'Tagihan'
+        context['subtotal'] = subtotal
         return context
 
 #Kritik & Saran

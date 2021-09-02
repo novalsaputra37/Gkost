@@ -1,6 +1,6 @@
 {% extends "base/base-volt.html" %}
 
-{% block title %} Dashboard {% endblock %}
+{% block title %} Pembayaran - PerpanjangTamu{% endblock %}
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -258,7 +258,7 @@
           <div class="d-grid gap-2 col-4">
             <br>
             <a
-              href="/dashadmin/pdf"
+              href="{% url 'dashadmin:pdf-tagihan' invoice.Nik %}"
               class="btn btn-primary"
               target="_blank"
             >

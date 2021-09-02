@@ -1,0 +1,109 @@
+{% extends "base/base-volt.html" %}
+
+{% block title %} DashboardTamu {% endblock title %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<!-- Table Biodata -->
+<div class="row">
+  <div class="col-12 col-xl-8 mb-4">
+    <div class="row">
+      <div class="col-12 mb-4">
+        <div class="card border-light shadow-sm">
+          <div class="card-header">
+            <div class="row align-items-center">
+              <div class="col">
+                <h2 class="h5">Biodata</h2>
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table align-items-center table-flush ">
+              {% for DataTamu in DataTamu %}
+              <tr>
+                <th scope="row">
+                  Nik
+                </th>
+                <td>
+                  {{DataTamu.Nik}}
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  Nama
+                </th>
+                <td>
+                  {{DataTamu.Nama_lengkap|title}}
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  Jenis kelamin
+                </th>
+                <td>
+                  {{DataTamu.Jenis_kelamin|capfirst}}
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  TTL
+                </th>
+                <td>
+                  {{DataTamu.Tempat_lahir|capfirst}}, {{DataTamu.Tanggal_lahir|date:"d F Y"}}
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  Agama
+                </th>
+                <td>
+                  {{DataTamu.Agama|capfirst}}
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  Pekerjaan
+                </th>
+                <td>
+                  {{DataTamu.Pekerjaan|capfirst}}
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  No_tlp
+                </th>
+                <td>
+                  +62 {{DataTamu.No_tlp}}
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  Email
+                </th>
+                <td>
+                  {{DataTamu.Email}}
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  Alamat
+                </th>
+                <td>
+                  {{DataTamu.Alamat_asal|title}}
+                </td>
+              </tr>
+              {% endfor %}
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

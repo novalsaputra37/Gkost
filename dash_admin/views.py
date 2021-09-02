@@ -389,6 +389,7 @@ class KritikSaranDeleteView(DeleteView):
     context_object_name = 'kritikSaran'
     success_url = '/dashadmin/kritik/1'
 
+#Email
 def send_gmail(request, Email):
     obj = ProfilTamuModel.objects.get(Email=Email)
     subject = 'Invoice Gatotkaca Kost'
@@ -407,9 +408,11 @@ def send_gmail(request, Email):
 
     return render(request, 'dash_admin/email/email.html')
 
-def render_pdf_view(request):
+#create PDF
+def render_pdf_view(request, Nik):
+    obj = ProfilTamuModel.objects.get(Nik=Nik)
     template_path = 'dash_admin/konfirmasi/pdf1.html'
-    context = {'myvar': 'this is your template context'}
+    context = {'myvar': 'this is your template context', 'obj' : obj}
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')
     template = get_template(template_path)

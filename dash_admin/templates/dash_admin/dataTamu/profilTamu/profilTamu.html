@@ -1,6 +1,6 @@
 {% extends "base/base-volt.html" %}
 
-{% block title %} Dashboard {% endblock %}
+{% block title %} DataTamu - ProfilTamu {% endblock %}
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -106,7 +106,7 @@
         <td><span class="fw-normal">{{ProfilTamu.Tempat_lahir|title}}, {{ProfilTamu.Tanggal_lahir|date:"d F Y"}}</span></td>
         <td>
           <span class="fw-normal d-flex align-items-center">
-            +62 {{ProfilTamu.No_tlp}}
+            <a href="https://api.whatsapp.com/send?phone=62{{ProfilTamu.No_tlp}}" target="_blank">+62 {{ProfilTamu.No_tlp}}</a>
           </span>
         </td>
         <td><span class="fw-normal">{{ProfilTamu.Alamat_asal|title}}</span></td>
@@ -170,8 +170,6 @@
       {% endfor %}
     </tbody>
   </table>
-
-
 
   <div class="card-footer px-3 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
     <nav aria-label="Page navigation example">
