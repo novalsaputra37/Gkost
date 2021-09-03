@@ -410,7 +410,7 @@ def send_gmail(request, Email):
 
 #create PDF
 def render_pdf_view(request, Nik):
-    obj = ProfilTamuModel.objects.get(Nik=Nik)
+    obj = ProfilTamuModel.objects.raw("SELECT dash_tamu_profiltamumodel.*, dash_admin_kamarkostmodel.*, dash_tamu_paketkostmodel.*, CASE WHEN dash_tamu_paketkostmodel.Paket = 3 THEN dash_admin_kamarkostmodel.Waktu_out + INTERVAL 12 MONTH WHEN dash_tamu_paketkostmodel.Paket = 2 THEN dash_admin_kamarkostmodel.Waktu_out + INTERVAL 3 MONTH WHEN dash_tamu_paketkostmodel.Paket = 1 THEN dash_admin_kamarkostmodel.Waktu_out + INTERVAL 1 MONTH END AS Bulan_out, dash_admin_kamarkostmodel.Waktu_in + INTERVAL 1 MONTH AS Bulan_in, datediff(Waktu_out, current_date()) as selisih FROM dash_tamu_profiltamumodel INNER JOIN dash_admin_kamarkostmodel ON dash_tamu_profiltamumodel.Nik=dash_admin_kamarkostmodel.Nik INNER JOIN dash_tamu_paketkostmodel ON dash_admin_kamarkostmodel.Nik=dash_tamu_paketkostmodel.Nik WHERE dash_tamu_profiltamumodel.Nik =%s", [Nik])
     template_path = 'dash_admin/konfirmasi/pdf1.html'
     context = {'myvar': 'this is your template context', 'obj' : obj}
     # Create a Django response object, and specify content_type as pdf

@@ -7,6 +7,7 @@ urlpatterns = [
     path('', views.dashTamuView, name='dashtamu-home'),
     path('profil/', views.ProfilListView.as_view(), name='dashtamu-profil'),
     path('logpembayaran/', views.LogPembayaranTamuListView.as_view(), name='log-dash'),
+    path('logpembayaran/pdf/', views.render_pdf_LogPembayaran_view, name='log-pdf'),
 
     #RegisterTamu
     path('register/profil', views.RegisterTamuView.as_view(), name='register-profil'),
@@ -19,4 +20,5 @@ urlpatterns = [
     path('peraturan/', views.PeraturanView.as_view(), name='peraturan'),
     #Kritik
     path('kritik/', views.KritikSaranView.as_view(), name='kritik-saran'),
+
 ]

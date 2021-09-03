@@ -19,8 +19,9 @@
                 {% endfor %}
               </div>
               <div class="col text-end"><a
-                  href="./traffic-sources.html"
+                  href="{% url 'dash_tamu:log-pdf' %}"
                   class="btn btn-sm btn-primary"
+                  target="_blank" 
                 >Print</a></div>
             </div>
           </div>

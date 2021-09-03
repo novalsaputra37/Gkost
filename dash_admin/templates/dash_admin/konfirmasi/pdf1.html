@@ -4,7 +4,7 @@
 
   <head>
     <meta charset="utf-8">
-    <title>Invoice - GatotkacaKost</title>
+    <title>Invoice - {% for obj in obj %} {{obj.Nama_lengkap}}{% endfor %} | GatotkacaKost</title>
 
     <style type="text/css">
       .clearfix:after {
@@ -110,21 +110,29 @@
   </head>
 
   <body>
+  {% for obj in obj %}
     <header class="clearfix">
       <div id="logo">
         <img src="static/assets_pdf/Gartnew.png">
       </div>
       
       <h1><br>Gatotkaca Kost</h1>
-
+      <center><h1>Invoice #{{obj.id|title}} 
+      {% if obj.selisih >= 0 %}
+      <span style="color:#10b981;">Lunas</span>
+      {% else %}
+      <span style="color:#e11d48;">Belum Bayar</span>
+      {% endif %}
+      </h1></center>
+      
       <div id="project">
         <div><span>Client Information:</span></div>
-        <div><span>Yth</span> Dzikri Noval Saputra</div>
-        <div><span>Mancasan Krajan, Wedomartani, Ngemplak, Sleman, Yogyakarta</span></div>
-        <div><span>EMAIL</span> <a href="mailto:john@example.com">novalsaputra37@gmail.com</a></div>
+        <div><span>Yth</span> {{obj.Nama_lengkap|title}}</div>
+        <div><span>{{obj.Alamat_asal|title}}</span></div>
+        <div><a href="mailto:{{obj.Email}}">{{obj.Email}}</a></div>
         <br>
-        <div><span>DATE</span> August 17, 2015</div>
-        <div><span>DUE DATE</span> September 17, 2015</div>
+        <div><span>DATE:</span> {{obj.Waktu_in|date:'d'|add:'-7'}} {{obj.Waktu_in|date:'M Y'}}</div>
+        <div><span>DUE DATE:</span> {{obj.Waktu_in|date:'d M Y'}}</div>
       </div>
     </header>
 
@@ -143,10 +151,33 @@
         <tbody>
           <tr>
             <td><center>1</center> </td>
-            <td><center>Kamar No 3</center></td>
-            <td><center>29 Aug 2021 - 29 Nov 2021</center></td>
-            <td><center>2</center></td>
-            <td><center>Rp. 1.500.000</center></td>
+            <td><center>Kamar No {{obj.No_kamar}}</center></td>
+            <td><center>
+            {% if obj.selisih >= 0 %}
+            {{obj.Waktu_in|date:'d M Y'}} - {{obj.Waktu_out|date:'d M Y'}}
+            {% else %}
+            {{obj.Waktu_out|date:'d M Y'}} - {{obj.Bulan_out|date:'d M Y'}}
+            {% endif %}
+            </center></td>
+            <td><center>{{obj.Paket}}</center></td>
+            {% if obj.Paket == '3' %}
+            <td><center>Rp. 6.000.000</center></td>
+          </tr>
+          <tr>
+            <td colspan="3"></td>
+            <td><center>SUBTOTAL <br><br> Discount (10%) <br><br> PPN (10%)</center></td>
+            <td><center>Rp. 6.000.000 <br><br> 	Rp. -1.350.0000 <br><br> 	Rp. 540.000</center></td>
+          </tr>
+
+          <tr>
+            <td
+              colspan="4"
+              class="grand total"
+            >TOTAL</td>
+            <td class="grand total">Rp. 5.940.000</td>
+          </tr>
+          {% elif obj.Paket == '2' %}
+          <td><center>Rp. 1.500.000</center></td>
           </tr>
           <tr>
             <td colspan="3"></td>
@@ -161,8 +192,26 @@
             >TOTAL</td>
             <td class="grand total">Rp. 1.567.500</td>
           </tr>
+          {% else %}
+          <td><center>Rp. 500.000</center></td>
+          </tr>
+          <tr>
+            <td colspan="3"></td>
+            <td><center>SUBTOTAL <br><br> Discount (0%) <br><br> PPN (10%)</center></td>
+            <td><center>Rp. 500.000 <br><br> 	Rp. 0 <br><br> Rp. 50.000</center></td>
+          </tr>
+
+          <tr>
+            <td
+              colspan="4"
+              class="grand total"
+            ><center>TOTAL</center></td>
+            <td class="grand total">Rp. 550.000</td>
+          </tr>
+          {% endif %}
         </tbody>
       </table>
+      {% endfor %}
 
       <div id="notices">
         <div>NOTICE:</div>

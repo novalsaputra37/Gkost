@@ -58,9 +58,11 @@ class LogPembayaranTamuListView(ListView):
         self.queryset = self.model.objects.raw('SELECT dash_admin_pemasukankostmodel.*, dash_tamu_profiltamumodel.Nama_lengkap  FROM dash_admin_pemasukankostmodel INNER JOIN dash_tamu_profiltamumodel ON dash_admin_pemasukankostmodel.Nik=dash_tamu_profiltamumodel.Nik WHERE dash_admin_pemasukankostmodel.Nik=%s', [Akun])
         return super().get_queryset()
 
-def render_pdf_view(request):
-    template_path = 'dash_admin/konfirmasi/pdf1.html'
-    context = {'myvar': 'this is your template context'}
+def render_pdf_LogPembayaran_view(request):
+    Akun = request.user
+    obj = PemasukanKostModel.objects.raw('SELECT dash_admin_pemasukankostmodel.*, dash_tamu_profiltamumodel.Nama_lengkap  FROM dash_admin_pemasukankostmodel INNER JOIN dash_tamu_profiltamumodel ON dash_admin_pemasukankostmodel.Nik=dash_tamu_profiltamumodel.Nik WHERE dash_admin_pemasukankostmodel.Nik=%s', [Akun])
+    template_path = 'dash_tamu/dashboard/printLogPembayaran.html'
+    context = {'obj': obj}
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')
     template = get_template(template_path)
