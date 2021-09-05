@@ -7,7 +7,7 @@
             </div>
             <div class="d-block">
             <h2 class="h5 mb-3">Hi, {{request.user.username}}</h2>
-            <a href="/page-sign-in.html" class="btn btn-secondary btn-sm d-inline-flex align-items-center">
+            <a href="{% url 'logout' %}" class="btn btn-secondary btn-sm d-inline-flex align-items-center">
                 <svg class="icon icon-xxs me-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>            
                 Sign Out
             </a>
@@ -138,6 +138,16 @@
                 <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"></path></svg>
                 </span> 
                 <span class="sidebar-text">Kritik & Saran</span>
+                </span>
+            </a>
+        </li>
+        <li class="nav-item {% if 'iotKost' in segment %} active {% endif %} ">
+            <a href="http://192.168.121.234" target="_blank" class="nav-link d-flex align-items-center justify-content-between">
+                <span>
+                <span class="sidebar-icon">
+                <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"></path></svg>
+                </span> 
+                <span class="sidebar-text">IOT Listrik Kost</span>
                 </span>
             </a>
         </li>

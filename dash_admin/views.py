@@ -131,6 +131,23 @@ class LogPembayaranDashListView(ListView):
         self.queryset = self.model.objects.raw("SELECT dash_admin_pemasukankostmodel.*, dash_tamu_profiltamumodel.Nama_lengkap FROM dash_admin_pemasukankostmodel INNER JOIN dash_tamu_profiltamumodel on dash_tamu_profiltamumodel.Nik=dash_admin_pemasukankostmodel.Nik WHERE YEAR(Tgl_pemasukan)= YEAR(NOW()) ORDER BY `dash_admin_pemasukankostmodel`.`Tgl_pemasukan` DESC")
         return super().get_queryset()
 
+def renderPdfLogPembayaran(request):
+    obj = PemasukanKostModel.objects.raw("SELECT dash_admin_pemasukankostmodel.*, dash_tamu_profiltamumodel.Nama_lengkap FROM dash_admin_pemasukankostmodel INNER JOIN dash_tamu_profiltamumodel on dash_tamu_profiltamumodel.Nik=dash_admin_pemasukankostmodel.Nik WHERE YEAR(Tgl_pemasukan)= YEAR(NOW()) ORDER BY `dash_admin_pemasukankostmodel`.`Tgl_pemasukan` DESC")
+    template_path = 'dash_admin/dashboard/pdfLogPembayaranDash.html'
+    context = {'myvar': 'this is your template context', 'obj' : obj}
+    # Create a Django response object, and specify content_type as pdf
+    response = HttpResponse(content_type='application/pdf')
+    template = get_template(template_path)
+    html = template.render(context)
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+       html, dest=response)
+    # if error then show some funy view
+    if pisa_status.err:
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
+
 #Pembayaran
 def KonfimasuTamyViewNew(request):
     template_name = None
@@ -425,3 +442,10 @@ def render_pdf_view(request, Nik):
     if pisa_status.err:
        return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
+
+def iotListrikKost(request):
+    context = {}
+    template_name = 'dash_admin/iotKost/iotKost.html'
+    context['segment'] = 'iotKost'
+
+    return render(request, template_name,context)

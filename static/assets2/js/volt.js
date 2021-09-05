@@ -140,8 +140,8 @@ d.addEventListener("DOMContentLoaded", function(event) {
     // Apex Charts
 
     //Main Chart
+    if (document.getElementById('chart')) {
     const data_chart = JSON.parse(document.getElementById('data-Main-chart').textContent);
-    // console.log(data_chart)
 
     var options = {
         chart: {
@@ -247,6 +247,7 @@ d.addEventListener("DOMContentLoaded", function(event) {
     if (document.getElementById('chart')) {
         chart.render();
     }
+}
 
     // Weekly Sales Chart
     var optionsWeeklySalesChart = {
@@ -314,8 +315,9 @@ d.addEventListener("DOMContentLoaded", function(event) {
     }
 
     //Customers Chart
+    if(document.getElementById('chart-customers')){
     const tamu_chart = JSON.parse(document.getElementById('data_tamu_chart').textContent);
-    console.log(tamu_chart)
+    //console.log(tamu_chart)
     var optionsCustomersChart = {
         series: [{
             name: 'Tamu Baru',
@@ -354,6 +356,7 @@ d.addEventListener("DOMContentLoaded", function(event) {
         var customersChart = new ApexCharts(customersChartEl, optionsCustomersChart);
         customersChart.render();
     }
+}
 
     //Today Users Chart
     var optionsUsersChart = {
@@ -389,6 +392,7 @@ d.addEventListener("DOMContentLoaded", function(event) {
         },
     };
     //gender
+    if (document.getElementById('pie-chart-apex')){
     const gender = JSON.parse(document.getElementById('gender').textContent);
     console.log(gender)
     var optionsPieChart = {
@@ -440,6 +444,7 @@ d.addEventListener("DOMContentLoaded", function(event) {
         var pieChart = new ApexCharts(pieChartEl, optionsPieChart);
         pieChart.render();
     }
+}
 
     var usersChartEl = document.getElementById('chart-users');
     if (usersChartEl) {

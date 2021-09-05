@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load humanize %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LogPembayaran - PDF | GatotkacaKost</title>
+
+    <style>
+        th, td{
+            padding: 5px;
+        }
+        table.center {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+    </style>
+</head>
+<body>
+    
+    <table border: 1px>
+    <tr>
+    <td>
+    <div><img width='100px' src="static/assets_pdf/Gartnew.png"></div>
+    </td>
+    <td style="text-align: right;"><h1>Gatotkaca Kost<br>Sleman, Yogyakarta<br>Gatotkacanetwork@gmail.com</h1></td>
+    </tr>
+    </table>
+    <hr>
+
+    <br>
+    <h1>Log Pembayaran {% for obj in obj|slice:":1" %}{{obj.Nama_lengkap|title}}{% endfor %}</h1>
+    <table style="border: 1px solid black;border-collapse: collapse;" >
+    <thead>
+    <tr>
+    <th>No</th>
+    <th>Nama</th>
+    <th>TGL_PEMBAYARAN</th>
+    <th>JMLH_DIBAYARAN</th>
+    <th>KETERANGAN</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for obj in obj %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{obj.Nama_lengkap|title}}</td>
+            <td>{{obj.Tgl_pemasukan|date:"d F Y"}}</td>
+            <td>{{obj.Jmlh_pemasukan|intcomma}}</td>
+            <td>{{obj.Keterangan}}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+</body>
+</html>
