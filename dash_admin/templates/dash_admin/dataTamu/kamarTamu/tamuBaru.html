@@ -59,7 +59,12 @@
 
     <div class="form-group">
       <label for="{{form.No_kamar.id_for_label}}">{{form.No_kamar.label}}:</label>
-      {{form.No_kamar}}
+      <select class='form-control' name="{{form.No_kamar.name}}" id="{{form.No_kamar.id_for_label}}">
+
+      {% for z in nokamar %}
+      <option value={{z}}>{{z}}</option>
+      {% endfor %}
+      </select>
     </div>
 
     <div class="form-group">

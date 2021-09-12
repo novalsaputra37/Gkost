@@ -210,7 +210,8 @@ def PembayaranTamuBaruNew(request):
 
         context = {
             'form' : form,
-            'profilTamu' : profilTamu
+            'profilTamu' : profilTamu,
+            'segment' : 'Pembayaran'
         }
 
         Tagihan = None
@@ -252,7 +253,7 @@ class ProfilTamuUpdateView(UpdateView):
     form_class = ProfilTamuForm
     model = ProfilTamuModel
     template_name = "dash_admin/dataTamu/profilTamu/profilTamuUpdate.html"
-    success_url = reverse_lazy('dashadmin:profiltamu-view')
+    success_url = '/dashadmin/data/profil/1'
 
 class ProfilTamuDetailView(DetailView):
     model = ProfilTamuModel
@@ -283,11 +284,17 @@ class KamarTamuListView(ListView):
 
 class KomfirmasiTamuBaruView(CreateView):
     form_class = KamarKostForm
-    template_name = 'dash_admin/konfirmasi/tamuBaru.html'
+    template_name = 'dash_admin/dataTamu/kamarTamu/tamuBaru.html'
     success_url = '/dashadmin/data/kamar/1'
 
     def get_context_data(self, **kwargs):
+        Nokamar = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        kamarTerpakai = KamarKostModel.objects.raw('SELECT * FROM dash_admin_kamarkostmodel ORDER BY dash_admin_kamarkostmodel.No_kamar ASC')
+        for x in kamarTerpakai:
+            Nokamar.remove(x.No_kamar)
+        
         context = super().get_context_data(**kwargs)
+        context['nokamar'] = Nokamar
         context['segment'] = ' KomfirmasiTamuBaru'
         context['profilTamu'] = ProfilTamuModel.objects.all()
         return context
@@ -307,11 +314,11 @@ class KamarTamuDeleteView(DeleteView):
 #Keuangan >> Penghasilan
 def PendapatanListView(request):
     context = {}
-    context['segment'] = 'Keuangan'
 
     PengeluaranKost = PengeluaranKostForm()
     context = {
-        'form' : PengeluaranKost
+        'form' : PengeluaranKost,
+        'segment' : 'Keuangan'
     }
     form = PengeluaranKostForm(request.POST)
     if form.is_valid():
@@ -442,10 +449,3 @@ def render_pdf_view(request, Nik):
     if pisa_status.err:
        return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
-
-def iotListrikKost(request):
-    context = {}
-    template_name = 'dash_admin/iotKost/iotKost.html'
-    context['segment'] = 'iotKost'
-
-    return render(request, template_name,context)
