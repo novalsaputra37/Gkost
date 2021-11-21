@@ -39,7 +39,8 @@
       </ol>
     </nav>
     <h2 class="h4">Kamar Tamu</h2>
-    <p class="mb-0">Your web analytics dashboard template.</p>
+    
+    
   </div>
 </div>
 
@@ -65,36 +66,6 @@
     Tambah Kamar
   </a>
 </div><br>
-
-<div class="table-settings mb-4">
-  <div class="row justify-content-between align-items-center">
-    <div class="col-9 col-lg-8 d-md-flex">
-      <div class="input-group me-2 me-lg-3 fmxw-300">
-        <span class="input-group-text">
-          <svg
-            class="icon icon-xs"
-            x-description="Heroicon name: solid/search"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            aria-hidden="true"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-              clip-rule="evenodd"
-            ></path>
-          </svg>
-        </span>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Search users"
-        >
-      </div>
-    </div>
-  </div>
-</div>
 
 <div class="card card-body shadow border-0 table-wrapper table-responsive">
   <table class="table user-table table-hover align-items-center">
@@ -159,7 +130,7 @@
               {% if KamarTamu.selisih <= 0 %}
               <a
                 class="dropdown-item d-flex align-items-center"
-                href="https://api.whatsapp.com/send/?phone=62{{KamarTamu.No_tlp}}&text=Kepada+Yth+{{KamarTamu.Nama_lengkap|title}}+kamar+no+{{KamarTamu.No_kamar}},+%0a+Kost+anda+memasuki+jatuh+tempo+pada+tanggal+{{KamarTamu.Waktu_out|date:"d F Y"}}+segera+membayar+untuk+memperpanjang+sewa+kost&app_absent=0"
+                href="https://api.whatsapp.com/send?phone=62{{KamarTamu.No_tlp}}&text=Kepada%20Yth%20{{KamarTamu.Nama_lengkap|title}},%0Akamar%20no%20{{KamarTamu.No_kamar}},%0AKost%20anda%20memasuki%20jatuh%20tempo%20pada%20tanggal%20{{KamarTamu.Waktu_out|date:"d F Y"}},%0A%0ATagihan%20tercetak%20pada%20link%20berikut:%0Ahttps://google.com%0A%0A*NB:*%20Segera%20lakukan%20pembayar%20untuk%20memperpanjang%20sewa%20kost,%20Jika%20belum%20melakukan%20pembayaran%20maka%20otomatis%20listrik%20kamar%20anda%20anda%20mati.&app_absent=0"
                 target="_blank"
               >
                 <svg
@@ -273,7 +244,11 @@
         {% endif %}
       </ul>
     </nav>
-    <div class="fw-normal small mt-4 mt-lg-0">Showing <b>5</b> out of <b>25</b> entries</div>
+    {% if jmlh_row < '10' %}
+    <div class="fw-normal small mt-4 mt-lg-0">Showing <b>{{jmlh_row}}</b> out of <b>{{jmlh_row}}</b> entries</div>
+    {% else %}
+    <div class="fw-normal small mt-4 mt-lg-0">Showing <b>10</b> out of <b>{{jmlh_row}}</b> entries</div>
+    {% endif %}
   </div>
 </div>
 

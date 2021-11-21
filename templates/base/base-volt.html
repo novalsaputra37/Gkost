@@ -2,18 +2,12 @@
 {% load static %}
 <head> 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<!-- Primary Meta Tags -->
 
 <title>
 {% block title %} {% endblock title %} | GatotkacaKost
 </title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="title" content="Volt - Premium Bootstrap 5 Dashboard">
-<meta name="author" content="Themesberg">
-<meta name="description" content="Volt Pro is a Premium Bootstrap 5 Admin Dashboard featuring over 800 components, 10+ plugins and 20 example pages using Vanilla JS.">
-<meta name="keywords" content="bootstrap 5, bootstrap, bootstrap 5 admin dashboard, bootstrap 5 dashboard, bootstrap 5 charts, bootstrap 5 calendar, bootstrap 5 datepicker, bootstrap 5 tables, bootstrap 5 datatable, vanilla js datatable, themesberg, themesberg dashboard, themesberg admin dashboard" />
-<link rel="canonical" href="https://appseed.us/admin-dashboards/django-dashboard-volt-pro">
 
 <!-- Favicon -->
 <link rel="apple-touch-icon" sizes="120x120" href="/static/assets2/img/logo/Gartnew.png">
@@ -27,12 +21,33 @@
 <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/leaflet.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'assets2/css/volt.min.css' %}">
 
+<script type="text/javascript">
+    window.onload = function() { jam(); }
+   
+    function jam() {
+     var e = document.getElementById('jam'),
+     d = new Date(), h, m, s;
+     h = d.getHours();
+     m = set(d.getMinutes());
+     s = set(d.getSeconds());
+   
+     e.innerHTML = h +':'+ m +':'+ s;
+   
+     setTimeout('jam()', 1000);
+    }
+   
+    function set(e) {
+     e = e < 10 ? '0'+ e : e;
+     return e;
+    }
+   </script>
+
 </head>
 <body>
 
     <nav class="navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none">
         <a class="navbar-brand me-lg-5" href="/">
-            <img class="navbar-brand-dark" src="/static/assets2/img/logo/Gartnew.png" alt="Volt logo" /> <img class="navbar-brand-light" src="/static/assets2/img/logo/Gartnew.png" alt="Volt logo" />
+            <img class="navbar-brand-dark" src="/static/assets2/img/logo/Gartnew.png" alt="gkost logo" /> <img class="navbar-brand-light" src="/static/assets2/img/logo/Gartnew.png" alt="gkost logo" />
         </a>
         <div class="d-flex align-items-center">
             <button class="navbar-toggler d-lg-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,65 +63,7 @@
   {% endif %}
   <main class="content">
 
-    <nav class="navbar navbar-top navbar-expand navbar-dashboard navbar-dark ps-0 pe-2 pb-0">
-    <div class="container-fluid px-0">
-        <div class="d-flex justify-content-between w-100" id="navbarSupportedContent">
-            <div class="d-flex align-items-center">
-            <button id="sidebar-toggle" class="sidebar-toggle me-3 btn btn-icon-only d-none d-lg-inline-block align-items-center justify-content-center">
-                <svg class="toggle-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
-            </button>
-            <!-- Search form -->
-            <form class="navbar-search form-inline" id="navbar-search-main">
-                <div class="input-group input-group-merge search-bar">
-                    <span class="input-group-text" id="topbar-addon">
-                    <svg class="icon icon-xs" x-description="Heroicon name: solid/search" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                        <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
-                    </svg>
-                    </span>
-                    <input type="text" class="form-control" id="topbarInputIconLeft" placeholder="Search" aria-label="Search" aria-describedby="topbar-addon">
-                </div>
-            </form>
-            <!-- / Search form -->
-            </div>
-            <!-- Navbar links -->
-            <ul class="navbar-nav align-items-center">
-            <li class="nav-item dropdown ms-lg-3">
-                <a class="nav-link dropdown-toggle pt-1 px-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <div class="media d-flex align-items-center">
-<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" color="#111827" class="bi bi-person-circle" viewBox="0 0 16 16">
-  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-  <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-</svg>
-                    <div class="media-body ms-2 text-dark align-items-center d-none d-lg-block">
-                    <span class="mb-0 font-small fw-bold text-gray-900">
-                        Hallo! {{request.user.username}}
-                    </span>
-                    </div>
-                </div>
-                </a>
-                <div class="dropdown-menu dashboard-dropdown dropdown-menu-end mt-2 py-1">
-                {% if user.username == 'admin' %}
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                    <svg class="dropdown-icon text-gray-400 me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd"></path></svg>
-                    My Profile
-                </a>
-                {% else %}
-                <a class="dropdown-item d-flex align-items-center" href="{% url 'dash_tamu:dashtamu-profil' %}">
-                    <svg class="dropdown-icon text-gray-400 me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd"></path></svg>
-                    My Profile
-                </a>
-                {% endif %}
-                <div role="separator" class="dropdown-divider my-1"></div>
-                <a class="dropdown-item d-flex align-items-center" href="/logout/">
-                    <svg class="dropdown-icon text-danger me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>                
-                    Logout
-                </a>
-                </div>
-            </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+    {% include 'includes/navigation.html' %}
 
     {% block content %}{% endblock content %}
 
@@ -122,50 +79,17 @@
 <script src="https://appsrv1-147a1.kxcdn.com/volt-dashboard-pro-v141/vendor/onscreen/dist/on-screen.umd.min.js"></script>
 <script src="https://appsrv1-147a1.kxcdn.com/volt-dashboard-pro-v141/vendor/nouislider/distribute/nouislider.min.js"></script>
 <script src="https://appsrv1-147a1.kxcdn.com/volt-dashboard-pro-v141/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
-<script src="https://appsrv1-147a1.kxcdn.com/volt-dashboard-pro-v141/vendor/countup.js/dist/countUp.umd.js"></script>
 <script src="https://appsrv1-147a1.kxcdn.com/volt-dashboard-pro-v141/vendor/apexcharts/dist/apexcharts.min.js"></script>
-<script src="https://appsrv1-147a1.kxcdn.com/volt-dashboard-pro-v141/vendor/vanillajs-datepicker/dist/js/datepicker.min.js"></script>
-<script src="https://appsrv1-147a1.kxcdn.com/volt-dashboard-pro-v141/vendor/simple-datatables/dist/umd/simple-datatables.js"></script>
 <script src="https://appsrv1-147a1.kxcdn.com/volt-dashboard-pro-v141/vendor/sweetalert2/dist/sweetalert2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
-<script src="https://appsrv1-147a1.kxcdn.com/volt-dashboard-pro-v141/vendor/vanillajs-datepicker/dist/js/datepicker.min.js"></script>
-<script src="https://appsrv1-147a1.kxcdn.com/volt-dashboard-pro-v141/vendor/fullcalendar/main.min.js"></script>
-<script src="https://appsrv1-147a1.kxcdn.com/volt-dashboard-pro-v141/vendor/dropzone/dist/min/dropzone.min.js"></script>
 <script src="https://appsrv1-147a1.kxcdn.com/volt-dashboard-pro-v141/vendor/choices.js/public/assets/scripts/choices.min.js"></script>
 <script src="https://appsrv1-147a1.kxcdn.com/volt-dashboard-pro-v141/vendor/notyf/notyf.min.js"></script>
-<script src="https://appsrv1-147a1.kxcdn.com/volt-dashboard-pro-v141/vendor/leaflet/dist/leaflet.js"></script>
-<script src="https://appsrv1-147a1.kxcdn.com/volt-dashboard-pro-v141/vendor/svg-pan-zoom/dist/svg-pan-zoom.min.js"></script>
-<script src="https://appsrv1-147a1.kxcdn.com/volt-dashboard-pro-v141/vendor/svgmap/dist/svgMap.min.js"></script>
 <script src="https://appsrv1-147a1.kxcdn.com/volt-dashboard-pro-v141/vendor/simplebar/dist/simplebar.min.js"></script>
-<script src="https://appsrv1-147a1.kxcdn.com/volt-dashboard-pro-v141/vendor/sortablejs/Sortable.min.js"></script>
 
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 
 <!-- Volt JS -->
-{% comment %} <script src="https://appsrv1-147a1.kxcdn.com/volt-dashboard-pro-v141/js/volt.js"></script> {% endcomment %}
 <script src="/static/assets2/js/volt.js"></script>
-
-{% comment %} <script src="/static/assets2/js/popper.min.js"></script>
-<script src="/static/assets2/js/bootstrap.min.js"></script>
-<script src="/static/assets2/js/on-screen.umd.min.js"></script>
-<script src="/static/assets2/js/smooth-scroll.polyfills.min.js"></script>
-<script src="/static/assets2/js/countUp.umd.js"></script>
-<script src="/static/assets2/js/apexcharts.min.js"></script>
-<script src="/static/assets2/js/datepicker.min.js"></script>
-<script src="/static/assets2/js/simple-datatables.js"></script>
-<script src="/static/assets2/js/sweetalert2.min.js"></script>
-<script src="/static/assets2/js/moment.min.js"></script>
-<script src="/static/assets2/js/main.min.js"></script>
-<script src="/static/assets2/js/dropzone.min.js"></script>
-<script src="/static/assets2/js/choices.min.js"></script>
-<script src="/static/assets2/js/notyf.min.js"></script>
-<script src="/static/assets2/js/leaflet.js"></script>
-<script src="/static/assets2/js/svg-pan-zoom.min.js"></script>
-<script src="/static/assets2/js/svgMap.min.js"></script>
-<script src="/static/assets2/js/simplebar.min.js"></script>
-<script src="/static/assets2/js/Sortable.min.js"></script>
-<script src="/static/assets2/js/buttons.js"></script>
-<script src="/static/assets2/js/volt.js"></script> {% endcomment %}
 
 </body>
 </html>

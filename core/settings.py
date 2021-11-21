@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'authentication',
     'dash_admin',
-    'dash_tamu'
+    'dash_tamu',
+    'api',
 ]
 
 MIDDLEWARE = [
@@ -132,8 +133,12 @@ EMAIL_HOST_PASSWORD = "afyipbrnpuoaupka"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
+
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR, 'static']
+STATIC_ROOT='/home/gatotka2/kost.gatotkaca-network.com/static'
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 

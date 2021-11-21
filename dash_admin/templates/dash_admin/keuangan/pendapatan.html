@@ -1,6 +1,6 @@
 {% extends "base/base-volt.html" %}
 {% load humanize %}
-{% block title %} Keuangan -RincianKeuangan {% endblock %}
+{% block title %} Keuangan - RincianKeuangan {% endblock %}
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -39,7 +39,6 @@
       </ol>
     </nav>
     <h2 class="h4">Rincian Keuangan</h2>
-    <p class="mb-0">Your web analytics dashboard template.</p>
   </div>
 </div>
 <!-- Pendapatan -->
@@ -90,6 +89,7 @@
               <th>Pengeluaran</th>
               <th>Tgl_pengeluaran</th>
               <th>jmlh_pengeluaran</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -99,6 +99,9 @@
               <td><span class="fw-normal">{{InfoPengeluaran.Pengeluaran|title}}</span></td>
               <td><span class="fw-normal">{{InfoPengeluaran.Tgl_pengeluaran|date:"d F Y"}}</span></td>
               <td><span class="fw-normal">Rp. {{InfoPengeluaran.jmlh_pengeluaran|intcomma}}</span></td>
+              <td>
+              <a class="btn btn-danger btn-sm" href="{% url 'dashadmin:pengeluaran-delete' InfoPengeluaran.pk %}">Delete</a>
+              </td>
             </tr>
             {% endfor %}
             <tr>

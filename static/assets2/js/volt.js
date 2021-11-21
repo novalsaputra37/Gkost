@@ -323,7 +323,7 @@ d.addEventListener("DOMContentLoaded", function(event) {
             name: 'Tamu Baru',
             data: tamu_chart
         }],
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
         chart: {
             type: 'area',
             width: "100%",
@@ -391,10 +391,10 @@ d.addEventListener("DOMContentLoaded", function(event) {
             },
         },
     };
+
     //gender
     if (document.getElementById('pie-chart-apex')){
     const gender = JSON.parse(document.getElementById('gender').textContent);
-    console.log(gender)
     var optionsPieChart = {
         series: gender,
         chart: {
@@ -452,12 +452,14 @@ d.addEventListener("DOMContentLoaded", function(event) {
         usersChart.render();
     }
 
-
     // Revenue Chart
+    if (document.getElementById('chart-revenue')){
+    const data_tahunan = JSON.parse(document.getElementById('Pendapatan_pertahun').textContent);
+    console.log(data_tahunan);
     var optionsRevenueChart = {
         series: [{
-            name: 'Sales',
-            data: [34, 29, 32, 38, 39, 35, 36]
+            name: 'Pendapatan',
+            data: data_tahunan
         }],
         chart: {
             type: 'bar',
@@ -484,9 +486,9 @@ d.addEventListener("DOMContentLoaded", function(event) {
                 },
             }
         },
-        labels: [1, 2, 3, 4, 5, 6, 7],
+        labels: [1, 2, 3, 4, 5],
         xaxis: {
-            categories: ['01 Feb', '02 Feb', '03 Feb', '04 Feb', '05 Feb', '06 Feb', '07 Feb'],
+            categories: ['2021', '2022', '2023', '2024', '2025'],
             crosshairs: {
                 width: 1
             },
@@ -503,7 +505,7 @@ d.addEventListener("DOMContentLoaded", function(event) {
             },
             y: {
                 formatter: function(val) {
-                    return "$ " + val + "k"
+                    return "Rp " + val
                 }
             }
         },
@@ -514,6 +516,7 @@ d.addEventListener("DOMContentLoaded", function(event) {
         var revenueChart = new ApexCharts(revenueChartEl, optionsRevenueChart);
         revenueChart.render();
     }
+}
 
     //Traffic volumes
     var optionsTrafficVolumesChart = {

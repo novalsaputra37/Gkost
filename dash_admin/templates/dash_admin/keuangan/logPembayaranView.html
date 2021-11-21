@@ -21,7 +21,6 @@
                 </ol>
             </nav>
             <h2 class="h4">Log Pembayaran</h2>
-            <p class="mb-0">Your web analytics dashboard template.</p>
         </div>
     </div>
 
@@ -89,7 +88,7 @@
                   {{invoice.Keterangan}}
                 </td>
                 <td>
-                  <a class="btn btn-warning" href="#">Edit</a>
+                  <a class="btn btn-warning" href="{% url 'dashadmin:LogPembayaran-update' invoice.pk %}">Edit</a>
                   <a class="btn btn-danger" href="{% url 'dashadmin:LogPembayaran-delete' invoice.pk %}">Delete</a>
                 </td>
               </tr>

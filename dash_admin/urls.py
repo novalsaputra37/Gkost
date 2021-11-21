@@ -17,9 +17,11 @@ from .views import (KomfirmasiTamuBaruView,
                     LogPembayaranDashListView,
                     send_gmail,
                     render_pdf_view,
-                    PembayaranTamuBaru,
                     PembayaranTamuBaruNew,
-                    renderPdfLogPembayaran)
+                    LogPembayaranUpdateView,
+                    renderPdfLogPembayaran,
+                    pengeluaranDeleteView,
+                    ProfilTamuView)
 
 app_name = 'dashadmin'
 urlpatterns = [
@@ -29,12 +31,13 @@ urlpatterns = [
     path('logpembayaran/', LogPembayaranDashListView.as_view(), name='log-dash'),
     path('logpembayaran/pdf/', renderPdfLogPembayaran, name='log-pdf'),
 
-    # path('pembayaran/tamubaru', PembayaranTamuBaru.as_view(), name='tambah-tamu-baru'),
+    # pembayaran
     path('pembayaran/tamubaru', PembayaranTamuBaruNew, name='tambah-tamu-baru'),
     path('pembayaran/', KonfimasuTamyViewNew, name='tambah-pembayaran'),
 
     #Data>>Profil Tamu
     path('data/profil/<page>', ProfilTamuListView.as_view(), name='profiltamu-view'),
+    path('test/', ProfilTamuView, name='profiltamubaru-view'),
     path('data/profil/update/<int:pk>', ProfilTamuUpdateView.as_view(), name='profiltamu-update'),
     path('data/profil/detail/<int:pk>', ProfilTamuDetailView.as_view(), name='profiltamu-detail'),
     path('data/profil/delete/<int:pk>', ProfilTamuDeleteView.as_view(), name='profiltamu-delete'),
@@ -47,9 +50,11 @@ urlpatterns = [
 
     #Keuangan >> Pemasukan
     path('keuangan/pemasukan/', PendapatanListView, name='pemasukan-view'),
+    path('keuangan/pemasukan/delete/<int:pk>', pengeluaranDeleteView.as_view(), name='pengeluaran-delete'),
 
     #Keuangan >> Log Pembayaran
     path('keuangan/logpembayaran/', LogPembayaranListView, name='LogPembayaran-view'),
+    path('keuangan/logpembayaran/update/<int:pk>', LogPembayaranUpdateView.as_view(), name='LogPembayaran-update'),
     path('keuangan/logpembayaran/delete/<int:pk>', LogPembayaranDeleteView.as_view(), name='LogPembayaran-delete'),
 
     #KritikSaran

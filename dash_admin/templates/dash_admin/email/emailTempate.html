@@ -67,7 +67,6 @@ th {font-weight: bold; padding:10px; border-bottom:2px solid #000;}
 tbody td {border-bottom: 1px solid #ddd; padding:10px;}
 
 
-
 .email_main_div{width:700px; margin:auto; background-color:#EEEEEE; min-height:500px; border:2px groove #999999;}
 strong{font-weight:bold;}
 .item_table{text-align:left;}
@@ -90,7 +89,7 @@ strong{font-weight:bold;}
 <table class="email_table">
 	<tr>
 		<td width="400px;" style="text-align:left; padding:10px;">
-			<img src="https://raw.githubusercontent.com/novalsaputra37/Gkost/main/static/assets2/img/logo/Gartnew.png?token=AQB4X2TEI7QRPYCDBETKPULBFR4H6" width="120" height="100px" />
+			<img src="https://kost.gatotkaca-network.com/static/assets2/img/logo/Gartnew.png" width="120" height="100px" />
 		</td>
 		<td style="text-align:left; padding:10px;">
 		Company Address Here:<br/>
@@ -103,13 +102,14 @@ strong{font-weight:bold;}
 </table>
 
 <table class="email_table" style="margin-top:14px;">
+{% for invoice in invoice %}
 	<tr>
 		<td width="350px;" style="text-align:left; padding:10px;">
 		Client Information:<br />
-		<strong>Yth Dzikri Noval Saputra</strong><br />
-		Mancasan Krajan, Wedomartani, Ngemplak, Sleman, Yogyakarta<br />
-		Tel: (+62)81903874977<br />
-		Email: novalsaputra37@gmail.com<br />
+		<strong>Yth {{invoice.Nama_lengkap|title}}</strong><br />
+		{{invoice.Alamat_asal|title}}<br />
+		Tel: (+62){{invoice.No_tlp}}<br />
+		Email: {{invoice.Email}}<br />
 		</td>
 	</tr>
 </table>
@@ -125,20 +125,45 @@ strong{font-weight:bold;}
   </thead>
   <tbody>
     <tr>
-      <td>Kamar No 4</td>
-      <td>11 Aug 2021 - 11 Aug 2022</td>
-      <td>3</td>
-	  <td>Rp. 6.000.000</td>
+      <td>Kamar No {{invoice.No_kamar}}</td>
+      <td>{{invoice.Waktu_out}} - {{invoice.Bulan_out}}</td>
+      <td>{{invoice.Paket}}</td>
+  {% if invoice.Paket == '3' %}
+	    <td>Rp. 6.000.000</td>
     </tr>
 	<tr>
 	  <td colspan="5" style="text-align:right; padding:10px;">
 	  <strong style="text-align:right; padding:10px;">Subtotal : </strong> Rp. 6.000.000 <br>
-	  <strong style="text-align:right; padding:10px;">Discount (5%) : </strong> Rp. 6.000.000 <br>
-	  <strong style="text-align:right; padding:10px;">PPN (10%) : </strong> Rp. 6.000.000 <br>
-	  <strong style="text-align:right; padding:10px;">Total	 : </strong> Rp. 6.000.000
+	  <strong style="text-align:right; padding:10px;">Discount (10%) : </strong> Rp. -1.350.000 <br>
+	  <strong style="text-align:right; padding:10px;">PPN (10%) : </strong> Rp. 540.000 <br>
+	  <strong style="text-align:right; padding:10px;">Total	 : </strong> Rp. 5.940.000
 	  </td>
 	</tr>
+  {% elif invoice.Paket == '2' %}
+      <td>Rp. 1.500.000</td>
+    </tr>
+	<tr>
+	  <td colspan="5" style="text-align:right; padding:10px;">
+	  <strong style="text-align:right; padding:10px;">Subtotal : </strong> Rp. 1.500.000 <br>
+	  <strong style="text-align:right; padding:10px;">Discount (5%) : </strong> Rp. -75.000 <br>
+	  <strong style="text-align:right; padding:10px;">PPN (10%) : </strong> Rp. 142.500 <br>
+	  <strong style="text-align:right; padding:10px;">Total	 : </strong> Rp. 1.567.500
+	  </td>
+  </tr>
+  {% else %}
+      <td>Rp. 500.000</td>
+    </tr>
+	<tr>
+	  <td colspan="5" style="text-align:right; padding:10px;">
+	  <strong style="text-align:right; padding:10px;">Subtotal : </strong> Rp. 500.000 <br>
+	  <strong style="text-align:right; padding:10px;">Discount (0%) : </strong> Rp. 0 <br>
+	  <strong style="text-align:right; padding:10px;">PPN (10%) : </strong> Rp. 50.000 <br>
+	  <strong style="text-align:right; padding:10px;">Total	 : </strong> Rp. 550.000
+	  </td>
+  </tr>
+  {% endif %}
   </tbody>
+  {% endfor %}
 </table>
 <table>
   

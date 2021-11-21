@@ -39,37 +39,24 @@
       </ol>
     </nav>
     <h2 class="h4">Profil Tamu</h2>
-    <p class="mb-0">Your web analytics dashboard template.</p>
-  </div>
-</div>
-
-<div class="table-settings mb-4">
-  <div class="row justify-content-between align-items-center">
-    <div class="col-9 col-lg-8 d-md-flex">
-      <div class="input-group me-2 me-lg-3 fmxw-300">
-        <span class="input-group-text">
-          <svg
-            class="icon icon-xs"
-            x-description="Heroicon name: solid/search"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            aria-hidden="true"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-              clip-rule="evenodd"
-            ></path>
-          </svg>
-        </span>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Search users"
-        >
-      </div>
-    </div>
+    <form enctype="multipart/form-data" method="POST">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="state" class="my-1 mr-2 p-2">Cari: </label>
+              <select
+                class='form-control'
+                name="NAMA"
+                id="state"
+                class="w-100"
+                onChange="form.submit();"
+              >
+                <option value='tampil-semua'>----- Pilih Nama -----</option>
+                {% for pilihan in pilihan %}
+                <option value={{pilihan.Nik}}>{{pilihan.Nama_lengkap|title}}</option>
+                {% endfor %}
+              </select>
+          </div>
+        </form>
   </div>
 </div>
 
@@ -106,7 +93,10 @@
         <td><span class="fw-normal">{{ProfilTamu.Tempat_lahir|title}}, {{ProfilTamu.Tanggal_lahir|date:"d F Y"}}</span></td>
         <td>
           <span class="fw-normal d-flex align-items-center">
-            <a href="https://api.whatsapp.com/send?phone=62{{ProfilTamu.No_tlp}}" target="_blank">+62 {{ProfilTamu.No_tlp}}</a>
+            <a
+              href="https://api.whatsapp.com/send?phone=62{{ProfilTamu.No_tlp}}"
+              target="_blank"
+            >+62 {{ProfilTamu.No_tlp}}</a>
           </span>
         </td>
         <td><span class="fw-normal">{{ProfilTamu.Alamat_asal|title}}</span></td>
@@ -172,7 +162,7 @@
   </table>
 
   <div class="card-footer px-3 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
-    <nav aria-label="Page navigation example">
+    {% comment %} <nav aria-label="Page navigation example">
       <ul class="pagination mb-0">
         {% if page_obj.has_previous %}
         <li class="page-item">
@@ -228,8 +218,12 @@
         </li>
         {% endif %}
       </ul>
-    </nav>
-    <div class="fw-normal small mt-4 mt-lg-0">Showing <b>5</b> out of <b>25</b> entries</div>
+    </nav> {% endcomment %}
+    {% if jmlh_row < '10' %}
+    <div class="fw-normal small mt-4 mt-lg-0">Showing <b>{{jmlh_row}}</b> out of <b>{{jmlh_row}}</b> entries</div>
+    {% else %}
+    <div class="fw-normal small mt-4 mt-lg-0">Showing <b>10</b> out of <b>{{jmlh_row}}</b> entries</div>
+    {% endif %}
   </div>
 </div>
 
