@@ -317,7 +317,7 @@ d.addEventListener("DOMContentLoaded", function(event) {
     //Customers Chart
     if(document.getElementById('chart-customers')){
     const tamu_chart = JSON.parse(document.getElementById('data_tamu_chart').textContent);
-    //console.log(tamu_chart)
+
     var optionsCustomersChart = {
         series: [{
             name: 'Tamu Baru',
@@ -455,7 +455,7 @@ d.addEventListener("DOMContentLoaded", function(event) {
     // Revenue Chart
     if (document.getElementById('chart-revenue')){
     const data_tahunan = JSON.parse(document.getElementById('Pendapatan_pertahun').textContent);
-    console.log(data_tahunan);
+
     var optionsRevenueChart = {
         series: [{
             name: 'Pendapatan',

@@ -71,7 +71,6 @@ def index(request):
         Pendapatan.append(Pendapatantahuan)
         x = x + 1
 
-    print(Pendapatan)
     context['Pendapatan_pertahun'] = Pendapatan
 
 
@@ -256,34 +255,6 @@ class ProfilTamuListView(ListView):
         context['jmlh_row'] = self.model.objects.count()
         return context
 
-def ProfilTamuView(request):
-    template_name = None
-    context = None
-    profilTamu = None
-
-    if request.user.is_authenticated:
-        nama = None
-        if request.method == 'POST':
-            nama = request.POST['NAMA']
-            if nama == 'tampil-semua':
-                profilTamu = ProfilTamuModel.objects.all()
-            profilTamu = ProfilTamuModel.objects.raw('SELECT * FROM `dash_tamu_profiltamumodel` WHERE Nik=%s', [nama])
-        else:
-            profilTamu = ProfilTamuModel.objects.all()
-        
-        pilihan = ProfilTamuModel.objects.all()
-        context = {
-            'ProfilTamu' : profilTamu,
-            'pilihan' : pilihan,
-            'jmlh_row' : ProfilTamuModel.objects.count(),
-        }
-            
-        template_name = 'dash_admin/dataTamu/profilTamu/profilTamu.html'
-    else:
-        template_name = 'auth/login.html'
-    
-    return render(request, template_name, context)
-
 class ProfilTamuUpdateView(UpdateView):
     form_class = ProfilTamuForm
     model = ProfilTamuModel
@@ -331,8 +302,6 @@ class KomfirmasiTamuBaruView(CreateView):
 
         if not Nokamar:
             Nokamar = "Kamar Habis Terisi"
-        print (Nokamar)
-
         
         context = super().get_context_data(**kwargs)
         context['nokamar'] = Nokamar

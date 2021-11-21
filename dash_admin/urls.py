@@ -20,8 +20,7 @@ from .views import (KomfirmasiTamuBaruView,
                     PembayaranTamuBaruNew,
                     LogPembayaranUpdateView,
                     renderPdfLogPembayaran,
-                    pengeluaranDeleteView,
-                    ProfilTamuView)
+                    pengeluaranDeleteView)
 
 app_name = 'dashadmin'
 urlpatterns = [
@@ -37,7 +36,6 @@ urlpatterns = [
 
     #Data>>Profil Tamu
     path('data/profil/<page>', ProfilTamuListView.as_view(), name='profiltamu-view'),
-    path('test/', ProfilTamuView, name='profiltamubaru-view'),
     path('data/profil/update/<int:pk>', ProfilTamuUpdateView.as_view(), name='profiltamu-update'),
     path('data/profil/detail/<int:pk>', ProfilTamuDetailView.as_view(), name='profiltamu-detail'),
     path('data/profil/delete/<int:pk>', ProfilTamuDeleteView.as_view(), name='profiltamu-delete'),
