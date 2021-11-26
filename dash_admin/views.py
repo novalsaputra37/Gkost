@@ -244,10 +244,9 @@ def PembayaranTamuBaruNew(request):
 #Data Tamu >> Profil
 class ProfilTamuListView(ListView):
     model = ProfilTamuModel
-    template_name = "dash_admin/dataTamu/profilTamu/profilTamu.html"
+    template_name = "dash_admin/dataTamu/profilTamu/newProfilTamu.html"
     context_object_name = 'ProfilTamu'
     ordering = ['-published']
-    paginate_by = 10
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

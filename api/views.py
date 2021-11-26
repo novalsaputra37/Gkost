@@ -5,8 +5,8 @@ from django.db import connection
 def iotRelayRequestView(request):
     context = {}
     cursor = connection.cursor()
-    a = cursor.execute('SELECT CASE WHEN datediff(Waktu_out, current_date()) >= 0 THEN 0 ELSE 1 END as listrik  FROM dash_admin_kamarkostmodel WHERE No_kamar=1')
-    if a == 0:
+    kamar1 = cursor.execute('SELECT CASE WHEN datediff(Waktu_out, current_date()) >= 0 THEN 0 ELSE 1 END as listrik  FROM dash_admin_kamarkostmodel WHERE No_kamar=1')
+    if kamar1 == 0:
         listrik = 1
     else:
         listrik = cursor.fetchone()[0]
@@ -17,8 +17,8 @@ def iotRelayRequestView(request):
 def iotRelayRequest2View(request):
     context = {}
     cursor = connection.cursor()
-    a = cursor.execute('SELECT CASE WHEN datediff(Waktu_out, current_date()) >= 0 THEN 0 ELSE 1 END as listrik  FROM dash_admin_kamarkostmodel WHERE No_kamar=2')
-    if a == 0:
+    kamar2 = cursor.execute('SELECT CASE WHEN datediff(Waktu_out, current_date()) >= 0 THEN 0 ELSE 1 END as listrik  FROM dash_admin_kamarkostmodel WHERE No_kamar=2')
+    if kamar2 == 0:
         listrik = 1
     else:
         listrik = cursor.fetchone()[0]
@@ -29,8 +29,8 @@ def iotRelayRequest2View(request):
 def iotRelayRequest3View(request):
     context = {}
     cursor = connection.cursor()
-    a = cursor.execute('SELECT CASE WHEN datediff(Waktu_out, current_date()) >= 0 THEN 0 ELSE 1 END as listrik  FROM dash_admin_kamarkostmodel WHERE No_kamar=3')
-    if a == 0:
+    kamar3 = cursor.execute('SELECT CASE WHEN datediff(Waktu_out, current_date()) >= 0 THEN 0 ELSE 1 END as listrik  FROM dash_admin_kamarkostmodel WHERE No_kamar=3')
+    if kamar3 == 0:
         listrik = 1
     else:
         listrik = cursor.fetchone()[0]
@@ -41,8 +41,8 @@ def iotRelayRequest3View(request):
 def iotRelayRequest4View(request):
     context = {}
     cursor = connection.cursor()
-    a = cursor.execute('SELECT CASE WHEN datediff(Waktu_out, current_date()) >= 0 THEN 0 ELSE 1 END as listrik  FROM dash_admin_kamarkostmodel WHERE No_kamar=4')
-    if a == 0:
+    kamar4 = cursor.execute('SELECT CASE WHEN datediff(Waktu_out, current_date()) >= 0 THEN 0 ELSE 1 END as listrik  FROM dash_admin_kamarkostmodel WHERE No_kamar=4')
+    if kamar4 == 0:
         listrik = 1
     else:
         listrik = cursor.fetchone()[0]
@@ -54,8 +54,8 @@ def iotRelayRequest4View(request):
 def iotRelayRequest5View(request):
     context = {}
     cursor = connection.cursor()
-    a = cursor.execute('SELECT CASE WHEN datediff(Waktu_out, current_date()) >= 0 THEN 0 ELSE 1 END as listrik  FROM dash_admin_kamarkostmodel WHERE No_kamar=5')
-    if a == 0:
+    kamar5 = cursor.execute('SELECT CASE WHEN datediff(Waktu_out, current_date()) >= 0 THEN 0 ELSE 1 END as listrik  FROM dash_admin_kamarkostmodel WHERE No_kamar=5')
+    if kamar5 == 0:
         listrik = 1
     else:
         listrik = cursor.fetchone()[0]
@@ -66,8 +66,8 @@ def iotRelayRequest5View(request):
 def iotRelayRequest6View(request):
     context = {}
     cursor = connection.cursor()
-    a = cursor.execute('SELECT CASE WHEN datediff(Waktu_out, current_date()) >= 0 THEN 0 ELSE 1 END as listrik  FROM dash_admin_kamarkostmodel WHERE No_kamar=6')
-    if a == 0:
+    kamar6 = cursor.execute('SELECT CASE WHEN datediff(Waktu_out, current_date()) >= 0 THEN 0 ELSE 1 END as listrik  FROM dash_admin_kamarkostmodel WHERE No_kamar=6')
+    if kamar6 == 0:
         listrik = 1
     else:
         listrik = cursor.fetchone()[0]
@@ -78,8 +78,8 @@ def iotRelayRequest6View(request):
 def iotRelayRequest7View(request):
     context = {}
     cursor = connection.cursor()
-    a = cursor.execute('SELECT CASE WHEN datediff(Waktu_out, current_date()) >= 0 THEN 0 ELSE 1 END as listrik  FROM dash_admin_kamarkostmodel WHERE No_kamar=7')
-    if a == 0:
+    kamar7 = cursor.execute('SELECT CASE WHEN datediff(Waktu_out, current_date()) >= 0 THEN 0 ELSE 1 END as listrik  FROM dash_admin_kamarkostmodel WHERE No_kamar=7')
+    if kamar7 == 0:
         listrik = 1
     else:
         listrik = cursor.fetchone()[0]
@@ -90,8 +90,8 @@ def iotRelayRequest7View(request):
 def iotRelayRequest8View(request):
     context = {}
     cursor = connection.cursor()
-    a = cursor.execute('SELECT CASE WHEN datediff(Waktu_out, current_date()) >= 0 THEN 0 ELSE 1 END as listrik  FROM dash_admin_kamarkostmodel WHERE No_kamar=8')
-    if a == 0:
+    kamar8 = cursor.execute('SELECT CASE WHEN datediff(Waktu_out, current_date()) >= 0 THEN 0 ELSE 1 END as listrik  FROM dash_admin_kamarkostmodel WHERE No_kamar=8')
+    if kamar8 == 0:
         listrik = 1
     else:
         listrik = cursor.fetchone()[0]
@@ -102,8 +102,8 @@ def iotRelayRequest8View(request):
 def iotRelayRequest9View(request):
     context = {}
     cursor = connection.cursor()
-    a = cursor.execute('SELECT CASE WHEN datediff(Waktu_out, current_date()) >= 0 THEN 0 ELSE 1 END as listrik  FROM dash_admin_kamarkostmodel WHERE No_kamar=9')
-    if a == 0:
+    kamar9 = cursor.execute('SELECT CASE WHEN datediff(Waktu_out, current_date()) >= 0 THEN 0 ELSE 1 END as listrik  FROM dash_admin_kamarkostmodel WHERE No_kamar=9')
+    if kamar9 == 0:
         listrik = 1
     else:
         listrik = cursor.fetchone()[0]
@@ -114,8 +114,8 @@ def iotRelayRequest9View(request):
 def iotRelayRequest10View(request):
     context = {}
     cursor = connection.cursor()
-    a = cursor.execute('SELECT CASE WHEN datediff(Waktu_out, current_date()) >= 0 THEN 0 ELSE 1 END as listrik  FROM dash_admin_kamarkostmodel WHERE No_kamar=10')
-    if a == 0:
+    kamar10 = cursor.execute('SELECT CASE WHEN datediff(Waktu_out, current_date()) >= 0 THEN 0 ELSE 1 END as listrik  FROM dash_admin_kamarkostmodel WHERE No_kamar=10')
+    if kamar10 == 0:
         listrik = 1
     else:
         listrik = cursor.fetchone()[0]
