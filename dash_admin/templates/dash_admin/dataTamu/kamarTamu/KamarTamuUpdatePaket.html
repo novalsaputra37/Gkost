@@ -1,6 +1,6 @@
 {% extends "base/base-volt.html" %}
 
-{% block title %} Dashboard {% endblock %}
+{% block title %} Dashboard {% endblock %} 
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -14,7 +14,7 @@
     >
       <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
         <li class="breadcrumb-item">
-          <a href="#">
+          <a href="/">
             <svg
               class="icon icon-xxs"
               fill="none"
@@ -31,28 +31,28 @@
             </svg>
           </a>
         </li>
-        <li class="breadcrumb-item"><a href="#">Data Tamu</a></li>
-        <li
-          class="breadcrumb-item active"
-          aria-current="page"
-        >Kamar Tamu</li>
+        <li class="breadcrumb-item"><a href="/dashadmin/pembayaran/">Pembayaran</a></li>
+        <li class="breadcrumb-item"><a href="/dashadmin/kamar/">Input kamar</a></li>
       </ol>
     </nav>
-    <h2 class="h4">Kamar Tamu</h2>
-    <p class="mb-0">Your web analytics dashboard template.</p>
+    <h2 class="h4">Update Paket Kost</h2>
   </div>
 </div>
 
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4"></div>
-
-<div class="row">
-  <div class="col-12 col-xl-4">
-    <div class="card card-body border-0 shadow mb-2">
-      <h2 class="h5 mb-4">Email berhasil terkirim</h2>
-        <p>Kembali ke menu awal:</p>
-        <a class='btn btn-success' href='/dashadmin/data/kamar/'>Kembali</a>
-    </div>
-  </div>
+<div class="card card-body shadow border-0 table-wrapper table-responsive">
+  <form
+    action=""
+    method='POST'
+  >
+    {% csrf_token %}
+    {{ form.as_table }}
+    
+    <br><br>
+    <button
+      class='btn btn-primary'
+      type='submit'
+    >Submit</button>
+  </form>
 </div>
 {% endblock content %}
 

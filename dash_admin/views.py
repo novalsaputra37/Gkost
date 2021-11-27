@@ -6,6 +6,8 @@ from django.template import loader
 from django.http import HttpResponse
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView, DetailView
 import datetime
+from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 #mail
 from django.core.mail import EmailMultiAlternatives
@@ -19,7 +21,7 @@ from xhtml2pdf import pisa
 
 #form
 from .forms import KamarKostForm, PemasukanKostForm, PengeluaranKostForm
-from dash_tamu.form import ProfilTamuForm
+from dash_tamu.form import ProfilTamuForm, PaketKostForm
 
 #models
 from .models import KamarKostModel,PemasukanKostModel, PengeluaranKostModel
@@ -27,6 +29,7 @@ from dash_tamu.models import ProfilTamuModel,PaketKostModel, KritikSaranModel
 from django.db import connection
 
 @login_required(login_url="/")
+@permission_required('user.is_staff')
 def index(request):
     context = {}
 
@@ -138,7 +141,8 @@ def index(request):
     html_template = loader.get_template( 'dash_admin/dashboard.html' )
     return HttpResponse(html_template.render(context, request))
 
-class LogPembayaranDashListView(ListView):
+class LogPembayaranDashListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+    permission_required = 'user.is_staff'
     model = PemasukanKostModel
     template_name = "dash_admin/dashboard/logPembayaranDash.html"
     context_object_name = 'obj'
@@ -147,6 +151,8 @@ class LogPembayaranDashListView(ListView):
         self.queryset = self.model.objects.raw("SELECT dash_admin_pemasukankostmodel.*, dash_tamu_profiltamumodel.Nama_lengkap FROM dash_admin_pemasukankostmodel INNER JOIN dash_tamu_profiltamumodel on dash_tamu_profiltamumodel.Nik=dash_admin_pemasukankostmodel.Nik WHERE YEAR(Tgl_pemasukan)= YEAR(NOW()) ORDER BY `dash_admin_pemasukankostmodel`.`Tgl_pemasukan` DESC")
         return super().get_queryset()
 
+@login_required(login_url="/")
+@permission_required('user.is_staff')
 def renderPdfLogPembayaran(request):
     obj = PemasukanKostModel.objects.raw("SELECT dash_admin_pemasukankostmodel.*, dash_tamu_profiltamumodel.Nama_lengkap FROM dash_admin_pemasukankostmodel INNER JOIN dash_tamu_profiltamumodel on dash_tamu_profiltamumodel.Nik=dash_admin_pemasukankostmodel.Nik WHERE YEAR(Tgl_pemasukan)= YEAR(NOW()) ORDER BY `dash_admin_pemasukankostmodel`.`Tgl_pemasukan` DESC")
     template_path = 'dash_admin/dashboard/pdfLogPembayaranDash.html'
@@ -165,6 +171,8 @@ def renderPdfLogPembayaran(request):
     return response
 
 #Pembayaran
+@login_required(login_url="/")
+@permission_required('user.is_staff')
 def KonfimasuTamyViewNew(request):
     template_name = None
     context = None
@@ -205,6 +213,8 @@ def KonfimasuTamyViewNew(request):
     
     return render(request, template_name, context)
 
+@login_required(login_url="/")
+@permission_required('user.is_staff')
 def PembayaranTamuBaruNew(request):
     template_name = None
     context = None
@@ -242,7 +252,8 @@ def PembayaranTamuBaruNew(request):
     return render(request, template_name, context)
 
 #Data Tamu >> Profil
-class ProfilTamuListView(ListView):
+class ProfilTamuListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+    permission_required = 'user.is_staff'
     model = ProfilTamuModel
     template_name = "dash_admin/dataTamu/profilTamu/newProfilTamu.html"
     context_object_name = 'ProfilTamu'
@@ -254,32 +265,36 @@ class ProfilTamuListView(ListView):
         context['jmlh_row'] = self.model.objects.count()
         return context
 
-class ProfilTamuUpdateView(UpdateView):
+class ProfilTamuUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    permission_required = 'user.is_staff'
     form_class = ProfilTamuForm
     model = ProfilTamuModel
     template_name = "dash_admin/dataTamu/profilTamu/profilTamuUpdate.html"
-    success_url = '/dashadmin/data/profil/1'
+    success_url = '/dashadmin/data/profil/'
 
-class ProfilTamuDetailView(DetailView):
+class ProfilTamuDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
+    permission_required = 'user.is_staff'
     model = ProfilTamuModel
     template_name = "dash_admin/dataTamu/profilTamu/profilTamuDetail.html"
     context_object_name = 'ProfilTamu'
 
-class ProfilTamuDeleteView(DeleteView):
+class ProfilTamuDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+    permission_required = 'user.is_staff'
     model = ProfilTamuModel
     template_name = "dash_admin/dataTamu/profilTamu/profilTamuDelete.html"
     context_object_name = 'ProfilTamu'
-    success_url = '/dashadmin/data/profil/1'
+    success_url = '/dashadmin/data/profil/'
 
 #Data Tamu >> Kamar
-class KamarTamuListView(ListView):
+class KamarTamuListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+    permission_required = 'user.is_staff'
     model = KamarKostModel
-    template_name = "dash_admin/dataTamu/kamarTamu/kamarTamu.html"
+    template_name = "dash_admin/dataTamu/kamarTamu/kamarTamuListNew.html"
     context_object_name = 'KamarTamu'
     paginate_by = 10
 
     def get_queryset(self):
-        self.queryset = self.model.objects.raw('SELECT dash_tamu_profiltamumodel.Nama_lengkap, dash_tamu_profiltamumodel.No_tlp, dash_tamu_profiltamumodel.Email, dash_admin_kamarkostmodel.*, current_date() as tgl_sekarang, datediff(Waktu_out, current_date()) as selisih FROM dash_tamu_profiltamumodel INNER JOIN dash_admin_kamarkostmodel ON dash_tamu_profiltamumodel.Nik=dash_admin_kamarkostmodel.Nik ORDER BY `No_kamar` ASC')
+        self.queryset = self.model.objects.raw('SELECT dash_tamu_profiltamumodel.Nama_lengkap, dash_tamu_profiltamumodel.No_tlp, dash_tamu_profiltamumodel.Email, dash_admin_kamarkostmodel.*, dash_tamu_paketkostmodel.Paket, current_date() as tgl_sekarang, datediff(Waktu_out, current_date()) as selisih FROM dash_tamu_profiltamumodel INNER JOIN dash_admin_kamarkostmodel ON dash_tamu_profiltamumodel.Nik=dash_admin_kamarkostmodel.Nik INNER JOIN dash_tamu_paketkostmodel on dash_admin_kamarkostmodel.Nik=dash_tamu_paketkostmodel.Nik ORDER BY `No_kamar` ASC')
         return super().get_queryset()
 
     def get_context_data(self, **kwargs):
@@ -288,10 +303,11 @@ class KamarTamuListView(ListView):
         context['jmlh_row'] = self.model.objects.count()
         return context
 
-class KomfirmasiTamuBaruView(CreateView):
+class KomfirmasiTamuBaruView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    permission_required = 'user.is_staff'
     form_class = KamarKostForm
     template_name = 'dash_admin/dataTamu/kamarTamu/tamuBaru.html'
-    success_url = '/dashadmin/data/kamar/1'
+    success_url = '/dashadmin/data/kamar/'
 
     def get_context_data(self, **kwargs):
         Nokamar = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
@@ -308,19 +324,31 @@ class KomfirmasiTamuBaruView(CreateView):
         context['profilTamu'] = ProfilTamuModel.objects.all()
         return context
 
-class KamarTamuUpdateView(UpdateView):
+class KamarTamuUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    permission_required = 'user.is_staff'
     form_class = KamarKostForm
     model = KamarKostModel
     template_name = "dash_admin/dataTamu/kamarTamu/kamarTamuUpdate.html"
-    success_url = '/dashadmin/data/kamar/1'
+    success_url = '/dashadmin/data/kamar/'
+
+class UpdatePaketView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    permission_required = 'user.is_staff'
+    form_class = PaketKostForm
+    model = PaketKostModel
+    template_name = "dash_admin/dataTamu/kamarTamu/KamarTamuUpdatePaket.html"
+    success_url = '/dashadmin/data/kamar/'
+
     
-class KamarTamuDeleteView(DeleteView):
+class KamarTamuDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+    permission_required = 'user.is_staff'
     model = KamarKostModel
     template_name = "dash_admin/dataTamu/profilTamu/profilTamuDelete.html"
     context_object_name = 'ProfilTamu'
-    success_url = '/dashadmin/data/kamar/1'
+    success_url = '/dashadmin/data/kamar/'
 
 #Keuangan >> Rincian Keuangan
+@login_required(login_url="/")
+@permission_required('user.is_staff')
 def PendapatanListView(request):
     context = {}
 
@@ -362,13 +390,16 @@ def PendapatanListView(request):
     html_template = loader.get_template( 'dash_admin/keuangan/pendapatan.html' )
     return HttpResponse(html_template.render(context, request))
 
-class pengeluaranDeleteView(DeleteView):
+class pengeluaranDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+    permission_required = 'user.is_staff'
     model = PengeluaranKostModel
     template_name = "dash_admin/dataTamu/profilTamu/profilTamuDelete.html"
     context_object_name = 'ProfilTamu'
     success_url = '/dashadmin/keuangan/pemasukan/'
 
 #Keuangan >> log Pembayaran
+@login_required(login_url="/")
+@permission_required('user.is_staff')
 def LogPembayaranListView(request):
     template_name = None
     context = None
@@ -400,23 +431,25 @@ def LogPembayaranListView(request):
     
     return render(request, template_name, context)
 
-class LogPembayaranUpdateView(UpdateView):
+class LogPembayaranUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    permission_required = 'user.is_staff'
     form_class = PemasukanKostForm
     model = PemasukanKostModel
     template_name = 'dash_admin/keuangan/logPembayaranUpdate.html'
     success_url = '/'
 
-
-class LogPembayaranDeleteView(DeleteView):
+class LogPembayaranDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+    permission_required = 'user.is_staff'
     model = PemasukanKostModel
     template_name = "dash_admin/dataTamu/profilTamu/profilTamuDelete.html"
     context_object_name = 'ProfilTamu'
     success_url = '/dashadmin/keuangan/logpembayaran/'
 
 #KritikSaran
-class kritikSaranListView(ListView):
+class kritikSaranListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+    permission_required = 'user.is_staff'
     model = KritikSaranModel
-    template_name = "dash_admin/kritikSaran/kritikSaranList.html"
+    template_name = "dash_admin/kritikSaran/kritikSaranListNew.html"
     context_object_name = 'kritikSaran'
     paginate_by = 10
 
@@ -429,11 +462,12 @@ class kritikSaranListView(ListView):
         context['segment'] = ' KritikSaran'
         return context
 
-class KritikSaranDeleteView(DeleteView):
+class KritikSaranDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+    permission_required = 'user.is_staff'
     model = KritikSaranModel
     template_name = "dash_admin/kritikSaran/kritikSaranDelete.html"
     context_object_name = 'kritikSaran'
-    success_url = '/dashadmin/kritik/1'
+    success_url = '/dashadmin/kritik/'
 
 #Email
 def send_gmail(request, Email):

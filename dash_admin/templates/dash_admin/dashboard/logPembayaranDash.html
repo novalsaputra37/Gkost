@@ -58,7 +58,7 @@
                     class="text-gray-900"
                     scope="row"
                   >{{forloop.counter}}</th>
-                  <td class="fw-bolder text-gray-500">{{obj.Nama_lengkap}}</td>
+                  <td class="fw-bolder text-gray-500">{{obj.Nama_lengkap|title}}</td>
                   <td class="fw-bolder text-gray-500">{{obj.Tgl_pemasukan|date:"d F Y"}}</td>
                   <td class="fw-bolder text-gray-500">Rp. {{obj.Jmlh_pemasukan|intcomma}}</td>
                   <td class="fw-bolder text-gray-500">{{obj.Keterangan}}</td>

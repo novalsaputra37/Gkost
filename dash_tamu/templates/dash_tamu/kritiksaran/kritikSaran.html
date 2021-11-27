@@ -33,7 +33,7 @@
               id="{{form.Saran.id_for_label}}"></textarea>
           </div>
           <br>
-          <button type="submit" class="btn btn-fill btn-primary">Kirim</button>
+          <button type="submit" class="btn btn-fill btn-primary" id="successAlert">Kirim</button>
         </form>
 
       </div>
@@ -44,4 +44,15 @@
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
+<script>
+document.getElementById('successAlert').addEventListener('click', function () {
+            swalWithBootstrapButtons.fire({
+                icon: 'success',
+                title: 'Success alert',
+                text: 'Your work has been saved',
+                showConfirmButton: true,
+                timer: 1500
+            })
+        });
+</script>
 {% endblock javascripts %}

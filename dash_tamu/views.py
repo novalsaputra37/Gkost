@@ -5,6 +5,7 @@ from django.views.generic.edit import CreateView
 from django.template import loader
 from django.http import HttpResponse
 from django.db import connection
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 #models
 from .models import ProfilTamuModel, PaketKostModel
@@ -48,7 +49,7 @@ def dashTamuView(request):
     else:
         return redirect('/dashtamu/register/peraturan')
 
-class LogPembayaranTamuListView(ListView):
+class LogPembayaranTamuListView(LoginRequiredMixin, ListView):
     model = PemasukanKostModel
     template_name = "dash_tamu/dashboard/logPembayaranTamu.html"
     context_object_name = 'obj'
@@ -76,7 +77,7 @@ def render_pdf_LogPembayaran_view(request):
        return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
 
-class ProfilListView(ListView):
+class ProfilListView(LoginRequiredMixin, ListView):
     model = ProfilTamuModel
     template_name = "dash_tamu/profil/profil.html"
     context_object_name = 'DataTamu'
@@ -87,15 +88,15 @@ class ProfilListView(ListView):
         return super().get_queryset()
 
 #Register Tamu
-class PeraturanKostView(TemplateView):
+class PeraturanKostView(LoginRequiredMixin, TemplateView):
     template_name = 'dash_tamu/registerTamu/peraturan.html'
 
-class RegisterTamuView(CreateView):
+class RegisterTamuView(LoginRequiredMixin, CreateView):
     form_class = ProfilTamuForm
     template_name = "dash_tamu/registerTamu/regtamunew.html"
     success_url = '/dashtamu/register/paketkost'
 
-class PaketKostView(FormView):
+class PaketKostView(LoginRequiredMixin, FormView):
     form_class = PaketKostForm
     template_name = 'dash_tamu/registerTamu/pilihanPaket.html'
     success_url = '/'
@@ -109,7 +110,7 @@ class PaketKostView(FormView):
             return render(request, self.template_name, {'form': form })
 
 #Peraturan Kost
-class PeraturanView(TemplateView):
+class PeraturanView(LoginRequiredMixin, TemplateView):
     template_name ='dash_tamu/peraturankost/peraturankost.html'
 
     def get_context_data(self, **kwargs):
@@ -118,7 +119,7 @@ class PeraturanView(TemplateView):
         return context
 
 #harga list
-class PaketKostDashView(ListView):
+class PaketKostDashView(LoginRequiredMixin, ListView):
     model = ProfilTamuModel
     template_name ='dash_tamu/Tagihan/tagihan.html'
     context_object_name = 'invoice'
@@ -142,7 +143,7 @@ class PaketKostDashView(ListView):
         return context
 
 #Kritik & Saran
-class KritikSaranView(CreateView):
+class KritikSaranView(LoginRequiredMixin, CreateView):
     form_class = KritikSaranForm
     template_name = 'dash_tamu/kritiksaran/kritikSaran.html'
     success_url = '/'

@@ -14,7 +14,7 @@ def login_view(request):
     msg = None
     
     if request.user.is_authenticated:
-        if request.user.username == 'admin':
+        if request.user.is_staff == 1:
             return redirect("/dashadmin")
         else:
             return redirect("/dashtamu")
@@ -31,7 +31,7 @@ def login_view(request):
     
                 if user is not None:
                     login(request, user)
-                    if user.username == 'admin':
+                    if request.user.is_staff == 1:
                         return redirect("/dashadmin")
                     else:
                         return redirect("/dashtamu")

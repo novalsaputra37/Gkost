@@ -1,0 +1,69 @@
+{% extends "base/base-volt.html" %}
+
+{% block title %} DashboardAdmin - KrtikSaran {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+        <div class="d-block mb-4 mb-md-0">
+            <h2 class="h4">Kritik & Saran new</h2>
+        </div>
+    </div>
+
+    <div class="card">
+            <div class="table-responsive py-4">
+                <table class="table table-flush" id="datatable">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Kritik</th>
+                            <th>Saran</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       {% for kritikSaran in kritikSaran %}
+                <tr>
+                    <td><span class="fw-normal">{{forloop.counter}}</span></td>
+                    <td>
+                        <a href="#" class="d-flex align-items-center">
+                            <div class="avatar d-flex align-items-center justify-content-center fw-bold rounded bg-secondary me-3"><span>{{kritikSaran.Nama_lengkap|first|title}}</span></div>
+                            <div class="d-block">
+                                <span class="fw-bold">{{kritikSaran.Nama_lengkap}}</span>
+                                <div class="small text-gray">{{kritikSaran.Email}}</div>
+                            </div>
+                        </a> 
+                    </td>
+                    <td><span class="fw-normal">{{kritikSaran.Kritik|title}}</span></td>                        
+                    <td><span class="fw-normal">{{kritikSaran.Saran|title}}</span></td>                        
+
+                    <!-- button-->
+                    <td>
+                        <div class="btn-group">
+                            <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <svg class="icon icon-xs" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"></path></svg>
+                                <span class="visually-hidden">Toggle Dropdown</span>
+                            </button>
+                            <div class="dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1">
+                                <a class="dropdown-item d-flex align-items-center" href="{% url 'dashadmin:kritikSaran-delete' kritikSaran.pk %}">
+                                    <svg class="dropdown-icon text-danger me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M11 6a3 3 0 11-6 0 3 3 0 016 0zM14 17a6 6 0 00-12 0h12zM13 8a1 1 0 100 2h4a1 1 0 100-2h-4z"></path></svg>
+                                    Delete
+                                </a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+{% endblock content %}
+
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

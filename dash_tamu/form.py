@@ -92,6 +92,12 @@ class ProfilTamuForm(forms.ModelForm):
                     'placeholder' : 'Alamat Asal',}
 				),
         }
+    
+    PILIHAN = (
+			('nilai 1','Pilihan 1'),
+			('nilai 2','Pilihan 2'),
+			('nilai 3','Pilihan 3'),
+		)
 
 class PaketKostForm(forms.ModelForm):
     class Meta :
@@ -100,6 +106,27 @@ class PaketKostForm(forms.ModelForm):
             'Nik',
             'Paket'
         ]
+
+        PILIHAN = (
+			('1','Paket 1'),
+			('2','Paket 2'),
+			('3','Paket 3'),
+		)
+
+        widgets = {
+            'Nik' : forms.TextInput(
+                attrs ={
+                    'class' : 'form-control',
+                }
+            ),
+
+            'Paket': forms.Select(
+                choices= PILIHAN,
+				attrs = {
+					'class':'form-control',
+                    }
+				),
+        }
 
 class KritikSaranForm(forms.ModelForm):
     class Meta :

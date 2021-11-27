@@ -56,7 +56,7 @@
         </div>
     </nav>
 
-  {% if user.username == 'admin' %}
+  {% if user.is_staff == 1 %}
     {% include 'includes/sidebar.html' %}
   {% else %}
     {% include 'includes/sidebar-tamu.html' %}
