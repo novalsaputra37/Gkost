@@ -156,7 +156,8 @@ class LogPembayaranDashListView(LoginRequiredMixin, PermissionRequiredMixin, Lis
 def renderPdfLogPembayaran(request):
     obj = PemasukanKostModel.objects.raw("SELECT dash_admin_pemasukankostmodel.*, dash_tamu_profiltamumodel.Nama_lengkap FROM dash_admin_pemasukankostmodel INNER JOIN dash_tamu_profiltamumodel on dash_tamu_profiltamumodel.Nik=dash_admin_pemasukankostmodel.Nik WHERE YEAR(Tgl_pemasukan)= YEAR(NOW()) ORDER BY `dash_admin_pemasukankostmodel`.`Tgl_pemasukan` DESC")
     template_path = 'dash_admin/dashboard/pdfLogPembayaranDash.html'
-    context = {'myvar': 'this is your template context', 'obj' : obj}
+    TimeNow = datetime.datetime.now().strftime('%Y')
+    context = {'myvar': 'this is your template context', 'obj' : obj, 'TimeNow' : TimeNow}
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')
     template = get_template(template_path)
@@ -286,21 +287,19 @@ class ProfilTamuDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteVi
     success_url = '/dashadmin/data/profil/'
 
 #Data Tamu >> Kamar
-class KamarTamuListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+class kamarTamuView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = 'user.is_staff'
     model = KamarKostModel
-    template_name = "dash_admin/dataTamu/kamarTamu/kamarTamuListNew.html"
+    template_name = "dash_admin/kamarTamu.html"
     context_object_name = 'KamarTamu'
-    paginate_by = 10
 
     def get_queryset(self):
-        self.queryset = self.model.objects.raw('SELECT dash_tamu_profiltamumodel.Nama_lengkap, dash_tamu_profiltamumodel.No_tlp, dash_tamu_profiltamumodel.Email, dash_admin_kamarkostmodel.*, dash_tamu_paketkostmodel.Paket, current_date() as tgl_sekarang, datediff(Waktu_out, current_date()) as selisih FROM dash_tamu_profiltamumodel INNER JOIN dash_admin_kamarkostmodel ON dash_tamu_profiltamumodel.Nik=dash_admin_kamarkostmodel.Nik INNER JOIN dash_tamu_paketkostmodel on dash_admin_kamarkostmodel.Nik=dash_tamu_paketkostmodel.Nik ORDER BY `No_kamar` ASC')
+        self.queryset = self.model.objects.raw('SELECT dash_tamu_profiltamumodel.Nama_lengkap, dash_tamu_profiltamumodel.No_tlp, dash_tamu_profiltamumodel.Email, dash_admin_kamarkostmodel.id, dash_tamu_paketkostmodel.Paket, dash_tamu_paketkostmodel.id as id_paket, current_date() as tgl_sekarang, datediff(Waktu_out, current_date()) as selisih FROM dash_tamu_profiltamumodel INNER JOIN dash_admin_kamarkostmodel ON dash_tamu_profiltamumodel.Nik=dash_admin_kamarkostmodel.Nik INNER JOIN dash_tamu_paketkostmodel on dash_admin_kamarkostmodel.Nik=dash_tamu_paketkostmodel.Nik ORDER BY No_kamar ASC')
         return super().get_queryset()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['segment'] = 'ProfilTamu'
-        context['jmlh_row'] = self.model.objects.count()
         return context
 
 class KomfirmasiTamuBaruView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):

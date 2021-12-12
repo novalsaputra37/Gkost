@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import my_view
+from .views import Kamar_API
 
 urlpatterns = [
-    path('test/', my_view, name='test'),
+    path('kamar/', Kamar_API, name='kamar'),
 ]

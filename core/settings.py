@@ -136,7 +136,7 @@ EMAIL_HOST_PASSWORD = "afyipbrnpuoaupka"
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR, 'static']
-STATIC_ROOT='/home/gatotka2/kost.gatotkaca-network.com/static'
+# STATIC_ROOT='/home/gatotka2/kost.gatotkaca-network.com/static'
 
 
 # Default primary key field type

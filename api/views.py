@@ -2,7 +2,7 @@ from django.db import connection
 import json
 from django.http import HttpResponse
 
-def my_view(request):
+def Kamar_API(request):
     x = 1
     while (x <= 10):
         cursor = connection.cursor()
@@ -11,8 +11,6 @@ def my_view(request):
             lampu = 1
         else:
             lampu = cursor.fetchone()[0]
-        
-        print(lampu)
 
         if x == 1:
             kamar1 = lampu

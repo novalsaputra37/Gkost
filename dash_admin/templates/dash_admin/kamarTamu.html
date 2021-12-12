@@ -135,7 +135,7 @@
               </a>
               <a
                 class="dropdown-item d-flex align-items-center"
-                href="{% url 'dashadmin:kamartamu-update-paket' KamarTamu.pk %}"
+                href="/dashadmin/data/kamar/updatepaket/{{KamarTamu.id_paket}}"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -151,10 +151,11 @@
                 </svg>
                 &nbsp;&nbsp;Update Paket Kost
               </a>
+              
               {% if KamarTamu.selisih <= 0 %}
               <a
                 class="dropdown-item d-flex align-items-center"
-                href="https://api.whatsapp.com/send?phone=62{{KamarTamu.No_tlp}}&text=Kepada%20Yth%20{{KamarTamu.Nama_lengkap|title}},%0Akamar%20no%20{{KamarTamu.No_kamar}},%0AKost%20anda%20memasuki%20jatuh%20tempo%20pada%20tanggal%20{{KamarTamu.Waktu_out|date:"d F Y"}},%0A%0ATagihan%20tercetak%20pada%20link%20berikut:%0Ahttps://google.com%0A%0A*NB:*%20Segera%20lakukan%20pembayar%20untuk%20memperpanjang%20sewa%20kost,%20Jika%20belum%20melakukan%20pembayaran%20maka%20otomatis%20listrik%20kamar%20anda%20anda%20mati.&app_absent=0"
+                href="https://api.whatsapp.com/send?phone=62{{KamarTamu.No_tlp}}&text=Kepada%20Yth%20{{KamarTamu.Nama_lengkap|title}},%0Akamar%20no%20{{KamarTamu.No_kamar}},%0AKost%20anda%20memasuki%20jatuh%20tempo%20pada%20tanggal%20{{KamarTamu.Waktu_out|date:"d F Y"}},%0A%0ATagihan%20tercetak%20pada%20link%20berikut:%0Ahttp://kost.gatotkaca-network.com/dashadmin/pdf/{{KamarTamu.Nik}}%0A%0A*NB:*%20Segera%20lakukan%20pembayar%20untuk%20memperpanjang%20sewa%20kost,%20Jika%20belum%20melakukan%20pembayaran%20maka%20otomatis%20listrik%20kamar%20anda%20mati.&app_absent=0"
                 target="_blank"
               >
                 <svg

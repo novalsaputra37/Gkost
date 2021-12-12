@@ -5,7 +5,6 @@ from .views import (KomfirmasiTamuBaruView,
                     ProfilTamuUpdateView,
                     ProfilTamuDetailView,
                     ProfilTamuDeleteView,
-                    KamarTamuListView,
                     KamarTamuUpdateView,
                     KamarTamuDeleteView,
                     KonfimasuTamyViewNew,
@@ -21,7 +20,8 @@ from .views import (KomfirmasiTamuBaruView,
                     LogPembayaranUpdateView,
                     renderPdfLogPembayaran,
                     pengeluaranDeleteView,
-                    UpdatePaketView)
+                    UpdatePaketView,
+                    kamarTamuView)
 
 app_name = 'dashadmin'
 urlpatterns = [
@@ -42,10 +42,10 @@ urlpatterns = [
     path('data/profil/delete/<int:pk>', ProfilTamuDeleteView.as_view(), name='profiltamu-delete'),
 
     #Data>>Kamar Tamu
-    path('data/kamar/', KamarTamuListView.as_view(), name='kamartamu-view'),
+    path('data/kamar/', kamarTamuView.as_view(), name='kamartamu-view'),
     path('data/kamar/kamarbaru/', KomfirmasiTamuBaruView.as_view(), name='kamartamu-create'),
     path('data/kamar/update/<int:pk>', KamarTamuUpdateView.as_view(), name='kamartamu-update'),
-    path('data/kamar/paket/update/<int:pk>', UpdatePaketView.as_view(), name='kamartamu-update-paket'),
+    path('data/kamar/updatepaket/<int:pk>', UpdatePaketView.as_view(), name='kamartamu-update-paket'),
     path('data/kamar/delete/<int:pk>', KamarTamuDeleteView.as_view(), name='kamartamu-delete'),
 
     #Keuangan >> Pemasukan
