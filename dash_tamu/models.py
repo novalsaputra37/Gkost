@@ -12,7 +12,7 @@ class ProfilTamuModel(models.Model):
     Pekerjaan       = models.CharField(max_length=50)
     Jenis_kelamin   = models.CharField(max_length=50)
     Alamat_asal     = models.CharField(max_length=255)
-    Foto_ktp        = models.ImageField(upload_to='static/Foto_KTP')
+    Foto_ktp        = models.ImageField(upload_to='foto_ktp')
     published       = models.DateTimeField(auto_now_add=True)
     updated         = models.DateTimeField(auto_now=True)
 

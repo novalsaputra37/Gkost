@@ -136,8 +136,12 @@ EMAIL_HOST_PASSWORD = "afyipbrnpuoaupka"
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR, 'static']
-# STATIC_ROOT='/home/gatotka2/kost.gatotkaca-network.com/static'
+STATIC_ROOT= BASE_DIR/'static_root'
+#STATIC_ROOT='/home/gatotka2/kost.gatotkaca-network.com/static'
 
+MEDIA_URL = '/media_root/'
+MEDIA_ROOT = BASE_DIR/'media_root'
+#MEDIA_ROOT = '/home/gatotka2/kost.gatotkaca-network.com/media_root'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
