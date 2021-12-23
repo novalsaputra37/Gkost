@@ -294,7 +294,7 @@ class kamarTamuView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     context_object_name = 'KamarTamu'
 
     def get_queryset(self):
-        self.queryset = self.model.objects.raw('SELECT dash_tamu_profiltamumodel.Nama_lengkap, dash_tamu_profiltamumodel.No_tlp, dash_tamu_profiltamumodel.Email, dash_admin_kamarkostmodel.id, dash_tamu_paketkostmodel.Paket, dash_tamu_paketkostmodel.id as id_paket, current_date() as tgl_sekarang, datediff(Waktu_out, current_date()) as selisih FROM dash_tamu_profiltamumodel INNER JOIN dash_admin_kamarkostmodel ON dash_tamu_profiltamumodel.Nik=dash_admin_kamarkostmodel.Nik INNER JOIN dash_tamu_paketkostmodel on dash_admin_kamarkostmodel.Nik=dash_tamu_paketkostmodel.Nik ORDER BY No_kamar ASC')
+        self.queryset = self.model.objects.raw('SELECT dash_tamu_profiltamumodel.Nama_lengkap, dash_tamu_profiltamumodel.No_tlp, dash_tamu_profiltamumodel.Email, dash_admin_kamarkostmodel.id, dash_tamu_paketkostmodel.Paket, dash_tamu_paketkostmodel.id as id_paket, current_date() as tgl_sekarang, datediff(Waktu_out, current_date()) as selisih FROM dash_tamu_profiltamumodel INNER JOIN dash_admin_kamarkostmodel ON dash_tamu_profiltamumodel.Nik=dash_admin_kamarkostmodel.Nik INNER JOIN dash_tamu_paketkostmodel on dash_admin_kamarkostmodel.Nik=dash_tamu_paketkostmodel.Nik ORDER BY selisih DESC')
         return super().get_queryset()
 
     def get_context_data(self, **kwargs):

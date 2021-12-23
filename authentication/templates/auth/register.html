@@ -44,9 +44,18 @@
                     class="input-group-text"
                     id="basic-addon3"
                   ><span class="fas fa-user-shield"></span></span>
-                  {{ form.username }}
+                  <input
+                    type="tel"
+                    class="form-control"
+                    name="{{form.username.name}}"
+                    id="{{form.username.id_for_label}}"
+                    pattern="[0-9]+"
+                    maxlength="16"
+                    minlength="16"
+                    required
+                  >
                 </div>
-                <span class="text-error">{{ form.username.errors }}</span>
+                 <span class="text-error">{{ form.username.errors }}</span>
               </div>
 
               <!-- Form -->

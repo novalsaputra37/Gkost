@@ -2,9 +2,9 @@ from django.db import models
 
 # Create your models here.
 class ProfilTamuModel(models.Model):
-    Nik             = models.CharField(max_length=50)
+    Nik             = models.CharField(max_length=16)
     Nama_lengkap    = models.CharField(max_length=50)
-    No_tlp          = models.BigIntegerField()
+    No_tlp          = models.CharField(max_length=12)
     Email           = models.CharField(max_length=255)
     Tempat_lahir    = models.CharField(max_length=50)
     Tanggal_lahir   = models.DateField()
@@ -20,16 +20,18 @@ class ProfilTamuModel(models.Model):
         return "{}. {}".format(self.id, self.Nik)
 
 class PaketKostModel(models.Model):
-    Nik             = models.CharField(max_length=50)
+    Nik             = models.CharField(max_length=16)
     Paket           = models.CharField(max_length=50)
     
     def __str__(self):
         return "{}. {}".format(self.id, self.Nik)
 
 class KritikSaranModel(models.Model):
-    Nik             = models.CharField(max_length=50)
+    Nik             = models.CharField(max_length=16)
     Kritik          = models.CharField(max_length=250)
     Saran           = models.CharField(max_length=250)
 
     def __str__(self) :
         return "{}. {}".format(self.id, self.Nik)
+
+        

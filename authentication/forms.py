@@ -28,7 +28,9 @@ class SignUpForm(UserCreationForm):
         widget=forms.NumberInput(
             attrs={
                 "placeholder" : "Nik",                
-                "class": "form-control"
+                "class": "form-control",
+                "minlength" : "16",
+                "maxlength" : "16"
             }
         ))
     email = forms.EmailField(
